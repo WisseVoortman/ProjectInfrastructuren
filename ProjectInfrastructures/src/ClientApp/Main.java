@@ -147,7 +147,7 @@ public class Main {
     private void showTeam() {
     	JOptionPane.showMessageDialog(screen, 
                 "Project Thema 2.2\n" + "Cliënt Application\n" + "Team: " + "Jesse van Veen, " + "Mitchel van Rijn, " + "Tobias Schiphorst, " + "Rudolf Klijnhout, " + "Wisse Voortman",
-                "Simulator Parkeergarage - Team Doet maar", 
+                "Project Infrastructures - Jousting-systems-ltd", 
                 JOptionPane.INFORMATION_MESSAGE);
     }
 }
