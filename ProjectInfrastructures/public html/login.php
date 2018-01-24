@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       		if(mysqli_num_rows($result) > 0)
       		{
       			$_SESSION['username'] = $myusername;
-      			header("Location: overview.php");
+      			header("Location: dashboard.php");
       		}
       		else {
       			$error = 'username or password cannot be found';

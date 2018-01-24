@@ -6,7 +6,14 @@
 	<?php
 		include '/functions/head.php';
 	?>
-	<div class="container"
-		<h1> Is dit een teletubbie?</h1>
-	</div>
+	<body>
+		<header>
+		</header>
+		<nav>
+			test text
+		</nav>
+		<div class="container">
+			<h1>Is dit een teletubbie?</h1>
+		</div>
+	</body>
 </html>

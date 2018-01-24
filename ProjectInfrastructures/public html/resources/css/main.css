@@ -1,7 +1,15 @@
+/* body */
+
+body {
+	margin: 0;
+}
+
+
 /* Bordered form */
 form {
-    border: 3px solid #f1f1f1;
+    border: 3;
 }
+
 
 /* Full-width inputs */
 input[type=text], input[type=password] {
@@ -31,7 +39,7 @@ button:hover {
 
 /* Add padding to containers */
 .container {
-    padding: 16px;
+    padding: 1% 1%;
 }
 
 /* The "Forgot password" text */
@@ -46,4 +54,17 @@ span.psw {
         display: block;
         float: none;
     }
+}
+
+/* nav */
+nav {
+	width: 100%;
+	background-color: #1ac6ff;
+	padding: 5px 10px;
+	
+}
+
+/* H */
+h1 {
+	margin: 1%;
 }
