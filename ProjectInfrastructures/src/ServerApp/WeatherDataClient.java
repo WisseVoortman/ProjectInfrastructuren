@@ -34,7 +34,9 @@ class WeatherDataClient implements Runnable {
                     if(line.contains("<?xml")) {
                         // Print current buffer
                         if( !buffer.equals("") )
+                        	// prints thread id + weaterDataClientID + Buffer.
                             System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
+                        	
                         // Clean buffer
                         this.buffer = line;
                     }else{
