@@ -7,6 +7,6 @@
 		include '/functions/head.php';
 	?>
 	<div class="container"
-		<h1> Is dit een teletubbie? </h1>
+		<h1> Is dit een teletubbie?</h1>
 	</div>
 </html>
