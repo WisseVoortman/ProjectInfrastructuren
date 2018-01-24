@@ -30,11 +30,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Welcome @ Dean Environmental Research Facility</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/main.css">
-	<script type="text/javascript" src="resources/javascript/main.js"></script>
-</head>
+<?php
+include '/functions/head.php';
+?>
 <body>
 	<h1>Please login to continue</h1>
 	<p>The login in required</p>
