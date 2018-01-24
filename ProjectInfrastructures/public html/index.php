@@ -34,7 +34,9 @@
 include '/functions/head.php';
 ?>
 <body>
-	<div class="row">
+	<!--<div class="row">-->
+	<header>
+	</header>
 	<div class="container">
 	</div>
 	<div class="container">
@@ -52,6 +54,6 @@ include '/functions/head.php';
 	    <button type="submit">Login</button>
 	  </div>
 	</form>
-	</div>
+	<!--</div>-->
 </body>
 </html>
