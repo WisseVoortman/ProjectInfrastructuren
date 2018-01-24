@@ -12,12 +12,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         if(password_verify($mypassword, $pwhash['password'])) {
                               $_SESSION['username'] = $myusername;
                               $_SESSION['loggedin'] = true;
-                              header("Location: overview.php");            
+                              header("Location: dashboard.php");            
                         }
       			else {
                               $error = 'wrong password';
                         }
-      		}
+
       		else {
       			$error = 'username or password cannot be found';
       		}

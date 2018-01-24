@@ -29,20 +29,16 @@ include 'functions/head.php';
 	</div>
 	<h1>Please login to continue</h1>
 	<?php if(!empty($error))  echo '<p style=color:red;>'. $error .'</p>';    ?>
-	<form action="index.php" method="post">
-	
-	<form action="" method="post">
+		<form action="index.php" method="post">
+			<div class="container">
+				<label><b>Username</b></label>
+				<input type="text" placeholder="Enter Username" name="username" required>
 
-	  <div class="container">
-	    <label><b>Username</b></label>
-	    <input type="text" placeholder="Enter Username" name="username" required>
+				<label><b>Password</b></label>
+				<input type="password" placeholder="Enter Password" name="password" required>
 
-	    <label><b>Password</b></label>
-	    <input type="password" placeholder="Enter Password" name="password" required>
-
-	    <button type="submit">Login</button>
-	  </div>
-	</form>
-	<!--</div>-->
+				<button type="submit">Login</button>
+			</div>
+		</form>
 </body>
 </html>
