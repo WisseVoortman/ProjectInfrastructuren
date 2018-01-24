@@ -1,8 +1,9 @@
 package ServerApp;
 
+import java.util.*;
+
 import java.io.File;
 import java.io.StringReader;
-import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -13,6 +14,7 @@ import org.dom4j.io.SAXReader;
 public class Dom4jParser implements Runnable{
 	
 	private String buffer;
+	private LinkedList<Object> Data;
 	
 	public Dom4jParser(String buffer){
 		this.buffer = buffer;
@@ -56,7 +58,24 @@ public class Dom4jParser implements Runnable{
 	            System.out.println("Special Circumstances : " + node.selectSingleNode("FRSHTT").getText());
 	            System.out.println("Cloudiness : " + node.selectSingleNode("CLDC").getText());
 	            System.out.println("Wind direction : " + node.selectSingleNode("WNDDIR").getText());
-		         
+		        
+	            /*
+	            this.Data.add(node.selectSingleNode("STN").getText());
+	            this.Data.add(node.selectSingleNode("DATE").getText());
+	            this.Data.add(node.selectSingleNode("TIME").getText());
+	            this.Data.add(node.selectSingleNode("TEMP").getText());
+	            this.Data.add(node.selectSingleNode("DEWP").getText());
+	            this.Data.add(node.selectSingleNode("STP").getText());
+	            this.Data.add(node.selectSingleNode("SLP").getText());
+	            this.Data.add(node.selectSingleNode("VISIB").getText());
+	            this.Data.add(node.selectSingleNode("WDSP").getText());
+	            this.Data.add(node.selectSingleNode("PRCP").getText());
+	            this.Data.add(node.selectSingleNode("SNDP").getText());
+	            this.Data.add(node.selectSingleNode("FRSHTT").getText());
+	            this.Data.add(node.selectSingleNode("CLDC").getText());
+	            this.Data.add(node.selectSingleNode("WNDDIR").getText());
+	            System.out.println(Data);
+		        */
 	         }
 	      } catch (DocumentException e) {
 	         e.printStackTrace();
