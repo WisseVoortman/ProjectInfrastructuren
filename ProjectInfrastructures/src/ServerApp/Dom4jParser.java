@@ -1,6 +1,7 @@
 package ServerApp;
 
 import java.io.File;
+import java.io.StringReader;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -26,7 +27,7 @@ public class Dom4jParser implements Runnable{
 	      try {
 	         File inputFile = new File("input.txt");
 	         SAXReader reader = new SAXReader();
-	         Document document = reader.read( inputFile );
+	         Document document = reader.read(new StringReader(this.buffer));
 
 	         System.out.println("Root element :" + document.getRootElement().getName());
 
