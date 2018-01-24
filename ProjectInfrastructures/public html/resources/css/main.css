@@ -68,3 +68,16 @@ nav {
 h1 {
 	margin: 1%;
 }
+
+/* selector */
+.selector {
+	max-width: 30%;
+}
+
+table.selector-table{
+	text-align: left;
+}
+input[type=date], input[type=time]{
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
