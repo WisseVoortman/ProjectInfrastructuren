@@ -34,8 +34,12 @@
 include '/functions/head.php';
 ?>
 <body>
-	<h1>Please login to continue</h1>
-	<p>The login in required</p>
+	<div class="row">
+	<div class="container">
+	</div>
+	<div class="container">
+		<h1>Please login to continue</h1>
+	</div>
 	<form action="" method="post">
 
 	  <div class="container">
@@ -48,5 +52,6 @@ include '/functions/head.php';
 	    <button type="submit">Login</button>
 	  </div>
 	</form>
+	</div>
 </body>
 </html>
