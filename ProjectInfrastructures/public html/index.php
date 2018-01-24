@@ -2,6 +2,14 @@
 	session_start();
    	require_once("config.php");
    	require_once("login.php");
+   	/*
+   	if(isset($_SESSION['loggedin']) || $_SESSION['loggedin']) {
+		header("Location: overview.php");
+	}
+	if(isset($_POST["logout"]) && $_POST["logout"]) {
+		$_SESSION['loggedin'] = false;
+	}
+	*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +19,7 @@
 	<script type="text/javascript" src="resources/javascript/main.js"></script>
 </head>
 <?php
-include '/functions/head.php';
+include 'functions/head.php';
 ?>
 <body>
 	<header>
@@ -20,7 +28,7 @@ include '/functions/head.php';
 	<div class="container">
 	</div>
 	<h1>Please login to continue</h1>
-	<?php if(!empty($error))  echo '<p color="red">'. $error .'</p>';    ?>
+	<?php if(!empty($error))  echo '<p style=color:red;>'. $error .'</p>';    ?>
 	<form action="index.php" method="post">
 	
 	<form action="" method="post">

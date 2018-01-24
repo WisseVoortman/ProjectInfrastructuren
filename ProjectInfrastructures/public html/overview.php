@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include_once 'functions/check_login.php';
  ?>
 <!DOCTYPE html>
 <html>
@@ -8,6 +8,6 @@ session_start();
 	<title>Overview page</title>
 </head>
 <body>
-<h1> <?php echo "Welcome on the overview page" . $_SESSION["login_user"] ?> </h1>
+	<h1> <?php echo "Welcome on the overview page" . $_SESSION["username"] ?> </h1>
 </body>
 </html>
