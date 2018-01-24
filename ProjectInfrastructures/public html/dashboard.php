@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<?php
-		include '/functions/head.php';
+		include 'functions/head.php';
 	?>
 	<body>
 		<header>

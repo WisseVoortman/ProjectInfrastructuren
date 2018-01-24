@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       			else {
                               $error = 'wrong password';
                         }
-
+			}
       		else {
       			$error = 'username or password cannot be found';
       		}
