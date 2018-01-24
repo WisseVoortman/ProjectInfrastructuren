@@ -1,32 +1,7 @@
 <?php
-   include("config.php");
-   session_start();
-   
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-      
-      $sql = "SELECT id FROM user WHERE username = '$myusername' and passcode = '$mypassword'";
-      $result = mysqli_query($db,$sql);
-      echo $result;
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      $active = $row['active'];
-      
-      $count = mysqli_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
-		
-      if($count == 1) {
-         session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
-         
-         header("Location: overview.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
-      }
-   }
+	session_start();
+   	require_once("config.php");
+   	require_once("login.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,8 +12,8 @@
 </head>
 <body>
 	<h1>Please login to continue</h1>
-	<p>The login in required</p>
-	<form action="" method="post">
+	<?php if(!empty($error))  echo '<p color="red">'. $error .'</p>';    ?>
+	<form action="index.php" method="post">
 
 	  <div class="container">
 	    <label><b>Username</b></label>
