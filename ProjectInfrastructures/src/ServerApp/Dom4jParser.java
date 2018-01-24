@@ -1,17 +1,27 @@
-package sandbox;
+package ServerApp;
 
 import java.io.File;
 import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
+//import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
-public class Dom4jParser {
+public class Dom4jParser implements Runnable{
 	
-	public static void main(String[] args) {
+	private String buffer;
+	
+	public Dom4jParser(String buffer){
+		this.buffer = buffer;
+	}
+	
+	public void run(){
+		parse(this.buffer);
+	}
+	
+	public void parse(String buffer) {
 
 	      try {
 	         File inputFile = new File("input.txt");
@@ -20,7 +30,7 @@ public class Dom4jParser {
 
 	         System.out.println("Root element :" + document.getRootElement().getName());
 
-	         Element classElement = document.getRootElement();
+	         //Element classElement = document.getRootElement();
 
 	         List<Node> nodes = document.selectNodes("/WEATHERDATA/MEASUREMENT" );
 	         System.out.println("----------------------------");

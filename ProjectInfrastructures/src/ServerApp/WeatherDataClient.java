@@ -36,7 +36,12 @@ class WeatherDataClient implements Runnable {
                         if( !buffer.equals("") )
                         	// prints thread id + weaterDataClientID + Buffer.
                             System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
-                        	
+                        	//test
+                        	new Dom4jParser(buffer).run();
+                        	//Dom4jParser a = new Dom4jParser();
+                        	//a.parse();
+                        	//test
+                        
                         // Clean buffer
                         this.buffer = line;
                     }else{
