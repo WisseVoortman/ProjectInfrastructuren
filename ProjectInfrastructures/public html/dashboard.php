@@ -4,46 +4,77 @@
 ?>
 <!DOCTYPE html>
 <html>
-	<?php
-		include 'functions/head.php';
-	?>
+	<head>
+		<title>Weather data royal university of Bhutan</title>
+		<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<meta charset="utf-8";>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex, nofollow">
+		<meta name="description" content="een super awesome website">
+		<link rel="shortcut icon" href="assets\images\initialPicture.jpg">
+
+	</head>
 	<body>
 		<header>
 		</header>
 		<nav>
 			test text
 		</nav>
+		<div id="test">
+		
+		</div>
+		
 		<div class="container">
-			<h1>Is dit een teletubbie?</h1>
+			<h1>Dashboard page</h1>
+			
+			<div class="">
+				<div class="dashboardItem" id="tempGauge"></div>
+				<div class="dashboardItem" id="downfallGraph"></div>
+			</div>
+			
+
 			
 			<div class="selector">
-				<form action="/dashboard.php">
+				<form action="#" onsubmit="return false;">
 					<table class="selector-table">
 						<tr></tr>
 						<tr>				
-							<th>startdate:</th>
-							<td><input type="date" name="startdate"></td>
+							<th>start date and time:</th>
+							<td><input type="date" id="startDate"></td>
+							<td><input type="time" id="startName"></td>
 						</tr>
 						<tr>
-							<th>enddate:</th>
-							<td><input type="date" name="enddate"></td>
+							<th>end date and time:</th>
+							<td><input type="date" id="endDate"></td>
+							<td><input type="time" id="endTime"></td>
 						</tr>
-						<tr>	
+						<!--<tr>	
 							<th>starttime:</th>
 							<td><input type="time" name="starttime"></td>
 						</tr>
 						<tr>
 							<th>enddate:</th>
 							<td><input type="time" name="endtime"></td>
-						</tr>
+						</tr>-->
 						<tr>
-							<th colspan="2"><button type="submit">Send</button></th>
+							<th colspan="3"><button type="submit">Send</button></th>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
 		<footer>
+		
+		<script src="https://code.highcharts.com/highcharts.src.js"></script>
+		<script src="https://code.highcharts.com/highcharts-more.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+		<script src="resources/javascript/tempGauge.js"></script>
+		<script src="resources/javascript/downfallGraph.js"></script>
+		<script> 
+			
+		</script>
 		</footer>
 	</body>
 </html>
