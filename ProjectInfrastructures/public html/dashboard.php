@@ -8,6 +8,7 @@
 		<title>Weather data royal university of Bhutan</title>
 		<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="resources/javascript/main.js"></script>
 		<meta charset="utf-8";>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="robots" content="noindex, nofollow">
@@ -19,7 +20,13 @@
 		<header>
 		</header>
 		<nav>
-			test text
+			<div class="button-selection container">
+				<button type="button" id="button-selection-option-all" class="button-selection-option">All</button>
+				<button type="button" id="button-selection-option-temp" class="button-selection-option">Temp</button> 
+				<button type="button" id="button-selection-option-downfall" class="button-selection-option">Downfall</button>
+				<button type="button" id="button-selection-option-snowfall" class="button-selection-option">Snowfall</button>
+				<button type="button" id="button-selection-option-custom" class="button-selection-option">Custom</button>
+			</div>
 		</nav>
 		<div id="test">
 		
@@ -33,9 +40,7 @@
 				<div class="dashboardItem" id="downfallGraph"></div>
 			</div>
 			
-
-			
-			<div class="selector">
+			<div class="selector" id="custom_selector">
 				<form action="#" onsubmit="return false;">
 					<table class="selector-table">
 						<tr></tr>
@@ -63,6 +68,7 @@
 					</table>
 				</form>
 			</div>
+			
 		</div>
 		<footer>
 		
@@ -72,6 +78,7 @@
 		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>
+
 		<script> 
 			
 		</script>
