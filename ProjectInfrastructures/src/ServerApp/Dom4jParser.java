@@ -14,9 +14,10 @@ import org.dom4j.io.SAXReader;
 public class Dom4jParser implements Runnable{
 	
 	private String buffer;
+	private GeneralBuffer generalBuffer;
 	
 	
-	private String stationnumber;
+	private int stationnumber;
 	private String date;
 	private String time;
 	private String temperature;
@@ -32,8 +33,9 @@ public class Dom4jParser implements Runnable{
 	private String winddirection;
 	
 		
-	public Dom4jParser(String buffer){
+	public Dom4jParser(String buffer, GeneralBuffer generalBuffer){
 		this.buffer = buffer;
+		this.generalBuffer = generalBuffer;
 		
 	}
 	
@@ -77,7 +79,7 @@ public class Dom4jParser implements Runnable{
 	            System.out.println("Wind direction : " + node.selectSingleNode("WNDDIR").getText());
 		        
 	            
-	            this.stationnumber 				= node.selectSingleNode("STN").getText();
+	            this.stationnumber 				= Integer.parseInt(node.selectSingleNode("STN").getText());
 	            this.date 						= node.selectSingleNode("DATE").getText();
 	            this.time 						= node.selectSingleNode("TIME").getText();
 	            this.temperature 				= node.selectSingleNode("TEMP").getText();
@@ -92,24 +94,14 @@ public class Dom4jParser implements Runnable{
 	            this.cloudiness 				= node.selectSingleNode("CLDC").getText();
 	            this.winddirection 				= node.selectSingleNode("WNDDIR").getText();
 	            
-	            ((StationBuffer) generalBuffer.map.get(1)).testone();
+	            if (generalBuffer.getmap().get(this.stationnumber) == null) { //gets the value for an id)
+	            		generalBuffer.getmap().put(this.stationnumber, new StationBuffer(this.stationnumber)); //no StationBuffer assigned, creating a new StationBuffer
+	            		System.out.println("created a new StationBuffer for: station " + this.stationnumber + ".");
+				    } // end of if
 	            
-	            /*
-	            this.Data.add(node.selectSingleNode("DATE").getText());
-	            this.Data.add(node.selectSingleNode("TIME").getText());
-	            this.Data.add(node.selectSingleNode("TEMP").getText());
-	            this.Data.add(node.selectSingleNode("DEWP").getText());
-	            this.Data.add(node.selectSingleNode("STP").getText());
-	            this.Data.add(node.selectSingleNode("SLP").getText());
-	            this.Data.add(node.selectSingleNode("VISIB").getText());
-	            this.Data.add(node.selectSingleNode("WDSP").getText());
-	            this.Data.add(node.selectSingleNode("PRCP").getText());
-	            this.Data.add(node.selectSingleNode("SNDP").getText());
-	            this.Data.add(node.selectSingleNode("FRSHTT").getText());
-	            this.Data.add(node.selectSingleNode("CLDC").getText());
-	            this.Data.add(node.selectSingleNode("WNDDIR").getText());
-	            System.out.println(Data);
-		        */
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).testone();
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).addArrayToQueue();
+	            
 	         }
 	      } catch (DocumentException e) {
 	         e.printStackTrace();

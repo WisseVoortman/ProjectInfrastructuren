@@ -9,12 +9,14 @@ class WeatherDataClient implements Runnable {
     private Socket _socket;
     private int id;
     private String buffer;
+    private GeneralBuffer generalBuffer;
 
-    WeatherDataClient(Socket _client, int id) {
+    WeatherDataClient(Socket _client, int id, GeneralBuffer generalBuffer) {
         this._socket = _client;
         System.out.println("Created new client!");
         this.id = id;
         this.buffer = "";
+        this.generalBuffer = generalBuffer;
     }
 
     public void run() {
@@ -37,7 +39,7 @@ class WeatherDataClient implements Runnable {
                         	// prints thread id + weaterDataClientID + Buffer.
                             System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
                         	//test
-                        	new Dom4jParser(buffer).run();
+                        	new Dom4jParser(buffer, this.generalBuffer).run();
                         	//Dom4jParser a = new Dom4jParser();
                         	//a.parse();
                         	//test
