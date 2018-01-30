@@ -32,6 +32,10 @@ button {
     width: 100%;
 }
 
+.button-selection-option {
+    width: 19%;
+}
+
 /* Add a hover effect for buttons */
 button:hover {
     opacity: 0.8;
@@ -69,6 +73,8 @@ h1 {
 	margin: 1%;
 }
 
+/* dashboard */
+
 /* selector */
 .selector {
 	max-width: 30%;
@@ -81,3 +87,10 @@ input[type=date], input[type=time]{
 	border: 1px solid #ccc;
 	box-sizing: border-box;
 }
+
+/* Display */
+.dashboardItem {
+	max-width: 50%;
+	float: left;
+}
+
