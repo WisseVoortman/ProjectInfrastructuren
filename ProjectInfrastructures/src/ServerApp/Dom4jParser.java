@@ -100,7 +100,7 @@ public class Dom4jParser implements Runnable{
 				    } // end of if
 	            
 	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).testone();
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).addArrayToQueue();
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).addDataArrayToQueue(this.stationnumber, this.date, this.time, this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
 	            
 	         }
 	      } catch (DocumentException e) {
