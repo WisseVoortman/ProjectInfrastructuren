@@ -8,6 +8,8 @@ import java.util.concurrent.Executors;
 public class ServerApp {
     private WeatherDataReceiver weatherReceiver;
     private ExecutorService _threadPool;
+    
+    private GeneralBuffer generalBuffer;
 
     public ServerApp() {
         // Assign a thread pool of 20 to this server
@@ -15,6 +17,8 @@ public class ServerApp {
 
         this.weatherReceiver = new WeatherDataReceiver(this, 26555);
         this.weatherReceiver.start();
+        
+        this.generalBuffer = new GeneralBuffer();
     }
     /*
      * main method that starts the application

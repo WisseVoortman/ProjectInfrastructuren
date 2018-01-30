@@ -33,10 +33,4 @@ public class GeneralBuffer {
 		
 	} // end of constructor
 	
-	public static void main(String[] args){
-		
-		GeneralBuffer generalBuffer = new GeneralBuffer();
-	
-	}
-	
 }//end of class

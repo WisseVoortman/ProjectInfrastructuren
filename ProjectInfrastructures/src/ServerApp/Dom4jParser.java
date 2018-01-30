@@ -14,10 +14,27 @@ import org.dom4j.io.SAXReader;
 public class Dom4jParser implements Runnable{
 	
 	private String buffer;
-	private LinkedList<Object> Data;
 	
+	
+	private String stationnumber;
+	private String date;
+	private String time;
+	private String temperature;
+	private String dewpoint;
+	private String airpresurestationlevel;
+	private String airpresuresealevel;
+	private String visability;
+	private String windspeed;
+	private String perception;
+	private String snowfallen;
+	private String specialcircumstances;
+	private String cloudiness;
+	private String winddirection;
+	
+		
 	public Dom4jParser(String buffer){
 		this.buffer = buffer;
+		
 	}
 	
 	public void run(){
@@ -27,7 +44,7 @@ public class Dom4jParser implements Runnable{
 	public void parse(String buffer) {
 
 	      try {
-	         File inputFile = new File("input.txt");
+	         //File inputFile = new File("input.txt");
 	         SAXReader reader = new SAXReader();
 	         Document document = reader.read(new StringReader(this.buffer));
 
@@ -59,8 +76,25 @@ public class Dom4jParser implements Runnable{
 	            System.out.println("Cloudiness : " + node.selectSingleNode("CLDC").getText());
 	            System.out.println("Wind direction : " + node.selectSingleNode("WNDDIR").getText());
 		        
+	            
+	            this.stationnumber 				= node.selectSingleNode("STN").getText();
+	            this.date 						= node.selectSingleNode("DATE").getText();
+	            this.time 						= node.selectSingleNode("TIME").getText();
+	            this.temperature 				= node.selectSingleNode("TEMP").getText();
+	            this.dewpoint 					= node.selectSingleNode("DEWP").getText();
+	            this.airpresurestationlevel 	= node.selectSingleNode("STP").getText();
+	            this.airpresuresealevel 		= node.selectSingleNode("SLP").getText();
+	            this.visability 				= node.selectSingleNode("VISIB").getText();
+	            this.windspeed 					= node.selectSingleNode("WDSP").getText();
+	            this.perception 				= node.selectSingleNode("PRCP").getText();
+	            this.snowfallen 				= node.selectSingleNode("SNDP").getText();
+	            this.specialcircumstances 		= node.selectSingleNode("FRSHTT").getText();
+	            this.cloudiness 				= node.selectSingleNode("CLDC").getText();
+	            this.winddirection 				= node.selectSingleNode("WNDDIR").getText();
+	            
+	            ((StationBuffer) generalBuffer.map.get(1)).testone();
+	            
 	            /*
-	            this.Data.add(node.selectSingleNode("STN").getText());
 	            this.Data.add(node.selectSingleNode("DATE").getText());
 	            this.Data.add(node.selectSingleNode("TIME").getText());
 	            this.Data.add(node.selectSingleNode("TEMP").getText());
