@@ -4,28 +4,28 @@ import java.util.*;
 
 public class StationBuffer {
 
-	private int id;
+	private String id;
 	private LinkedList<Object> queue; // queue that will contain arrays with data
 
-	public StationBuffer(int id){
+	public StationBuffer(String id){
 		this.id = id;
 		this.queue = new LinkedList<Object>(); // queue that will contain data 
 	}
 		
 		
-	public void testone(){
+	public void printID(){
 		System.out.println("donders dikke lul man");
 		System.out.println("my id is: " + id);
 		
 	}
 	
 	public void printqueue(){
-		System.out.println(this.queue.size());
-		System.out.println("this is the fucking queue: " + this.queue);
+		System.out.println("queue size: " + this.queue.size());
+		System.out.println("Current Queue: " + this.queue);
 	}
 	
 	public void addDataArrayToQueue(
-			int stationnumber, 
+			String stationnumber, 
 			String date,
 			String time,
 			String temperature,
@@ -40,7 +40,7 @@ public class StationBuffer {
 			String cloudiness,
 			String winddirection){
 		
-		List<Object> dataArray = new ArrayList<Object>(); // initiating an arraylist to add to the queue
+		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		
 		dataArray.add(stationnumber); // filling the arraylist with data before it is added to the queeu
 		dataArray.add(date);
@@ -57,17 +57,7 @@ public class StationBuffer {
 		dataArray.add(cloudiness);
 		dataArray.add(winddirection);
 		
-		this.queue.add(dataArray); // adds the dataArray to the queue.
-		printqueue();
-		this.queue.peek();// returns first element in the list
-		this.queue.remove();//removes first element in the list
-		this.queue.pop(); //removes and returns first element in the list
-		
-		if (this.queue.size() == 31){
-			correctTemperature();
-		}
-		
-		
+		this.queue.add(dataArray); // add the dataArray to the queue.
 		
 	}// end of addtodataQueue
 	
@@ -86,10 +76,42 @@ public class StationBuffer {
 		}
 	
 	public boolean correctionRequired(){
-		// compare temp element 1 with temp element 2
+		float allowedDiffrence = 0.0f;
+		float lowerLimitPercentage = 100 - allowedDiffrence;
+		float uperLimitPercentage = 100 + allowedDiffrence;
+		float absoluteZero = 273.15f;
 		
-			// if .... amount of diffrence > allowed diffrence
-		return true;
+		if(this.queue.size() >= 2){
+			LinkedList<String> newestArray = (LinkedList<String>) this.queue.get((this.queue.size()-1)); //newest
+			LinkedList<String> previousArray = (LinkedList<String>) this.queue.get((this.queue.size()-2)); //previous
+			
+			String newestTemp = newestArray.get(3);
+			String previousTemp = previousArray.get(3);
+			
+			System.out.println("newest: " + newestArray);
+			System.out.println("previous: " + previousArray);
+			
+			System.out.println("newest temp: " + newestTemp);
+			System.out.println("previous temp: " + previousTemp);
+			
+			float lowerLimit = ((absoluteZero + Float.parseFloat(newestTemp))/100) * lowerLimitPercentage;
+			System.out.println("Lower Limit" + lowerLimit);
+			
+			float uperLimit = ((absoluteZero + Float.parseFloat(previousTemp))/100) * uperLimitPercentage;
+			System.out.println("Uper Limit" + uperLimit);
+			
+			System.out.println("dis is it: " + (absoluteZero + Float.parseFloat(newestTemp))  );
+			
+			if((absoluteZero + Float.parseFloat(newestTemp)) >= lowerLimit && (absoluteZero + Float.parseFloat(newestTemp)) <= uperLimit){
+				System.out.println("New temp is within the limits, and therefore does not need to be corrected.");
+				return true;
+			}
+			else{
+				System.out.println("New temp is not within the limits, and therefore does need to be corrected.");
+				return false;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -99,6 +121,7 @@ public class StationBuffer {
 	
 	public void sendArray(){
 	// 1 send array to the vm
+	// 2 remove from queue
 	}
 	
 	/*

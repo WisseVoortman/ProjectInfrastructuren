@@ -17,7 +17,7 @@ public class Dom4jParser implements Runnable{
 	private GeneralBuffer generalBuffer;
 	
 	
-	private int stationnumber;
+	private String stationnumber;
 	private String date;
 	private String time;
 	private String temperature;
@@ -79,7 +79,7 @@ public class Dom4jParser implements Runnable{
 	            System.out.println("Wind direction : " + node.selectSingleNode("WNDDIR").getText());
 		        
 	            
-	            this.stationnumber 				= Integer.parseInt(node.selectSingleNode("STN").getText());
+	            this.stationnumber 				= node.selectSingleNode("STN").getText();
 	            this.date 						= node.selectSingleNode("DATE").getText();
 	            this.time 						= node.selectSingleNode("TIME").getText();
 	            this.temperature 				= node.selectSingleNode("TEMP").getText();
@@ -99,8 +99,13 @@ public class Dom4jParser implements Runnable{
 	            		System.out.println("created a new StationBuffer for: station " + this.stationnumber + ".");
 				    } // end of if
 	            
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).testone();
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).printID();
+	            
 	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).addDataArrayToQueue(this.stationnumber, this.date, this.time, this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
+	            
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).printqueue();
+	            
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).correctionRequired();
 	            
 	         }
 	      } catch (DocumentException e) {
