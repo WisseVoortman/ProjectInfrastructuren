@@ -59,6 +59,46 @@ public class StationBuffer {
 		
 		this.queue.add(dataArray); // adds the dataArray to the queue.
 		printqueue();
+		this.queue.peek();// returns first element in the list
+		this.queue.remove();//removes first element in the list
+		this.queue.pop(); //removes and returns first element in the list
+		
+		if (this.queue.size() == 31){
+			correctTemperature();
+		}
+		
+		
+		
+	}// end of addtodataQueue
+	
+	public void correctTemperature(){
+		if(correctionRequired()){
+			// 1 get all temp values
+			// 2 calculate new temp value
+			// 3 set new temp value
+			// 4 send arraylist to vm for storage
+		}
+		else if(!correctionRequired()){
+			//send arraylist to vm for storage
+		}			
+			
+			setNewTemp();
+		}
+	
+	public boolean correctionRequired(){
+		// compare temp element 1 with temp element 2
+		
+			// if .... amount of diffrence > allowed diffrence
+		return true;
+		return false;
+	}
+	
+	public void setNewTemp(){
+		
+	}
+	
+	public void sendArray(){
+	// 1 send array to the vm
 	}
 	
 	/*
