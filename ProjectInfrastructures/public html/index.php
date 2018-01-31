@@ -2,14 +2,14 @@
 	session_start();
    	require_once("config.php");
    	require_once("login.php");
-   	/*
-   	if(isset($_SESSION['loggedin']) || $_SESSION['loggedin']) {
-		header("Location: overview.php");
+   	
+   	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
+		header("Location: dashboard.php");
 	}
 	if(isset($_POST["logout"]) && $_POST["logout"]) {
 		$_SESSION['loggedin'] = false;
 	}
-	*/
+	
 ?>
 <!DOCTYPE html>
 <html>
