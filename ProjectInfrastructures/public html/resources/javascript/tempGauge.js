@@ -1,6 +1,5 @@
-
-
-Highcharts.chart('tempGauge', {
+function tempGauge() {
+    Highcharts.chart('tempGauge', {
 
     chart: {
         type: 'gauge',
@@ -112,3 +111,5 @@ function (chart) {
         }, 3000);
     }
 });
+}
+

@@ -1,30 +1,24 @@
-
-Highcharts.setOptions({
-    global: {
-        useUTC: false,
-		turboThreshold:1000000000
-    }
-});
+function downfallGraph() {
 
 Highcharts.chart('downfallGraph', {
         chart: {
             zoomType: 'x',
-			events: {
-				load: function () {
+            events: {
+                load: function () {
 
-					// set up the updating of the chart each second
-					var series = this.series[0];
-					setInterval(function () {
-						var x = (new Date()).getTime(), // current time
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    setInterval(function () {
+                        var x = (new Date()).getTime(), // current time
                         y = Math.round(Math.random()*1000);
-						series.addPoint([x, y], true, true);
-					}, 60000);
-				}
-			}
+                        series.addPoint([x, y], true, true);
+                    }, 60000);
+                }
+            }
         },
-		boost: {
-			useGPUTranslations: true
-		},
+        boost: {
+            useGPUTranslations: true
+        },
         title: {
             text: 'Average downfall last hour'
         },
@@ -34,25 +28,23 @@ Highcharts.chart('downfallGraph', {
         },
         xAxis: {
             type: 'datetime',
-			tickPixelInterval: 150
-			
+            tickPixelInterval: 150
         },
         yAxis: {
             title: {
                 text: 'Downfall in mm'
             },
-			min: 0,
-			max: 1000
-		
+            min: 0,
+            max: 1000
         },
         legend: {
             enabled: false
         },
         plotOptions: {
-			series:{
-				turboThreshold:24000000//larger threshold or set to 0 to disable
+            series:{
+                turboThreshold:24000000//larger threshold or set to 0 to disable
             },
-			area: {
+            area: {
                 fillColor: {
                     linearGradient: {
                         x1: 0,
@@ -66,34 +58,53 @@ Highcharts.chart('downfallGraph', {
                     ]
                 },
                 marker: {
-                    radius: 2
+                    radius: 0
                 },
                 lineWidth: 1,
                 states: {
                     hover: {
                         lineWidth: 1
                     }
-                },
-            },
-		
+                }
+            }
         },
 
         series: [{
             type: 'area',
             name: 'Downfall',
-			data: (function () {
+            data: (function () {
             // generate an array of random data
-				var data = [],
-					time = (new Date()).getTime(),
-					i;
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
 
-				for (i = -60; i <= 0; i += 1) {
-					data.push({
-						x: time + i * 1000 * 60,
-						y: Math.round(Math.random()*1000)
-					});
-				}
-            return data;
+                for (i = -60; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000 * 60,
+                        y: Math.round(Math.random()*1000)
+                    });
+                }
+				return data;
 			}())
-        }]
+        }],
+		
+		exporting: {
+			buttons:{
+				contextButton: {
+					enabled: true,
+					menuItems:[
+					'printChart',
+					'separator',
+					'downloadPNG',
+                    'downloadJPEG',
+                    'downloadPDF',
+                    'downloadSVG',
+					'separator'
+					]
+				}
+			}	
+		}
+
     });
+
+}

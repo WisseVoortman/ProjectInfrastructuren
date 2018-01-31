@@ -50,35 +50,19 @@ public class Dom4jParser implements Runnable{
 	         SAXReader reader = new SAXReader();
 	         Document document = reader.read(new StringReader(this.buffer));
 
-	         System.out.println("Root element :" + document.getRootElement().getName());
+	         //System.out.println("Root element :" + document.getRootElement().getName());
 
 	         //Element classElement = document.getRootElement();
 
 	         List<Node> nodes = document.selectNodes("/WEATHERDATA/MEASUREMENT" );
-	         System.out.println("----------------------------");
+	         //System.out.println("----------------------------");
 	         
 	         for (Node node : nodes) {
 	            //System.out.println("\nCurrent Element :"
 	            //   + node.getName());
 	            //System.out.println("Student roll no : " 
 	            //   + node.valueOf("@rollno") );
-	            
-	            System.out.println("Station number : " + node.selectSingleNode("STN").getText());
-	            System.out.println("Date of measurement : " + node.selectSingleNode("DATE").getText());
-	            System.out.println("Time of measurement : " + node.selectSingleNode("TIME").getText());
-	            System.out.println("Temperature : " + node.selectSingleNode("TEMP").getText());
-	            System.out.println("Dewpoint : " + node.selectSingleNode("DEWP").getText());
-	            System.out.println("Air presure at station level : " + node.selectSingleNode("STP").getText());
-	            System.out.println("Air presure at sea level : " + node.selectSingleNode("SLP").getText());
-	            System.out.println("Visibility : " + node.selectSingleNode("VISIB").getText());
-	            System.out.println("Wind speed : " + node.selectSingleNode("WDSP").getText());
-	            System.out.println("Perception : " + node.selectSingleNode("PRCP").getText());
-	            System.out.println("Snow fallen : " + node.selectSingleNode("SNDP").getText());
-	            System.out.println("Special Circumstances : " + node.selectSingleNode("FRSHTT").getText());
-	            System.out.println("Cloudiness : " + node.selectSingleNode("CLDC").getText());
-	            System.out.println("Wind direction : " + node.selectSingleNode("WNDDIR").getText());
-		        
-	            
+	                  
 	            this.stationnumber 				= node.selectSingleNode("STN").getText();
 	            this.date 						= node.selectSingleNode("DATE").getText();
 	            this.time 						= node.selectSingleNode("TIME").getText();
@@ -99,6 +83,8 @@ public class Dom4jParser implements Runnable{
 	            		System.out.println("created a new StationBuffer for: station " + this.stationnumber + ".");
 				    } // end of if
 	            
+	            //printParsedData();
+	            
 	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).printID();
 	            
 	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).addDataArrayToQueue(this.stationnumber, this.date, this.time, this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
@@ -112,4 +98,21 @@ public class Dom4jParser implements Runnable{
 	         e.printStackTrace();
 	      }
 	   }
+	
+	public void printParsedData(){
+        System.out.println("Station number : " + this.stationnumber);
+        System.out.println("Date of measurement : " + this.date);
+        System.out.println("Time of measurement : " + this.time);
+        System.out.println("Temperature : " + this.temperature);
+        System.out.println("Dewpoint : " + this.dewpoint);
+        System.out.println("Air presure at station level : " + this.airpresurestationlevel);
+        System.out.println("Air presure at sea level : " + this.airpresuresealevel);
+        System.out.println("Visibility : " + this.visability);
+        System.out.println("Wind speed : " + this.windspeed);
+        System.out.println("Perception : " + this.perception);
+        System.out.println("Snow fallen : " + this.snowfallen);
+        System.out.println("Special Circumstances : " + this.specialcircumstances);
+        System.out.println("Cloudiness : " + this.cloudiness);
+        System.out.println("Wind direction : " + this.winddirection);
+	}
 }

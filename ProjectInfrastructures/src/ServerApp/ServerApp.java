@@ -18,7 +18,7 @@ public class ServerApp {
     	this.generalBuffer = new GeneralBuffer();
     	
     	// Assign a thread pool of 20 to this server
-        this._threadPool = Executors.newFixedThreadPool(20);
+        this._threadPool = Executors.newFixedThreadPool(900);
 
         this.weatherReceiver = new WeatherDataReceiver(this, 26555, generalBuffer);
         this.weatherReceiver.start();
