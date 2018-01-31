@@ -11,7 +11,7 @@ Highcharts.chart('tempGauge', {
     },
 
     title: {
-        text: 'Tempature'
+        text: 'Temperature'
     },
 
     pane: {
