@@ -87,7 +87,7 @@ Highcharts.chart('tempGauge', {
 
     series: [{
         name: 'Tempature',
-        data: [20],
+        data: [Math.round((Math.random()*200)-100)],
         tooltip: {
             valueSuffix: ' °C'
         }

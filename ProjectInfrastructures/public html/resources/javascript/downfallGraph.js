@@ -1,7 +1,8 @@
 
 Highcharts.setOptions({
     global: {
-        useUTC: false
+        useUTC: false,
+		turboThreshold:1000000000
     }
 });
 
@@ -17,13 +18,12 @@ Highcharts.chart('downfallGraph', {
 						var x = (new Date()).getTime(), // current time
                         y = Math.round(Math.random()*1000);
 						series.addPoint([x, y], true, true);
-					}, 1000);
+					}, 60000);
 				}
 			}
         },
-		
 		boost: {
-        useGPUTranslations: true
+			useGPUTranslations: true
 		},
         title: {
             text: 'Average downfall last hour'
@@ -41,14 +41,18 @@ Highcharts.chart('downfallGraph', {
             title: {
                 text: 'Downfall in mm'
             },
-			min: 0
+			min: 0,
+			max: 1000
 		
         },
         legend: {
             enabled: false
         },
         plotOptions: {
-            area: {
+			series:{
+				turboThreshold:24000000//larger threshold or set to 0 to disable
+            },
+			area: {
                 fillColor: {
                     linearGradient: {
                         x1: 0,
@@ -70,8 +74,8 @@ Highcharts.chart('downfallGraph', {
                         lineWidth: 1
                     }
                 },
-                threshold: null
-            }
+            },
+		
         },
 
         series: [{
@@ -83,9 +87,9 @@ Highcharts.chart('downfallGraph', {
 					time = (new Date()).getTime(),
 					i;
 
-				for (i = -999; i <= 0; i += 1) {
+				for (i = -60; i <= 0; i += 1) {
 					data.push({
-						x: time + i * 1000,
+						x: time + i * 1000 * 60,
 						y: Math.round(Math.random()*1000)
 					});
 				}

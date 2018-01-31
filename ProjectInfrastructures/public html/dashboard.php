@@ -72,16 +72,19 @@
 		</div>
 		<footer>
 		
+
+
+		<script> 
+			
+		</script>
+		</footer>
+		
 		<script src="https://code.highcharts.com/highcharts.src.js"></script>
 		<script src="https://code.highcharts.com/highcharts-more.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>
-
-		<script> 
-			
-		</script>
-		</footer>
+		
 	</body>
 </html>
