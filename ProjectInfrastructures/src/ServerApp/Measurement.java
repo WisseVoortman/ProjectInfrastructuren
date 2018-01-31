@@ -1,6 +1,8 @@
 package ServerApp;
 
-public class Measurement {
+import java.io.Serializable;
+
+public class Measurement implements Serializable{
 	
 	public final int stationnumber;
 	public final String date;
