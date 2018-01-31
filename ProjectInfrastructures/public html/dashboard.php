@@ -22,9 +22,9 @@
 		<div class="button-selection container">
 			<button type="button" id="button-selection-option-all" onclick="all();" class="button-selection-option">All</button>
 			<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
-			<button type="button" id="button-selection-option-downfall" class="button-selection-option">Downfall</button>
-			<button type="button" id="button-selection-option-snowfall" class="button-selection-option">Snowfall</button>
-			<button type="button" id="button-selection-option-custom" class="button-selection-option">Custom</button>
+			<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
+			<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
+			<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
 		</div>
 		
 		<div id="test">
@@ -34,9 +34,12 @@
 		<div class="container">
 			<h1>Dashboard page</h1>
 			
-			<div class="">
+			<div id="dashboard-items">
+
 				<div class="dashboardItem" id="tempGauge"></div>
 				<div class="dashboardItem" id="downfallGraph"></div>
+				
+				<!--
 				<div class="selector" id="custom_selector">
 					<form action="#" onsubmit="return false;">
 						<table class="selector-table">
@@ -57,17 +60,23 @@
 						</table>
 					</form>
 				</div>
+			-->
 			</div>
 		</div>
 		<footer>	
+		</footer>
 		<script src="https://code.highcharts.com/highcharts.src.js"></script>
 		<script src="https://code.highcharts.com/highcharts-more.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
 		<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+		<script src="recources/javascript/highchartsGlobalSettings.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>
-		</footer>
 		<script src="resources/javascript/main.js"></script>
+		<script type="text/javascript">
+			tempGauge();
+      		downfallGraph();
+		</script>
 	</body>
 </html>

@@ -1,45 +1,34 @@
+var temphtml = '<div class="dashboardItem" id="tempGauge"></div>';
+var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div>';
+var customhtml = '<div class="selector" id="custom_selector"><form action="#" onsubmit="return false;"><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"><button type="submit">Send</button></th></tr></table></form></div>';
+  function check_id_not_null() {
+    if(document.getElementById("dashboard-items") !== null) {
+      return true;
+    }
+    return false;
+  }
 
   function all() {
-    if (document.getElementById('tempGaugeOut') !== null) {
-      document.getElementById("tempGaugeOut").innerHTML = '<div class="dashboardItem" id="tempGauge"></div>';
-    }
-    if (document.getElementById('downfallGraphOut') !== null) {
-      document.getElementById("tempGaugeOut").innerHTML = '<div class="dashboardItem" id="tempGauge"></div>';  
-    }
-    if (document.getElementById('custom_selector_out') !== null) {
-      document.getElementById('custom_selector_out').innerHTML = '<div class="selector" id="custom_selector"><form action="#" onsubmit="return false;"><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"><button type="submit">Send</button></th></tr></table></form></div>';
-    }  
+    if(check_id_not_null()) {
+      document.getElementById("dashboard-items").innerHTML = temphtml + " "+ downfallhtml;
+      tempGauge();
+      downfallGraph();
+    } 
   }
   function temp() {
-    document.getElementById("tempGauge").innerHTML = '<div class="dashboardItem" id="tempGauge"></div>';
-    document.getElementById("downfallGraph").innerHTML = '<div class="dashboardItem" id="downfallGraphOut"></div>'; 
-    document.getElementById("custom_selector").innerHTML = '<div id="custom_selector_out></div>"';
+    if(check_id_not_null()) {
+      document.getElementById("dashboard-items").innerHTML = temphtml;
+      tempGauge();
+    }
   }
-  
-
-  
-
-  /*
-  $("#button-selection-option-temp").click(function(){
-    $("#tempGaugeOut").html('<div class="dashboardItem" id="tempGauge"></div>');
-    $("#downfallGraphOut").html('');
-    $("#custom_selector").hide(1000);
-  });
-  $("#button-selection-option-downfall").click(function(){
-    $("#downfallGraph").show(1000);
-    $("#tempGauge").hide(1000);
-    $("#custom_selector").hide(1000);
-  });
-  $("#button-selection-option-custom").click(function(){
-    $("#custom_selector").show(1000);
-    $("#downfallGraph").hide(1000);
-    $("#tempGauge").hide(1000);
-  });
-  $("#button-selection-option-snowfall").click(function(){
-    //hier moet nog de showfall graph
-    $("#custom_selector").hide(1000);
-    $("#downfallGraph").hide(1000);
-    $("#tempGauge").hide(1000);
-  });
-  */
-
+  function downfall() {
+    if(check_id_not_null()) {
+      document.getElementById("dashboard-items").innerHTML = downfallhtml;
+      downfallGraph();
+    }
+  }
+  function custom() {
+    if(check_id_not_null()) {
+      document.getElementById("dashboard-items").innerHTML = customhtml;
+    }
+  }
