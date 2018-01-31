@@ -6,15 +6,24 @@ import java.util.concurrent.Executors;
  * MAIN Class for the PI application
  */
 public class ServerApp {
+	
+	private GeneralBuffer generalBuffer;
+	
     private WeatherDataReceiver weatherReceiver;
     private ExecutorService _threadPool;
-
+    
+    
     public ServerApp() {
-        // Assign a thread pool of 20 to this server
+        
+    	this.generalBuffer = new GeneralBuffer();
+    	
+    	// Assign a thread pool of 20 to this server
         this._threadPool = Executors.newFixedThreadPool(20);
 
-        this.weatherReceiver = new WeatherDataReceiver(this, 26555);
+        this.weatherReceiver = new WeatherDataReceiver(this, 26555, generalBuffer);
         this.weatherReceiver.start();
+        
+        
     }
     /*
      * main method that starts the application
