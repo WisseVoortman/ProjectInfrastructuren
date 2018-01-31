@@ -29,7 +29,6 @@ Highcharts.chart('downfallGraph', {
         xAxis: {
             type: 'datetime',
             tickPixelInterval: 150
-            
         },
         yAxis: {
             title: {
@@ -37,7 +36,6 @@ Highcharts.chart('downfallGraph', {
             },
             min: 0,
             max: 1000
-        
         },
         legend: {
             enabled: false
@@ -69,10 +67,7 @@ Highcharts.chart('downfallGraph', {
                     }
                 }
             }
-        
         },
-
-
 
         series: [{
             type: 'area',
@@ -89,8 +84,8 @@ Highcharts.chart('downfallGraph', {
                         y: Math.round(Math.random()*1000)
                     });
                 }
-            return data;
-			})
+				return data;
+			}())
         }],
 		
 		exporting: {
@@ -104,9 +99,7 @@ Highcharts.chart('downfallGraph', {
                     'downloadJPEG',
                     'downloadPDF',
                     'downloadSVG',
-					'separator',
-					'downloadCSV',
-					'downloadXLS'
+					'separator'
 					]
 				}
 			}	
