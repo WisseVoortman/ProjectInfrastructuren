@@ -2,20 +2,20 @@ package ServerApp;
 
 public class Measurement {
 	
-	private int stationnumber;
-	private String date;
-	private String time;
-	private Float temperature;
-	private Float dewpoint;
-	private Float airpresurestationlevel;
-	private Float airpresuresealevel;
-	private Float visability;
-	private Float windspeed;
-	private Float perception;
-	private Float snowfallen;
-	private int specialcircumstances;
-	private Float cloudiness;
-	private int winddirection;
+	public final int stationnumber;
+	public final String date;
+	public final String time;
+	public final Float temperature;
+	public final Float dewpoint;
+	public final Float airpresurestationlevel;
+	public final Float airpresuresealevel;
+	public final Float visability;
+	public final Float windspeed;
+	public final Float perception;
+	public final Float snowfallen;
+	public final int specialcircumstances;
+	public final Float cloudiness;
+	public final int winddirection;
 	
 	public Measurement(String stationnumber, String date, String time, String temperature, String dewpoint, String airpresurestationlevel, String airpresuresealevel, String visability, String windspeed, String perception, String snowfallen, String specialcircumstances, String cloudiness, String winddirection){
 		this.stationnumber 				= Integer.parseInt(stationnumber);
