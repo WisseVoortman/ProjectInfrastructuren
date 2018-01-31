@@ -19,14 +19,14 @@ public class StationBuffer {
 		
 		
 	public void printID(){
-		System.out.println("donders dikke lul man");
+		System.out.println("---------------------------------------------------------");
 		System.out.println("my id is: " + id);
 		
 	}
 	
 	public void printqueue(){
 		System.out.println("queue size: " + this.queue.size());
-		System.out.println("Current Queue: " + this.queue);
+		//System.out.println("Current Queue: " + this.queue);
 	}
 	
 	public void addDataArrayToQueue(
@@ -98,26 +98,26 @@ public class StationBuffer {
 			String newestTemp = newestArray.get(3); // get the temperature from the newest array of data
 			String previousTemp = previousArray.get(3); // get the temperature from previous the array of data
 			
-			System.out.println("newest: " + newestArray);
-			System.out.println("previous: " + previousArray);
+			//System.out.println("newest: " + newestArray);
+			//System.out.println("previous: " + previousArray);
 			
 			System.out.println("newest temp: " + newestTemp);
 			System.out.println("previous temp: " + previousTemp);
 			
 			float lowerLimit = ((absoluteZero + Float.parseFloat(newestTemp))/100) * lowerLimitPercentage;
-			System.out.println("Lower Limit" + lowerLimit);
+			//System.out.println("Lower Limit" + lowerLimit);
 			
 			float uperLimit = ((absoluteZero + Float.parseFloat(previousTemp))/100) * uperLimitPercentage;
-			System.out.println("Uper Limit" + uperLimit);
+			//System.out.println("Uper Limit" + uperLimit);
 			
-			System.out.println("dis is it: " + (absoluteZero + Float.parseFloat(newestTemp))  );
+			//System.out.println("value to test: " + (absoluteZero + Float.parseFloat(newestTemp))  );
 			
 			if((absoluteZero + Float.parseFloat(newestTemp)) >= lowerLimit && (absoluteZero + Float.parseFloat(newestTemp)) <= uperLimit){
-				System.out.println("New temp is within the limits, and therefore does not need to be corrected.");
+				//System.out.println("New temp is within the limits, and therefore does not need to be corrected.");
 				return true;
 			}
 			else{
-				System.out.println("New temp is not within the limits, and therefore does need to be corrected.");
+				//System.out.println("New temp is not within the limits, and therefore does need to be corrected.");
 				return false;
 			}
 		}
@@ -166,14 +166,10 @@ public class StationBuffer {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		finally{
+			
+		}
 		
 	}
 	
-	/*
-	 * in order to correct the temperature value we should store 30 values after which the corrected temperature value can be calculated
-	 * after recieving the xml the data should be parsed and stored in instances of the stationbuffer class 1 station per instance. 
-	 * we keep track of the stationbuffer instances in a parent bufferclass that has a map to containing key value pairs of station number and instance of stationbuffer.
-	 * */
-		
-
 }

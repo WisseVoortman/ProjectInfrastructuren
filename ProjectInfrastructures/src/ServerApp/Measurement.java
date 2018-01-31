@@ -34,6 +34,7 @@ public class Measurement implements Serializable{
 		this.specialcircumstances		= Integer.parseInt(specialcircumstances);
 		this.cloudiness					= Float.parseFloat(cloudiness);
 		this.winddirection				= Integer.parseInt(winddirection);
+		System.out.println("this.temp: " + this.temperature);
 	}
 	
 }
