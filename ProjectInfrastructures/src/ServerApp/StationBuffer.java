@@ -69,12 +69,17 @@ public class StationBuffer {
 	public void correctTemperature(){
 		if(correctionRequired()){
 			setNewTemp();
+			if(this.queue.size() >=31){
+				sendArray();
+			}
 			
-			// 4 send arraylist to vm for storage
 		}
 		else if(!correctionRequired()){
 			//send arraylist to vm for storage
 			setNewTemp();
+			if(this.queue.size() >=31){
+				sendArray();
+			}
 		}			
 			
 			
@@ -127,13 +132,17 @@ public class StationBuffer {
 	}
 	
 	public void sendArray(){
+		System.out.println("Sending Measurment...");
 		// 1 get the last array to send
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		
 		dataArray = (LinkedList<String>) this.queue.peek();
 		// 2 create object of array
 		Measurement m = new Measurement(dataArray.get(0), dataArray.get(1), dataArray.get(2), dataArray.get(3), dataArray.get(4), dataArray.get(5), dataArray.get(6), dataArray.get(7), dataArray.get(8), dataArray.get(9), dataArray.get(10), dataArray.get(11), dataArray.get(12), dataArray.get(13)); //imediately call function in this bitch
-		// 3 remove from queue
+		if(this.queue.size() >=31){
+			this.queue.remove();
+			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
+		}
 		Socket client = null;
 		ObjectOutputStream out = null;
 		
