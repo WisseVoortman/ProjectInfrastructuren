@@ -66,7 +66,7 @@ Highcharts.chart('downfallGraph', {
                     ]
                 },
                 marker: {
-                    radius: 2
+                    radius: 0
                 },
                 lineWidth: 1,
                 states: {
@@ -77,6 +77,8 @@ Highcharts.chart('downfallGraph', {
             },
 		
         },
+
+
 
         series: [{
             type: 'area',
@@ -95,5 +97,24 @@ Highcharts.chart('downfallGraph', {
 				}
             return data;
 			}())
-        }]
+        }],
+		
+		exporting: {
+			buttons:{
+				contextButton: {
+					enabled: true,
+					menuItems:[
+					'printChart',
+					'separator',
+					'downloadPNG',
+                    'downloadJPEG',
+                    'downloadPDF',
+                    'downloadSVG',
+					'separator',
+					'downloadCSV',
+					'downloadXLS'
+					]
+				}
+			}	
+		}
     });
