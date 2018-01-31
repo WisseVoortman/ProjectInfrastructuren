@@ -105,7 +105,7 @@ public class Dom4jParser implements Runnable{
 	            
 	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).printqueue();
 	            
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).correctionRequired();
+	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).correctTemperature();
 	            
 	         }
 	      } catch (DocumentException e) {

@@ -1,5 +1,10 @@
 package ServerApp;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.*;
 
 public class StationBuffer {
@@ -63,30 +68,30 @@ public class StationBuffer {
 	
 	public void correctTemperature(){
 		if(correctionRequired()){
-			// 1 get all temp values
-			// 2 calculate new temp value
-			// 3 set new temp value
+			setNewTemp();
+			
 			// 4 send arraylist to vm for storage
 		}
 		else if(!correctionRequired()){
 			//send arraylist to vm for storage
+			setNewTemp();
 		}			
 			
-			setNewTemp();
+			
 		}
 	
 	public boolean correctionRequired(){
-		float allowedDiffrence = 0.0f;
+		float allowedDiffrence = 1.0f;
 		float lowerLimitPercentage = 100 - allowedDiffrence;
 		float uperLimitPercentage = 100 + allowedDiffrence;
 		float absoluteZero = 273.15f;
 		
 		if(this.queue.size() >= 2){
-			LinkedList<String> newestArray = (LinkedList<String>) this.queue.get((this.queue.size()-1)); //newest
-			LinkedList<String> previousArray = (LinkedList<String>) this.queue.get((this.queue.size()-2)); //previous
+			LinkedList<String> newestArray = (LinkedList<String>) this.queue.get((this.queue.size()-1)); //get the newest array of data
+			LinkedList<String> previousArray = (LinkedList<String>) this.queue.get((this.queue.size()-2)); //get the previous array of data
 			
-			String newestTemp = newestArray.get(3);
-			String previousTemp = previousArray.get(3);
+			String newestTemp = newestArray.get(3); // get the temperature from the newest array of data
+			String previousTemp = previousArray.get(3); // get the temperature from previous the array of data
 			
 			System.out.println("newest: " + newestArray);
 			System.out.println("previous: " + previousArray);
@@ -116,12 +121,43 @@ public class StationBuffer {
 	}
 	
 	public void setNewTemp(){
-		
+		// 1 get all temp values
+		// 2 calculate new temp value
+		// 3 set new temp value
 	}
 	
 	public void sendArray(){
-	// 1 send array to the vm
-	// 2 remove from queue
+		// 1 get the last array to send
+		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
+		
+		dataArray = (LinkedList<String>) this.queue.peek();
+		// 2 create object of array
+		Measurement m = new Measurement(dataArray.get(0), dataArray.get(1), dataArray.get(2), dataArray.get(3), dataArray.get(4), dataArray.get(5), dataArray.get(6), dataArray.get(7), dataArray.get(8), dataArray.get(9), dataArray.get(10), dataArray.get(11), dataArray.get(12), dataArray.get(13)); //imediately call function in this bitch
+		// 3 remove from queue
+		Socket client = null;
+		ObjectOutputStream out = null;
+		
+		try{
+			client = new Socket("145.37.37.120", 30011);
+			out = new ObjectOutputStream(client.getOutputStream());		
+			out.writeObject(m);
+			out.flush();
+			
+			// close resources
+			
+			out.close();
+			client.close();
+		}
+		catch(UnknownHostException e){
+			e.printStackTrace();
+			System.exit(1);
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
 	}
 	
 	/*
