@@ -14,7 +14,7 @@ echo
 	<meta name="viewport" content="width=device-width, intial-scale=1.0">
 	<meta name="robots" content="noindex, nofollow">
 	<meta name="description" content="een super awesome website">
-	<link rel="shortcut icon" href="assets\images\initialPicture.jpg">
+	<link rel="shortcut icon" href="assets\images\logoBhutan.png">
 
 </head>
 '

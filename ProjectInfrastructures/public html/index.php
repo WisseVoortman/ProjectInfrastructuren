@@ -13,21 +13,16 @@
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Welcome @ Dean Environmental Research Facility</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/main.css">
-	<script type="text/javascript" src="resources/javascript/main.js"></script>
-</head>
 <?php
 include 'functions/head.php';
 ?>
 <body>
-	<header>
-	</header>
-	<!--<div class="row">-->
 	<div class="container">
+		<div class="image-container">
+			<img src="assets\images\logoBhutan.png" alt="Bhutan" class="image">
+		</div>
+		<h1>Please login to continue</h1>
 	</div>
-	<h1>Please login to continue</h1>
 	<?php if(!empty($error))  echo '<p style=color:red;>'. $error .'</p>';    ?>
 		<form action="index.php" method="post">
 			<div class="container">

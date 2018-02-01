@@ -7,10 +7,10 @@ var customhtml = '<div class="selector" id="custom_selector"><form action="#" on
     }
     return false;
   }
-
   function all() {
     if(check_id_not_null()) {
-      document.getElementById("dashboard-items").innerHTML = temphtml + " "+ downfallhtml;
+      var allhtml = temphtml + " " + downfallhtml;
+      document.getElementById("dashboard-items").innerHTML = allhtml;
       tempGauge();
       downfallGraph();
     } 

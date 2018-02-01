@@ -36,6 +36,11 @@ button {
     width: 19%;
 }
 
+.button-selection-option, a {
+    text-decoration: none;
+    color: white;
+}
+
 /* Add a hover effect for buttons */
 button:hover {
     opacity: 0.8;
@@ -95,3 +100,13 @@ input[type=date], input[type=time]{
 	float: left;
 }
 
+.image-container {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+.image {
+    width: 40%;
+    border-radius: 50%;
+}

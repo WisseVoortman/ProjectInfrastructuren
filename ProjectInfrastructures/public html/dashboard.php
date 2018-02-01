@@ -4,18 +4,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Weather data royal university of Bhutan</title>
-		<link rel="stylesheet" type="text/css" href="resources/css/main.css">
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		
-		<meta charset="utf-8";>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="robots" content="noindex, nofollow">
-		<meta name="description" content="een super awesome website">
-		<link rel="shortcut icon" href="assets\images\initialPicture.jpg">
-		
-	</head>
+	<?php
+		include 'functions/head.php';
+	?>
 	<body>
 		<header>
 		</header>
@@ -25,42 +16,13 @@
 			<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
 			<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
 			<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
+			<button type="submit" id="button-selection-option-logout" class="button-selection-option"><a href="logout.php">Logout</a></button>
 		</div>
-		
-		<div id="test">
-		
-		</div>
-		
 		<div class="container">
 			<h1>Dashboard page</h1>
-			
 			<div id="dashboard-items">
-
 				<div class="dashboardItem" id="tempGauge"></div>
 				<div class="dashboardItem" id="downfallGraph"></div>
-				
-				<!--
-				<div class="selector" id="custom_selector">
-					<form action="#" onsubmit="return false;">
-						<table class="selector-table">
-							<tr></tr>
-							<tr>				
-								<th>start date and time:</th>
-								<td><input type="date" id="startDate"></td>
-								<td><input type="time" id="startName"></td>
-							</tr>
-							<tr>
-								<th>end date and time:</th>
-								<td><input type="date" id="endDate"></td>
-								<td><input type="time" id="endTime"></td>
-							</tr>
-							<tr>
-								<th colspan="3"><button type="submit">Send</button></th>
-							</tr>
-						</table>
-					</form>
-				</div>
-			-->
 			</div>
 		</div>
 		<footer>	
