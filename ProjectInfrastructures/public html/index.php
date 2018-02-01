@@ -24,9 +24,9 @@ include 'functions/head.php';
 		</div>
 	</div>
 	<div class="login-container">
-	<?php if(!empty($error))  echo '<p style=color:red;>'. $error .'</p>';    ?>
 		<form action="index.php" method="post">
 			<div class="container">
+				<?php if(!empty($error))  echo '<p style=color:red;><b>'. $error .'</b></p>';    ?>
 				<label><b>Username</b></label>
 				<input type="text" placeholder="Enter Username" name="username" required>
 
@@ -37,5 +37,12 @@ include 'functions/head.php';
 			</div>
 		</form>
 	</div>
+	<footer>
+		<address>
+			<p>Hosted @ <a href="#" target="_blank">Jousting ltd</a><p>
+			<p>Written by: Jesse, Rudolf, Mitchel, Wisse and Tobias</p>
+			<p>Project: Weather data royal university of Bhutan</p>
+		</address>
+	</footer>
 </body>
 </html>
