@@ -1,10 +1,4 @@
 function downfallGraph() {
-    Highcharts.setOptions({
-    global: {
-        useUTC: false,
-        turboThreshold:1000000000
-    }
-});
 
 Highcharts.chart('downfallGraph', {
         chart: {
@@ -35,7 +29,6 @@ Highcharts.chart('downfallGraph', {
         xAxis: {
             type: 'datetime',
             tickPixelInterval: 150
-            
         },
         yAxis: {
             title: {
@@ -43,7 +36,6 @@ Highcharts.chart('downfallGraph', {
             },
             min: 0,
             max: 1000
-        
         },
         legend: {
             enabled: false
@@ -66,16 +58,15 @@ Highcharts.chart('downfallGraph', {
                     ]
                 },
                 marker: {
-                    radius: 2
+                    radius: 0
                 },
                 lineWidth: 1,
                 states: {
                     hover: {
                         lineWidth: 1
                     }
-                },
-            },
-        
+                }
+            }
         },
 
         series: [{
@@ -93,9 +84,28 @@ Highcharts.chart('downfallGraph', {
                         y: Math.round(Math.random()*1000)
                     });
                 }
-            return data;
-            }())
-        }]
+				return data;
+			}())
+        }],
+		
+		/*exporting: {
+			buttons:{
+				contextButton: {
+					enabled: true,
+					menuItems:[
+						'printChart',
+						'separator',
+						'downloadPNG',
+						'downloadJPEG',
+						'downloadPDF',
+						'downloadSVG',
+						'separator',
+						'downloadCSV',
+					]
+				}
+			}	
+		}*/
+
     });
 
 }
