@@ -27,8 +27,10 @@
 				<div class="dashboardItem" id="downfallGraph"></div>-->
 			</div>
 		</div>
+		
 		<footer>	
 		</footer>
+		
 		<script src="https://code.highcharts.com/highcharts.src.js"></script>
 		<script src="https://code.highcharts.com/highcharts-more.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -42,7 +44,6 @@
 			dashboardPage();
 		</script>
 
-		
 		
 	</body>
 </html>
