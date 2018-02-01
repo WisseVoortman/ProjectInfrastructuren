@@ -2,6 +2,7 @@ package StorageServer;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,60 +53,67 @@ public class DataReceiverClient implements Runnable {
      */
     private void saveToDisk(Measurement m) {
         try {
-            int stationID = m.stationnumber;
+            BufferedWriter bw = null;
+            FileWriter fw = null;
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
             Date date = sdf.parse( m.date + " " + m.time);
 
             // Byte buffer
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-            baos.write( (int)   date.getTime() );
-            baos.write( (byte)  Math.floor(m.temperature));
-            baos.write( (byte)  (Math.round((m.temperature % 1) * 100)*-1));
-            baos.write( (byte)  Math.floor(m.dewpoint));
-            baos.write( (byte)  (Math.round((m.dewpoint % 1) * 100)*-1));
-            baos.write( (short) (m.airpresurestationlevel * 10));
-            baos.write( (short) (m.airpresuresealevel * 10));
-            baos.write( (short) (m.visability * 10));
-            baos.write( (short) (m.windspeed * 10));
-            baos.write( (short) (m.perception * 10));
-            baos.write( (short) (m.snowfallen * 10));
+            baos.write( ByteBuffer.allocate(4).putInt((int)(date.getTime() /1000L )).array() );
+            baos.write( Tools.shortToByteArray( Short.parseShort(Integer.toString(Math.round(m.temperature*10))) ));
+            baos.write( Tools.shortToByteArray( Short.parseShort(Integer.toString(Math.round(m.dewpoint*10))) ) );
+            baos.write( Tools.shortToByteArray( (short) (m.airpresurestationlevel * 10) ));
+            baos.write( Tools.shortToByteArray( (short) (m.airpresuresealevel * 10) ) );
+            baos.write( Tools.shortToByteArray( (short) (m.visability * 10) ) );
+            baos.write( Tools.shortToByteArray( (short) (m.windspeed * 10) ) );
+            baos.write( Tools.shortToByteArray( (short) (m.perception * 100) ) );
+            baos.write( Tools.shortToByteArray( (short) (m.snowfallen * 10) ) );
 
             String bitMask = Integer.toString(m.specialcircumstances);
             int MASK1 = Integer.parseInt(bitMask, 2);
             int MASK2 = Integer.parseInt("00111111", 2);
-            baos.write( (byte)  (MASK1 & MASK2));
+            baos.write( ByteBuffer.allocate(1).put((byte)  (MASK1 & MASK2)).array());
 
-            baos.write( (short) (m.cloudiness * 10));
-            baos.write( (short) m.winddirection);
+            baos.write( Tools.shortToByteArray( (short) (m.cloudiness * 10) ) );
+            baos.write( Tools.shortToByteArray( (short) m.winddirection) );
 
             // Write buffer to array
             byte[] dataList = baos.toByteArray();
 
-            System.out.println(
-                    "Timestamp\\Expected: " + date.getTime() / 1000 + "\tSaved as: " + (int)(date.getTime()/1000)
-            );
-            System.out.println(
-                    "Temperature1\\Expected: " + m.temperature + "\tSaved as: " + (byte)(Math.ceil(m.temperature))
-            );
-            System.out.println(
-                    "Temperature2\\Expected: " + m.temperature + "\tSaved as: " + (byte)(Math.round((m.temperature % 1) * 100)*-1)
-            );
-            System.out.println(
-                    "Pressure\\Expected: " + m.airpresurestationlevel + "\tSaved as: " + (short)((m.airpresurestationlevel * 10))
-            );
-            System.out.println(
-                    "Winddir\\Expected; " + m.winddirection + "\tSaved as: " + (short) m.winddirection
-            );
-            System.out.println(
-                    "Special\\Received: " + m.specialcircumstances + "\tBitmask: " + bitMask + "\tMK1: " + MASK1 + "\tMK2: " + MASK2 + "\tFinished: " + (MASK1&MASK2) + "\tSaved: " + (byte)(MASK1&MASK2)
-            );
+            // Make sure the directory exists
+            File dir = new File(this.model.CUR_PATH + m.stationnumber + "\\");
+            dir.mkdirs();
 
-            //TODO: Check if file exists
-            //TODO: Try to open file
-            //TODO: Write to file
+            try {
+                File file = new File(this.model.CUR_PATH + m.stationnumber + "\\" + m.stationnumber + "_" + m.date + ".dat");
 
-        } catch (ParseException e) {
+                // if file doesnt exists, then create it
+                if (!file.exists()) {
+                    boolean t = file.createNewFile();
+                }
+
+                try (FileOutputStream output = new FileOutputStream(file, true)) {
+                    baos.writeTo(output);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (bw != null)
+                        bw.close();
+                    if (fw != null)
+                        fw.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
     }
