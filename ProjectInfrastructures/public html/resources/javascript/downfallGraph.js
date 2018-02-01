@@ -38,14 +38,17 @@ Highcharts.chart('downfallGraph', {
             //max: 100
         },
         legend: {
-            enabled: false
+            enabled: true
         },
 		tooltip: {
 			xDateFormat: '%H:%M'
 		},
         plotOptions: {
             series:{
-                turboThreshold:24000000//larger threshold or set to 0 to disable
+                turboThreshold:24000000,//larger threshold or set to 0 to disable
+				marker: {
+					enabled: false
+				}
             },
             area: {
                 fillColor: {
@@ -61,6 +64,7 @@ Highcharts.chart('downfallGraph', {
                     ]
                 },
                 marker: {
+					enabled: false,
                     radius: 0
                 },
                 lineWidth: 1,
@@ -73,8 +77,8 @@ Highcharts.chart('downfallGraph', {
         },
 
         series: [{
-            type: 'area',
-            name: 'Downfall',
+            type: 'spline',
+            name: 'Rain',
             data: (function () {
             // generate an array of random data
                 var data = [],
