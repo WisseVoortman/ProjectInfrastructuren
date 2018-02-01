@@ -15,12 +15,11 @@
 				<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
 				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
 				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
-				<button type="submit" id="button-selection-option-logout" class="button-selection-option"><a href="logout.php">Logout</a></button>
+				<a href="logout.php"><button type="submit" id="button-selection-option-logout" class="button-selection-option">Logout</button></a>
 			</div>
 		</nav>
 		<header>
 		</header>
-		
 		<div class="container">
 			<h1>Dashboard page</h1>
 			<div id="dashboard-items">
