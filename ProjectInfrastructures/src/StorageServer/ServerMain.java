@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Class that manages all active 'servers'
+ * Class that manages all servers and contains shared references
  */
 class ServerMain {
     private DataReceiver dataReceiver;
@@ -27,9 +27,11 @@ class ServerMain {
         this.queryPool = Executors.newFixedThreadPool(50);
         this.dataPool = Executors.newFixedThreadPool(900);
 
+        // Assign threads to the servers
         this.serverPool.execute(new DataReceiver( this, _portData ));
         this.serverPool.execute(new QueryHandler( this ));
 
+        // Debug info printer
         this.serverPool.execute(new printer(this));
 
     }

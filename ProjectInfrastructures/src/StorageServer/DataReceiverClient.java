@@ -1,14 +1,13 @@
 package StorageServer;
 
+import ServerApp.Measurement;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.lang.Math;
-
-import ServerApp.Measurement;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Threaded class used for processing incoming data.
@@ -56,13 +55,14 @@ public class DataReceiverClient implements Runnable {
             BufferedWriter bw = null;
             FileWriter fw = null;
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-            Date date = sdf.parse( m.date + " " + m.time);
+            // Create a DateTime object for easy conversion to epoch
+            LocalDateTime dateTime = LocalDateTime.parse((m.date + " " + m.time),
+                    DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss"));
 
             // Byte buffer
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-            baos.write( ByteBuffer.allocate(4).putInt((int)(date.getTime() /1000L )).array() );
+            baos.write( ByteBuffer.allocate(4).putInt((int)(dateTime.toEpochSecond(ZoneOffset.UTC) )).array() );
             baos.write( Tools.shortToByteArray( Short.parseShort(Integer.toString(Math.round(m.temperature*10))) ));
             baos.write( Tools.shortToByteArray( Short.parseShort(Integer.toString(Math.round(m.dewpoint*10))) ) );
             baos.write( Tools.shortToByteArray( (short) (m.airpresurestationlevel * 10) ));
@@ -80,9 +80,6 @@ public class DataReceiverClient implements Runnable {
             baos.write( Tools.shortToByteArray( (short) (m.cloudiness * 10) ) );
             baos.write( Tools.shortToByteArray( (short) m.winddirection) );
 
-            // Write buffer to array
-            byte[] dataList = baos.toByteArray();
-
             // Make sure the directory exists
             File dir = new File(this.model.CUR_PATH + m.stationnumber + "\\");
             dir.mkdirs();
@@ -95,6 +92,7 @@ public class DataReceiverClient implements Runnable {
                     boolean t = file.createNewFile();
                 }
 
+                // Append our byte list to the file
                 try (FileOutputStream output = new FileOutputStream(file, true)) {
                     baos.writeTo(output);
                 }
@@ -113,7 +111,7 @@ public class DataReceiverClient implements Runnable {
             }
 
 
-        } catch (ParseException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
