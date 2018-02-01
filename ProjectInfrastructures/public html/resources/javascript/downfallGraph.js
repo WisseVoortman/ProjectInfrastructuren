@@ -88,22 +88,23 @@ Highcharts.chart('downfallGraph', {
 			}())
         }],
 		
-		exporting: {
+		/*exporting: {
 			buttons:{
 				contextButton: {
 					enabled: true,
 					menuItems:[
-					'printChart',
-					'separator',
-					'downloadPNG',
-                    'downloadJPEG',
-                    'downloadPDF',
-                    'downloadSVG',
-					'separator'
+						'printChart',
+						'separator',
+						'downloadPNG',
+						'downloadJPEG',
+						'downloadPDF',
+						'downloadSVG',
+						'separator',
+						'downloadCSV',
 					]
 				}
 			}	
-		}
+		}*/
 
     });
 
