@@ -10,7 +10,6 @@ var allhtml = temphtml + "" + downfallhtml;
   }
   function dashboardPage() {
     if(check_id_not_null()) {
-      
       document.getElementById("dashboard-items").innerHTML = allhtml;
 	  downfallGraph();
 	  tempGauge();
@@ -32,11 +31,4 @@ var allhtml = temphtml + "" + downfallhtml;
 		if(check_id_not_null()) {
 			document.getElementById("dashboard-items").innerHTML = customhtml;
     }
-  }
-  function loadPage(){
-		if(check_id_not_null()) {
-			document.getElementById("dashboard-items").innerHTML = allhtml;
-			downfallGraph();
-			tempGauge();
-		}
   }

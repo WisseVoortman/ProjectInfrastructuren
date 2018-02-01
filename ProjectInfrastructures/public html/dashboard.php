@@ -37,7 +37,7 @@
 		<script src="resources/javascript/downfallGraph.js"></script>
 		<script src="resources/javascript/main.js"></script>
 		<script type="text/javascript">
-			loadPage();
+			dashboardPage();
 		</script>
 
 		
