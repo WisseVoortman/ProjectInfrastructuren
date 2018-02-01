@@ -10,7 +10,7 @@
 	<body>
 		<nav>
 			<div class="button-selection">
-				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">All</button>
+				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">Dashboard</button>
 				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
 				<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
 				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
@@ -21,7 +21,6 @@
 		<header>
 		</header>
 		<div class="container">
-			<h1>Dashboard page</h1>
 			<div id="dashboard-items">
 				<!--<div class="dashboardItem" id="tempGauge"></div>
 				<div class="dashboardItem" id="downfallGraph"></div>-->
