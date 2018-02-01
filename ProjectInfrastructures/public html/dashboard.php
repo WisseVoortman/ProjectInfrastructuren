@@ -8,16 +8,19 @@
 		include 'functions/head.php';
 	?>
 	<body>
+		<nav>
+			<div class="button-selection container">
+				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">All</button>
+				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
+				<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
+				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
+				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
+				<button type="submit" id="button-selection-option-logout" class="button-selection-option"><a href="logout.php">Logout</a></button>
+			</div>
+		</nav>
 		<header>
 		</header>
-		<div class="button-selection container">
-			<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">All</button>
-			<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
-			<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
-			<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
-			<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
-			<button type="submit" id="button-selection-option-logout" class="button-selection-option"><a href="logout.php">Logout</a></button>
-		</div>
+		
 		<div class="container">
 			<h1>Dashboard page</h1>
 			<div id="dashboard-items">

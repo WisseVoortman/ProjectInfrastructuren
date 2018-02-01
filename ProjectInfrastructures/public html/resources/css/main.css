@@ -23,7 +23,7 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-    background-color: #87CEFA;
+    background-color: #0163ec;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -33,7 +33,9 @@ button {
 }
 
 .button-selection-option {
-    width: 19%;
+    width: 10%;
+	padding: 0.5% 0.5%;
+	
 }
 
 .button-selection-option, a {
@@ -73,7 +75,7 @@ span.psw {
 /* nav */
 nav {
 	width: 100%;
-	background-color: #1ac6ff;
+	background-color: #5199ff;
 	padding: 5px 10px;
 	
 }
