@@ -90,8 +90,11 @@ function tempGauge() {
         tooltip: {
             valueSuffix: ' °C'
         }
-    }]
-
+    }],
+	
+    exporting: {
+        enabled: false
+    }	
 },
 // Add some life
 function (chart) {
