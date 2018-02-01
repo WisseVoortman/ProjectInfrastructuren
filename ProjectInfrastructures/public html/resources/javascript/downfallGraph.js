@@ -10,7 +10,7 @@ Highcharts.chart('downfallGraph', {
                     var series = this.series[0];
                     setInterval(function () {
                         var x = (new Date()).getTime(), // current time
-                        y = Math.round(Math.random()*1000);
+                        y = Math.round(Math.random()*100);
                         series.addPoint([x, y], true, true);
                     }, 60000);
                 }
@@ -32,10 +32,10 @@ Highcharts.chart('downfallGraph', {
         },
         yAxis: {
             title: {
-                text: 'Downfall in mm'
+                text: 'Downfall in cm'
             },
             min: 0,
-            max: 1000
+            //max: 100
         },
         legend: {
             enabled: false
@@ -81,7 +81,7 @@ Highcharts.chart('downfallGraph', {
                 for (i = -60; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000 * 60,
-                        y: Math.round(Math.random()*1000)
+                        y: Math.round(Math.random()*100)
                     });
                 }
 				return data;
