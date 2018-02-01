@@ -20,9 +20,10 @@ include 'functions/head.php';
 	<div class="container">
 		<div class="image-container">
 			<img src="assets\images\logoBhutan.png" alt="Bhutan" class="image">
+			<h1>Please login to continue</h1>
 		</div>
-		<h1>Please login to continue</h1>
 	</div>
+	<div class="login-container">
 	<?php if(!empty($error))  echo '<p style=color:red;>'. $error .'</p>';    ?>
 		<form action="index.php" method="post">
 			<div class="container">
@@ -35,5 +36,6 @@ include 'functions/head.php';
 				<button type="submit">Login</button>
 			</div>
 		</form>
+	</div>
 </body>
 </html>

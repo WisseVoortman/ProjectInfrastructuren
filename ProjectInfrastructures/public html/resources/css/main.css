@@ -51,6 +51,11 @@ button:hover {
     padding: 1% 1%;
 }
 
+.login-container {
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
 /* The "Forgot password" text */
 span.psw {
     float: right;
@@ -107,6 +112,5 @@ input[type=date], input[type=time]{
 }
 
 .image {
-    width: 40%;
     border-radius: 50%;
 }
