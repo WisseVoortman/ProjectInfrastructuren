@@ -7,28 +7,36 @@ var customhtml = '<div class="selector" id="custom_selector"><form action="#" on
     }
     return false;
   }
-  function all() {
+  function dashboardPage() {
     if(check_id_not_null()) {
-      var allhtml = temphtml + " " + downfallhtml;
+      var allhtml = temphtml + "" + downfallhtml;
       document.getElementById("dashboard-items").innerHTML = allhtml;
-      tempGauge();
-      downfallGraph();
+	  downfallGraph();
+	  tempGauge();
     } 
   }
   function temp() {
     if(check_id_not_null()) {
       document.getElementById("dashboard-items").innerHTML = temphtml;
-      tempGauge();
+	  tempGauge();
     }
   }
   function downfall() {
     if(check_id_not_null()) {
       document.getElementById("dashboard-items").innerHTML = downfallhtml;
-      downfallGraph();
+	  downfallGraph();
     }
   }
   function custom() {
-    if(check_id_not_null()) {
-      document.getElementById("dashboard-items").innerHTML = customhtml;
+		if(check_id_not_null()) {
+			document.getElementById("dashboard-items").innerHTML = customhtml;
     }
+  }
+  function loadPage(){
+		if(check_id_not_null()) {
+			var allhtml = temphtml + "" + downfallhtml;
+			document.getElementById("dashboard-items").innerHTML = allhtml;
+			downfallGraph();
+			tempGauge();
+		}
   }
