@@ -1,6 +1,6 @@
 function downfallGraph() {
 
-Highcharts.chart('downfallGraph', {
+	var DownfallGraphChart = Highcharts.chart('downfallGraph', {
         chart: {
             zoomType: 'x',
             events: {

@@ -1,5 +1,5 @@
 function tempGauge() {
-    Highcharts.chart('tempGauge', {
+	var tempGaugeChart = Highcharts.chart('tempGauge', {
 
     chart: {
         type: 'gauge',
