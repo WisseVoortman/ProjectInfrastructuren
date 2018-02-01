@@ -9,7 +9,7 @@
 	?>
 	<body>
 		<nav>
-			<div class="button-selection container">
+			<div class="button-selection">
 				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">All</button>
 				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
 				<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>

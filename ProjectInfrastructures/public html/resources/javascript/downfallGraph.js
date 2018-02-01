@@ -40,6 +40,9 @@ Highcharts.chart('downfallGraph', {
         legend: {
             enabled: false
         },
+		tooltip: {
+			xDateFormat: '%H:%M'
+		},
         plotOptions: {
             series:{
                 turboThreshold:24000000//larger threshold or set to 0 to disable

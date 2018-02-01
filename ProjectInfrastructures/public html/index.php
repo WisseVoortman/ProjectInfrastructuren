@@ -23,7 +23,7 @@ include 'functions/head.php';
 			<h1>Please login to continue</h1>
 		</div>
 	</div>
-	<div class="login-container">
+	<div class="container login-container">
 		<form action="index.php" method="post">
 			<div class="container">
 				<?php if(!empty($error))  echo '<p style=color:red;><b>'. $error .'</b></p>';    ?>
