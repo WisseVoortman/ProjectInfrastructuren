@@ -48,6 +48,7 @@
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
 		<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+		<script src="resources/javascript/html/stationSelector.js"
 		<script src="resources/javascript/highchartsGlobalSettings.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>

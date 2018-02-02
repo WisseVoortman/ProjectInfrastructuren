@@ -141,18 +141,13 @@ input[type=date], input[type=time]{
     color: white;
 }
 
-#downfallSelector select {
-    background: transparent;
-    border: none;
-    font-size: 14px;
-    height: 29px;
-    padding: 5px; 
-    width: 268px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    background-color: #0163ec;
-    color: white;
+.stationSelector {
+	float: left;
+	width: 20%;
+	overflow: auto;
+	display: block;
 }
-
+.stationSelectorCheckbox {
+	
+}
 

@@ -1,15 +1,16 @@
 var temphtml = '<div class="dashboardItem" id="tempGauge"></div>';
-var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div> <div class="dashboardItem" id="downfallSelector"><select><option value="weatherstation-1">weatherstation 1</option><option value="weatherstation-2">weatherstation 2</option><option value="weatherstation-3">weatherstation 3</option><option value="weatherstation-4">weatherstation 4</option></select></div>';
+var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div> '
 var customhtml = '<div class="selector" id="custom_selector"><form action="#" onsubmit="return false;"><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"><button type="submit">Send</button></th></tr></table></form></div>';
 var allhtml = temphtml + "" + downfallhtml;
 var previousButton;
 
-  function setDashboardItemWidth() {
+
+ function setDashboardItemWidth() {
 	  var dashboardItems = document.getElementsByClassName("dashboardItem");
 	  var i;
 	  for (i=0; i < dashboardItems.length; i++) {
 		  dashboardItems[i].style.cssFloat = 'none';
-		  dashboardItems[i].style.maxWidth = '100%';
+		  dashboardItems[i].style.maxWidth = '80%';
 	  }
   }
   function configureButton(){
@@ -51,10 +52,14 @@ var previousButton;
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-downfall';
-      document.getElementById("dashboard-items").innerHTML = downfallhtml;
+	  document.getElementById("dashboard-items").innerHTML = stationSelector + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
 	  downfallGraph();
+	  var graphHeight = window.getComputedStyle(document.getElementById("downfallGraph")).getPropertyValue('height');
+	  console.log();
+	  //window.getComputedStyle(graphHeight).getPropertyValue('Height')
+	  document.getElementById("downfallSelector").style.height = graphHeight;
     }
   }
   function custom() {
