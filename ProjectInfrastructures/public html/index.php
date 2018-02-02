@@ -37,12 +37,8 @@ include 'functions/head.php';
 			</div>
 		</form>
 	</div>
-	<footer>
-		<address>
-			<p>Hosted @ <a href="#" target="_blank">Jousting ltd</a><p>
-			<p>Written by: Jesse, Rudolf, Mitchel, Wisse and Tobias</p>
-			<p>Project: Weather data royal university of Bhutan</p>
-		</address>
-	</footer>
+	<?php
+	include 'functions/footer.php';
+	?>	
 </body>
 </html>
