@@ -5,7 +5,7 @@ var stationListSelectorBoxes = "";
 var i;
 stationList.sort();
 for (i=0; i < stationList.length; i++){
-	stationListSelectorBoxes += '<input class="stationSelectorCheckbox" type="checkbox" value=' + stationList[i] + '>' + stationList[i] + '<br>';
+	stationListSelectorBoxes += '<label><input class="stationSelectorCheckbox" type="checkbox" value=' + stationList[i] + '>' + stationList[i] + '</label>' +'<br>';
 }
 
 

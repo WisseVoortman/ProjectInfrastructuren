@@ -57,8 +57,7 @@ var previousButton;
 	  setDashboardItemWidth();
 	  downfallGraph();
 	  var graphHeight = window.getComputedStyle(document.getElementById("downfallGraph")).getPropertyValue('height');
-	  console.log();
-	  //window.getComputedStyle(graphHeight).getPropertyValue('Height')
+	  console.log(graphHeight);
 	  document.getElementById("downfallSelector").style.height = graphHeight;
     }
   }
