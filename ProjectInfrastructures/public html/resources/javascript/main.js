@@ -73,11 +73,18 @@ var previousButton;
 	  var countries = [];
 	  var i;
 	  for (i = 0; i < formInput.length; i++){
-		if (formInput[i].type == "checkbox"){
+		if (formInput[i].type == "checkbox" && formInput[i].value != "selectAll"){
 			if (formInput[i].checked){
 				countries.push(formInput[i].value);
 			}
 		}
 	  }
 	  document.getElementById('test').innerHTML = countries;
+  }
+  function toggleAll(source){
+	  var allSelectorBoxes = document.getElementsByTagName("input");
+	  var i;
+	  for (i = 0; i < allSelectorBoxes.length; i++){
+		  allSelectorBoxes[i].checked = source.checked;
+	  }
   }

@@ -5,7 +5,7 @@ var stationListSelectorBoxes = "";
 var i;
 stationList.sort();
 for (i=0; i < stationList.length; i++){
-	stationListSelectorBoxes += '<label><input class="stationSelectorCheckbox" type="checkbox" value=' + stationList[i] + '>' + stationList[i] + '</label>' +'<br>';
+	stationListSelectorBoxes += '<label><input class="stationSelectorCheckbox" type="checkbox" value=' + stationList[i].toLowerCase() + '>' + stationList[i] + '</label>' +'<br>';
 }
 
 
@@ -14,6 +14,7 @@ for (i=0; i < stationList.length; i++){
 var stationSelector = [
 	'<div class="downfallSelectorWrapper" id="downfallSelectorWrapper">',
 		'<div class="stationSelector" id="downfallSelector">',
+			'<label><input class="stationSelectorCheckbox" type="checkbox" onClick="toggleAll(this);" value="selectAll">SELECT ALL</label><br>',
 			stationListSelectorBoxes,
 		'</div>',
 		'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit</button>',
