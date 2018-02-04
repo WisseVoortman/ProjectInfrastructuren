@@ -57,8 +57,7 @@ var previousButton;
 	  setDashboardItemWidth();
 	  downfallGraph();
 	  var graphHeight = window.getComputedStyle(document.getElementById("downfallGraph")).getPropertyValue('height');
-	  console.log(graphHeight);
-	  document.getElementById("downfallSelector").style.height = graphHeight;
+	  document.getElementById("downfallSelectorWrapper").style.height = graphHeight;
     }
   }
   function custom() {
@@ -68,4 +67,17 @@ var previousButton;
 			document.getElementById("dashboard-items").innerHTML = customhtml;
 			configureButton();
     }
+  }
+  function readForm() {
+	  var formInput = document.getElementsByTagName("input");
+	  var countries = [];
+	  var i;
+	  for (i = 0; i < formInput.length; i++){
+		if (formInput[i].type == "checkbox"){
+			if (formInput[i].checked){
+				countries.push(formInput[i].value);
+			}
+		}
+	  }
+	  document.getElementById('test').innerHTML = countries;
   }

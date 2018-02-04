@@ -141,11 +141,19 @@ input[type=date], input[type=time]{
     color: white;
 }
 
-.stationSelector {
+.downfallSelectorWrapper{
 	float: left;
 	width: 20%;
-	overflow: auto;
 	display: block;
+	overflow: hidden;
+}
+
+.stationSelector {
+	background-color: #f7f7f7;
+	width: 100%;
+	display: block;
+	overflow: scroll;
+	max-height: 80%;
 }
 .stationSelectorCheckbox {
 	

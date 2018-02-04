@@ -11,6 +11,12 @@ for (i=0; i < stationList.length; i++){
 
 
 
-var stationSelector = ['<div class="stationSelector" id="downfallSelector">',
-	stationListSelectorBoxes,
+var stationSelector = [
+	'<div class="downfallSelectorWrapper" id="downfallSelectorWrapper">',
+		'<div class="stationSelector" id="downfallSelector">',
+			stationListSelectorBoxes,
+		'</div>',
+		'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit</button>',
+	'</div>',
+	'<div id="test">',
 	'</div>'].join("\n");
