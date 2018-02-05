@@ -14,7 +14,7 @@ import org.dom4j.io.SAXReader;
 public class Dom4jParser implements Runnable{
 	
 	private String buffer;
-	private GeneralBuffer generalBuffer;
+	private StationBufferMap generalBuffer;
 	
 	
 	private String stationnumber;
@@ -33,7 +33,7 @@ public class Dom4jParser implements Runnable{
 	private String winddirection;
 	
 		
-	public Dom4jParser(String buffer, GeneralBuffer generalBuffer){
+	public Dom4jParser(String buffer, StationBufferMap generalBuffer){
 		this.buffer = buffer;
 		this.generalBuffer = generalBuffer;
 		

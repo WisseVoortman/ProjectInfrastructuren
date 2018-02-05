@@ -3,13 +3,13 @@ package ServerApp;
 import java.util.HashMap;
 
 
-public class GeneralBuffer {
+public class StationBufferMap {
 
 	private int id;
 	@SuppressWarnings("rawtypes")
 	private HashMap map;
 	
-	public GeneralBuffer(){
+	public StationBufferMap(){
 		id = 1;
 		this.map = new HashMap<>();
 		

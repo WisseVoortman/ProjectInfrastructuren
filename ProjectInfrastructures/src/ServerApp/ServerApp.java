@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
  */
 public class ServerApp {
 	
-	private GeneralBuffer generalBuffer;
+	private StationBufferMap generalBuffer;
 	
     private WeatherDataReceiver weatherReceiver;
     private ExecutorService _threadPool;
@@ -15,7 +15,7 @@ public class ServerApp {
     
     public ServerApp() {
         
-    	this.generalBuffer = new GeneralBuffer();
+    	this.generalBuffer = new StationBufferMap();
     	
     	// Assign a thread pool of 20 to this server
         this._threadPool = Executors.newFixedThreadPool(900);

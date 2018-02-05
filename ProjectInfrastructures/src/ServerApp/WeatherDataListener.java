@@ -6,13 +6,13 @@ import java.net.Socket;
 
 class WeatherDataListener implements Runnable {
     private WeatherDataReceiver weatherDataReceiver;
-    private GeneralBuffer generalBuffer;
+    private StationBufferMap generalBuffer;
     private int port;
     private ServerSocket listener;
     private ServerApp _sApp;
     private int lastId;
 
-    WeatherDataListener( WeatherDataReceiver _weatherDataReceiver, ServerApp _serverApp, int _port, GeneralBuffer generalBuffer) {
+    WeatherDataListener( WeatherDataReceiver _weatherDataReceiver, ServerApp _serverApp, int _port, StationBufferMap generalBuffer) {
         this.weatherDataReceiver = _weatherDataReceiver;
         this.port = _port;
         this._sApp = _serverApp;

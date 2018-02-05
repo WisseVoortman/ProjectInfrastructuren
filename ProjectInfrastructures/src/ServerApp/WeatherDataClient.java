@@ -9,9 +9,9 @@ class WeatherDataClient implements Runnable {
     private Socket _socket;
     private int id;
     private String buffer;
-    private GeneralBuffer generalBuffer;
+    private StationBufferMap generalBuffer;
 
-    WeatherDataClient(Socket _client, int id, GeneralBuffer generalBuffer) {
+    WeatherDataClient(Socket _client, int id, StationBufferMap generalBuffer) {
         this._socket = _client;
         System.out.println("Created new client!");
         this.id = id;
