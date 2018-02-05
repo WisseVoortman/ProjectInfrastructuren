@@ -70,16 +70,19 @@ var previousButton;
   }
   function readForm() {
 	  var formInput = document.getElementsByTagName("input");
-	  var countries = [];
+	  var locations = [];
 	  var i;
 	  for (i = 0; i < formInput.length; i++){
 		if (formInput[i].type == "checkbox" && formInput[i].value != "selectAll"){
 			if (formInput[i].checked){
-				countries.push(formInput[i].value);
+				locations.push(formInput[i].value);
 			}
 		}
 	  }
-	  document.getElementById('test').innerHTML = countries;
+	  if (locations.length < 1){
+		  
+	  }
+	  document.getElementById('test').innerHTML = locations;
   }
   function toggleAll(source){
 	  var allSelectorBoxes = document.getElementsByTagName("input");
