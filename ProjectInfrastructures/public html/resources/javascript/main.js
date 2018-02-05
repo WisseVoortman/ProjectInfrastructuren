@@ -110,6 +110,7 @@ var rand = Math.round(Math.random() * 10000);
   		if(request.readyState == 4) {
   			if(request.status >= 200 && request.status < 304) {
   				alert("connection exists!");
+  				document.getElementById("error-message").innerHTML = '';
   			} else {
   				document.getElementById("error-message").innerHTML = errorhtml;
   			}

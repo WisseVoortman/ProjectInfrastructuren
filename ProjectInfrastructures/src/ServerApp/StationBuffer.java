@@ -11,6 +11,23 @@ public class StationBuffer {
 
 	private String id;
 	private LinkedList<Object> queue; // queue that will contain arrays with data
+	private long duration;
+	
+	private String stationnumber; 
+	private String date;
+	private String time;
+	private String temperature;
+	private String dewpoint;
+	private String airpresurestationlevel;
+	private String airpresuresealevel;
+	private String visability;
+	private String windspeed;
+	private String perception;
+	private String snowfallen;
+	private String specialcircumstances;
+	private String cloudiness;
+	private String winddirection;
+	
 
 	public StationBuffer(String id){
 		this.id = id;
@@ -44,6 +61,25 @@ public class StationBuffer {
 			String specialcircumstances,
 			String cloudiness,
 			String winddirection){
+		
+		
+		this.stationnumber = stationnumber;
+		this.date = date;
+		this.time = time;
+		this.temperature = temperature;
+		this.dewpoint = dewpoint;
+		this.airpresurestationlevel = airpresurestationlevel;
+		this.airpresuresealevel = airpresuresealevel;
+		this.visability = visability;
+		this.windspeed = windspeed;
+		this.perception = perception;
+		this.snowfallen = snowfallen;
+		this.specialcircumstances = specialcircumstances;
+		this.cloudiness = cloudiness;
+		this.winddirection = winddirection;
+		
+		
+		checkStrings(this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
 		
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		
@@ -131,6 +167,85 @@ public class StationBuffer {
 		// 3 set new temp value
 	}
 	
+	public void checkStrings(String temperature, String dewpoint, String airpresurestationlevel, String airpresuresealevel, String visability, String windspeed, String perception, String snowfallen, String specialcircumstances, String cloudiness, String winddirection){
+		if (queue.size() > 0){
+			LinkedList<String> dL = (LinkedList<String>) queue.peek();
+			
+			if (this.temperature.isEmpty()){
+				this.temperature = dL.get(3);
+			}
+			if (this.dewpoint.isEmpty()){
+				this.dewpoint = dL.get(4);
+			}
+			if (this.airpresurestationlevel.isEmpty()){
+				this.airpresurestationlevel = dL.get(5);
+			}
+			if (this.airpresuresealevel.isEmpty()){
+				this.airpresuresealevel = dL.get(6);
+			}
+			if (this.visability.isEmpty()){
+				this.visability  = dL.get(7);
+			}
+			if (this.windspeed.isEmpty()){
+				this.windspeed  = dL.get(8);
+			}
+			if (this.perception.isEmpty()){
+				this.perception  = dL.get(9);
+			}
+			if (this.snowfallen.isEmpty()){
+				this.snowfallen  = dL.get(10);
+			}
+			if (this.specialcircumstances.isEmpty()){
+				this.specialcircumstances  = dL.get(11);
+			}
+			if (this.cloudiness.isEmpty()){
+				this.cloudiness  = dL.get(12);
+			}
+			if (this.winddirection.isEmpty()){
+				this.winddirection  = dL.get(13);
+			}
+		}
+		else if (queue.size() < 1 ){
+			LinkedList<String> dL = (LinkedList<String>) queue.peek();
+			
+			if (this.temperature.isEmpty()){
+				this.temperature = "0";
+			}
+			if (this.dewpoint.isEmpty()){
+				this.dewpoint = "0";
+			}
+			if (this.airpresurestationlevel.isEmpty()){
+				this.airpresurestationlevel = "0";
+			}
+			if (this.airpresuresealevel.isEmpty()){
+				this.airpresuresealevel = "0";
+			}
+			if (this.visability.isEmpty()){
+				this.visability  = "0";
+			}
+			if (this.windspeed.isEmpty()){
+				this.windspeed  = "0";
+			}
+			if (this.perception.isEmpty()){
+				this.perception  = "0";
+			}
+			if (this.snowfallen.isEmpty()){
+				this.snowfallen  = "0";
+			}
+			if (this.specialcircumstances.isEmpty()){
+				this.specialcircumstances  = "0";
+			}
+			if (this.cloudiness.isEmpty()){
+				this.cloudiness  = "0";
+			}
+			if (this.winddirection.isEmpty()){
+				this.winddirection  = "0";
+			}
+		}
+		
+		
+	}
+	
 	public void sendArray(){
 		System.out.println("Sending Measurment...");
 		// 1 get the last array to send
@@ -138,6 +253,7 @@ public class StationBuffer {
 		
 		dataArray = (LinkedList<String>) this.queue.peek();
 		// 2 create object of array
+		
 		Measurement m = new Measurement(dataArray.get(0), dataArray.get(1), dataArray.get(2), dataArray.get(3), dataArray.get(4), dataArray.get(5), dataArray.get(6), dataArray.get(7), dataArray.get(8), dataArray.get(9), dataArray.get(10), dataArray.get(11), dataArray.get(12), dataArray.get(13)); //imediately call function in this bitch
 		if(this.queue.size() >=31){
 			this.queue.remove();
@@ -147,6 +263,7 @@ public class StationBuffer {
 		ObjectOutputStream out = null;
 		
 		try{
+			this.duration = System.currentTimeMillis();
 			client = new Socket("145.37.37.120", 30011);
 			out = new ObjectOutputStream(client.getOutputStream());		
 			out.writeObject(m);
@@ -162,7 +279,8 @@ public class StationBuffer {
 			System.exit(1);
 		} 
 		catch (IOException e) {
-			// TODO Auto-generated catch block
+			this.duration = System.currentTimeMillis() - this.duration;
+			System.out.println("connect attempt duration measured in ms:" + this.duration); // Prints how long the attempt at making a connection takes.
 			e.printStackTrace();
 			System.exit(1);
 		}
