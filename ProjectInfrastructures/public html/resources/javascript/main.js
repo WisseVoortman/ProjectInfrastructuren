@@ -82,8 +82,12 @@ var rand = Math.round(Math.random() * 10000);
 			}
 		}
 	  }
-	  if (locations.length < 1){
-		  
+	  try{
+		if (locations.length < 1) throw "Select at least one station";
+	  }
+	  catch(err){
+		  window.alert(err);
+		  console.log(err);
 	  }
 	  document.getElementById('test').innerHTML = locations;
   }
