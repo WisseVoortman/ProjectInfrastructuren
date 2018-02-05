@@ -2,8 +2,9 @@ var temphtml = '<div class="dashboardItem" id="tempGauge"></div>';
 var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div> '
 var customhtml = '<div class="selector" id="custom_selector"><form action="#" onsubmit="return false;"><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"><button type="submit">Send</button></th></tr></table></form></div>';
 var allhtml = temphtml + "" + downfallhtml;
+var errorhtml = '<p class="error dashboard-error-message"><b>No internet connection</b></p>';
 var previousButton;
-
+var rand = Math.round(Math.random() * 10000);
 
  function setDashboardItemWidth() {
 	  var dashboardItems = document.getElementsByClassName("dashboardItem");
@@ -22,6 +23,8 @@ var previousButton;
   function check_id_not_null() {
     if(document.getElementById("dashboard-items") !== null) {
       return true;
+    } else if (document.getElementById("error-message") !== null) {
+    	return true;
     }
     return false;
   }
@@ -90,4 +93,23 @@ var previousButton;
 	  for (i = 0; i < allSelectorBoxes.length; i++){
 		  allSelectorBoxes[i].checked = source.checked;
 	  }
+  }
+
+  function check_internet_connection() {
+  	var request = new XMLHttpRequest();
+  	var file = "/empty.html";
+  	request.open('HEAD', file + "?rand=" + rand, true);
+  	request.send();
+  	request.addEventListener("readystatechange", processRequest, false);
+
+  	function processRequest() {
+  		if(request.readyState == 4) {
+  			if(request.status >= 200 && request.status < 304) {
+  				alert("connection exists!");
+  			} else {
+  				document.getElementById("error-message").innerHTML = errorhtml;
+  			}
+  		}
+  	}
+
   }
