@@ -10,9 +10,6 @@ function stationSelectorGenerator (){
 		stationListSelectorBoxes += '<label><input class="stationSelectorCheckbox" type="checkbox" value=' + stationList[object].stationNumber + '>' + stationList[object].Name + '</label>' +'<br>';
 	}
 
-
-
-
 	var stationSelector = [
 		'<div class="downfallSelectorWrapper" id="downfallSelectorWrapper">',
 			'<div class="stationSelector" id="downfallSelector">',
@@ -20,8 +17,6 @@ function stationSelectorGenerator (){
 				stationListSelectorBoxes,
 			'</div>',
 			'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit</button>',
-		'</div>',
-		'<div id="test">',
 		'</div>'].join("\n");
 	return stationSelector;
-		}
+}

@@ -11,7 +11,7 @@ var previousButton;
 	  var i;
 	  for (i=0; i < dashboardItems.length; i++) {
 		  dashboardItems[i].style.cssFloat = 'none';
-		  dashboardItems[i].style.maxWidth = '80%';
+		  dashboardItems[i].style.width = '80%';
 	  }
   }
   function configureButton(){
