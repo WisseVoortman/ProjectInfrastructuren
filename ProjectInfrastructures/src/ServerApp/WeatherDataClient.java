@@ -36,18 +36,19 @@ class WeatherDataClient implements Runnable {
                 if(line != null) {
                     if(line.contains("<?xml")) {
                         // Print current buffer
-                        if( !buffer.equals("") )
+                        if( !buffer.equals("") ){
                         	// prints thread id + weaterDataClientID + Buffer.
                             //System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
                         	//test
-                        	new Dom4jParser(buffer, this.generalBuffer).run();
-                        	//Dom4jParser a = new Dom4jParser();
-                        	//a.parse();
-                        	//test
-                        
-                        // Clean buffer
-                        this.buffer = line;
-                    }else{
+                        	
+                        	new Dom4jParser(this.serverApp, buffer, this.generalBuffer).run();
+                        	
+                        	//does not work yet because of a null pointer execption
+                        	//this.serverApp.getParserPool().execute(new Dom4jParser(this.serverApp, buffer, this.generalBuffer));
+                        	
+                        	this.buffer = line; // Clean buffer
+                        }
+                        	                    }else{
                         buffer += line;
                     }
 

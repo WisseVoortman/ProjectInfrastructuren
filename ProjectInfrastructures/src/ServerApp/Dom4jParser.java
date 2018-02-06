@@ -12,6 +12,7 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
 public class Dom4jParser implements Runnable{
+	private ServerApp serverApp;
 	
 	private String buffer;
 	private StationBufferMap generalBuffer;
@@ -33,7 +34,8 @@ public class Dom4jParser implements Runnable{
 	private String winddirection;
 	
 		
-	public Dom4jParser(String buffer, StationBufferMap generalBuffer){
+	public Dom4jParser(ServerApp serverapp, String buffer, StationBufferMap generalBuffer){
+		this.serverApp = serverapp;
 		this.buffer = buffer;
 		this.generalBuffer = generalBuffer;
 		
@@ -50,18 +52,10 @@ public class Dom4jParser implements Runnable{
 	         SAXReader reader = new SAXReader();
 	         Document document = reader.read(new StringReader(this.buffer));
 
-	         //System.out.println("Root element :" + document.getRootElement().getName());
-
-	         //Element classElement = document.getRootElement();
-
 	         List<Node> nodes = document.selectNodes("/WEATHERDATA/MEASUREMENT" );
 	         //System.out.println("----------------------------");
 	         
 	         for (Node node : nodes) {
-	            //System.out.println("\nCurrent Element :"
-	            //   + node.getName());
-	            //System.out.println("Student roll no : " 
-	            //   + node.valueOf("@rollno") );
 	                  
 	            this.stationnumber 				= node.selectSingleNode("STN").getText();
 	            this.date 						= node.selectSingleNode("DATE").getText();

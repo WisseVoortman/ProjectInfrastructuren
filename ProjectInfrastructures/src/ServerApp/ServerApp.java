@@ -36,13 +36,14 @@ public class ServerApp {
     	new ServerApp();
     }
       
-    ExecutorService getThreadPool() {
+    public ExecutorService getThreadPool() {
         return this.recieverThreadPool;
     }
-    ExecutorService getParserPool() {
+    public ExecutorService getParserPool() {
         return this.parserThreadPool;
     }
-    ExecutorService getSenderPool() {
+    public ExecutorService getSenderPool() {
         return this.senderThreadPool;
     }
+    
 }
