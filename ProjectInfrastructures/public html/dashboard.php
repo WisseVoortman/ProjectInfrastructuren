@@ -36,19 +36,6 @@
 			-->
 			</div>
 			<div id="dashboard-items">
-				<!--<div class="dashboardItem" id="tempGauge"></div>
-				<div class="dashboardItem" id="downfallGraph"></div>-->
-				<!--
-				<div class="dashboardItem" id="downfallSelector">
-					<select>
-						<option value="weatherstation-1">weatherstation 1</option>
-						<option value="weatherstation-2">weatherstation 2</option>
-						<option value="weatherstation-3">weatherstation 3</option>
-						<option value="weatherstation-4">weatherstation 4</option>
-					</select>
-				</div>
-				-->
-				
 			</div>
 			
 		</div>

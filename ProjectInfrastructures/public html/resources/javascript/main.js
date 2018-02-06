@@ -71,7 +71,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
     }
   }
   function readForm() {
-	  var formInput = document.getElementsByTagName("input");
+	  var formInput = document.getElementsByClassName("customForm");
 	  var locations = [];
 	  var i;
 	  for (i = 0; i < formInput.length; i++){
@@ -82,12 +82,15 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
 		}
 	  }
 	  if (locations.length < 1){
-		  
+		 window.alert("Select at least one station.")
 	  }
-	  document.getElementById('test').innerHTML = locations;
+	  if (locations.length > 0){
+		  window.alert(locations);
+	  }
+	  console.log(locations);
   }
   function toggleAll(source){
-	  var allSelectorBoxes = document.getElementsByTagName("input");
+	  var allSelectorBoxes = document.getElementsByClassName("customForm");
 	  var i;
 	  for (i = 0; i < allSelectorBoxes.length; i++){
 		  allSelectorBoxes[i].checked = source.checked;

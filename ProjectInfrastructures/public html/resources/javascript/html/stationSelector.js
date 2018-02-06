@@ -6,8 +6,7 @@ function stationSelectorGenerator (){
 	stationList = sortByKey(stationList, 'Name')
 
 	for (object in stationList){
-		console.log(stationList[object].stationNumber);
-		stationListSelectorBoxes += '<label><input class="stationSelectorCheckbox" type="checkbox" value=' + stationList[object].stationNumber + '>' + stationList[object].Name + '</label>' +'<br>';
+		stationListSelectorBoxes += '<label><input class="stationSelectorCheckbox customForm" type="checkbox" value=' + stationList[object].stationNumber + '>' + stationList[object].Name + '</label>' +'<br>';
 	}
 
 	var stationSelector = [
