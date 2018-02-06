@@ -163,7 +163,7 @@ input[type=date], input[type=time]{
 .stationSelector {
 	background-color: #f7f7f7;
 	border: solid;
-	border-width: 1%;
+	border-width: 2%;
 	border-color: #f5f5f5;
 	width: 100%;
 	display: block;

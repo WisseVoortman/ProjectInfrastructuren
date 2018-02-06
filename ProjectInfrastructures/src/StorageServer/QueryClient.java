@@ -141,8 +141,8 @@ public class QueryClient implements Runnable {
                                 multiRun = true;
                                 ArrayList<QueryResult> results = new ArrayList<>();
                                 for (String station : stations)
-                                    this.model.getQueryPool().execute(new QueryExecutor(
-                                            this.model, this, station, query, threadMode.MULTI, results
+                                    this.model.getQueryPool().execute(new QueryExecutorMulti(
+                                            this.model, this, station, query, results
                                     ));
 
                                 while (results.size() != stations.length)
@@ -153,6 +153,8 @@ public class QueryClient implements Runnable {
                             }
                         }
                         if (query[5].toLowerCase().equals("between") || !multiRun) {
+                            for(String station : stations)
+                                new QueryExecutorSingle(this.model, this, station, query).executeQuery();
 
                         }
 

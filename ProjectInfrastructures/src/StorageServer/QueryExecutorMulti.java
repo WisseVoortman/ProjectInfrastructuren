@@ -13,42 +13,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //TODO: Documentation
-enum threadMode { SINGLE, MULTI }
-public class QueryExecutor implements Runnable{
+@SuppressWarnings("Duplicates")
+public class QueryExecutorMulti implements Runnable{
     private ServerMain model;
     private QueryClient client;
     private String stationNumber;
     private String[] query;
-    private threadMode mode;
     private ArrayList<QueryResult> results;
 
-    public QueryExecutor(ServerMain model, QueryClient client, String stationnumber, String[] query, threadMode mode, ArrayList<QueryResult> results) {
+    public QueryExecutorMulti(ServerMain model, QueryClient client, String stationnumber, String[] query, ArrayList<QueryResult> results) {
         this.model = model;
         this.client = client;
         this.stationNumber = stationnumber;
         this.query = query;
-        this.mode = mode;
         this.results = results;
     }
 
     @Override
     public void run() {
         // Execute the query
-        switch(this.mode) {
-            case SINGLE:
-                this.executeQuerySingleThread();
-                break;
-
-            case MULTI:
-                this.executeQueryMultiThread(this.results);
-                break;
-
-            default:
-                break;
-        }
+        executeQuery(this.results);
     }
 
-    private void executeQueryMultiThread(ArrayList<QueryResult> reseults) {
+    private void executeQuery(ArrayList<QueryResult> results) {
         try {
             // Get a date object
             Date dateObj = new Date(Long.parseLong(query[6]) * 1000L);
@@ -132,43 +119,45 @@ public class QueryExecutor implements Runnable{
                 // Add it to the list
                 results.add(result);
 
-            }
+            }else {
+                //TODO: Make it look for the right time
+                // Find approx. time
+                index = (reqDate - foundDate) * 25;
+                raf.seek(index);
+                int foundTime = raf.readInt();
+                
+                QueryResult result = new QueryResult();
+                result.setStationNumber(Integer.parseInt(this.stationNumber));
+                result.setStatus(STATE.OK);
+                // Build a result
+                for(String column : query[2].split("\\+")) {
+                    switch(Tools.FIELD_LIST.get(column).type) {
+                        case Byte:
+                            raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                            result.addResult( new QueryCol(Tools.FIELD_LIST.get(column), raf.readByte(), foundTime) );
+                            break;
 
+                        case Short:
+                            raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                            result.addResult( new QueryCol(Tools.FIELD_LIST.get(column), raf.readShort(), foundTime) );
+                            break;
 
-
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void executeQuerySingleThread() {
-        // First determine whether we need to query a single time or multiple
-        try {
-            if(query[5].toLowerCase().equals("at")) {
-                // Get a date object
-                Date dateObj = new Date(Long.parseLong(query[6]) * 1000L);
-
-                // Convert to string
-                Format formatter = new SimpleDateFormat("uuuu-MM-dd");
-                String dateString = formatter.format(dateObj);
-
-                // Get the filename
-                String fileName = stationNumber + "_" + dateString + ".dat";
-                String directory = this.model.CUR_PATH + "\\data\\" + stationNumber + "\\";
-                File file = new File(this.model.CUR_PATH + "\\data\\" + stationNumber + "\\" + fileName);
-                if(!file.exists()) {// Try to find the closest file
-                    // Get filelist
-                    File[] files = new File(directory).listFiles((dir1, name) -> name.endsWith(".dat"));
-
-
+                        case Integer:
+                            raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                            result.addResult( new QueryCol(Tools.FIELD_LIST.get(column), raf.readInt(), foundTime) );
+                            break;
+                    }
                 }
-
-
+                
+                results.add(result);
             }
+
         }catch(Exception e) {
             e.printStackTrace();
         }
     }
+
+    
     //TODO: Add per clause
 
             /*
