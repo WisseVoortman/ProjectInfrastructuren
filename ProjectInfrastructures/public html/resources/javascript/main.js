@@ -52,7 +52,7 @@ var previousButton;
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-downfall';
-	  document.getElementById("dashboard-items").innerHTML = stationSelector + downfallhtml;
+	  document.getElementById("dashboard-items").innerHTML = stationSelectorGenerator() + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
 	  downfallGraph();
@@ -95,3 +95,10 @@ var previousButton;
 		  allSelectorBoxes[i].checked = source.checked;
 	  }
   }
+
+  function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
