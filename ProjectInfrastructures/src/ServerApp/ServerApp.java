@@ -20,9 +20,9 @@ public class ServerApp {
     	this.stationBufferMap = new StationBufferMap();
     	
     	// Assign a thread pool of 20 to this server
-        this.recieverThreadPool = Executors.newFixedThreadPool(900);
-        this.parserThreadPool = Executors.newFixedThreadPool(900);
-        this.senderThreadPool = Executors.newFixedThreadPool(900);
+        this.recieverThreadPool = Executors.newFixedThreadPool(800);
+        this.parserThreadPool = Executors.newFixedThreadPool(600);
+        this.senderThreadPool = Executors.newFixedThreadPool(1);
 
         this.weatherReceiver = new WeatherDataReceiver(this, 26555, stationBufferMap);
         this.weatherReceiver.start();
