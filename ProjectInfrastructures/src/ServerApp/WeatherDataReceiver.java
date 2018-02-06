@@ -1,15 +1,15 @@
 package ServerApp;
 
 class WeatherDataReceiver {
-    private ServerApp _sApp;
+    private ServerApp serverApp;
     private Boolean isStopped;
     private int port;
     private StationBufferMap generalBuffer;
 
 
-    WeatherDataReceiver(ServerApp _serverApp, int _port, StationBufferMap generalBuffer) {
+    WeatherDataReceiver(ServerApp serverApp, int _port, StationBufferMap generalBuffer) {
         this.isStopped = true; // Disable by default
-        this._sApp = _serverApp;
+        this.serverApp = serverApp;
         this. port = _port;
         this.generalBuffer = generalBuffer;
     }
@@ -17,7 +17,7 @@ class WeatherDataReceiver {
     void start() {
         this.isStopped = false; // Enable
         // Create a new thread
-        this._sApp.getThreadPool().execute(new WeatherDataListener(this, this._sApp, this.port, this.generalBuffer));
+        this.serverApp.getThreadPool().execute(new WeatherDataListener(this, this.serverApp, this.port, this.generalBuffer));
     }
 
     void stop() {

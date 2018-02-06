@@ -6,12 +6,13 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 class WeatherDataClient implements Runnable {
-    private Socket _socket;
+	private ServerApp serverApp;
+	private Socket _socket;
     private int id;
     private String buffer;
     private StationBufferMap generalBuffer;
 
-    WeatherDataClient(Socket _client, int id, StationBufferMap generalBuffer) {
+    WeatherDataClient(ServerApp serverApp,Socket _client, int id, StationBufferMap generalBuffer) {
         this._socket = _client;
         System.out.println("Created new client!");
         this.id = id;
