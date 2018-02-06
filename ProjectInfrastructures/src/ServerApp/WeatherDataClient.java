@@ -13,7 +13,8 @@ class WeatherDataClient implements Runnable {
     private StationBufferMap generalBuffer;
 
     WeatherDataClient(ServerApp serverApp,Socket _client, int id, StationBufferMap generalBuffer) {
-        this._socket = _client;
+        this.serverApp = serverApp;
+    	this._socket = _client;
         System.out.println("Created new client!");
         this.id = id;
         this.buffer = "";
@@ -39,12 +40,12 @@ class WeatherDataClient implements Runnable {
                         if( !buffer.equals("") ){
                         	// prints thread id + weaterDataClientID + Buffer.
                             //System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
-                        	//test
                         	
-                        	new Dom4jParser(this.serverApp, buffer, this.generalBuffer).run();
+                        	//parser without threadpool
+                        	//new Dom4jParser(this.serverApp, buffer, this.generalBuffer).run();
                         	
-                        	//does not work yet because of a null pointer execption
-                        	//this.serverApp.getParserPool().execute(new Dom4jParser(this.serverApp, buffer, this.generalBuffer));
+                        	// parser with threadpool
+                        	this.serverApp.getParserPool().execute(new Dom4jParser(this.serverApp, buffer, this.generalBuffer));
                         	
                         	this.buffer = line; // Clean buffer
                         }
