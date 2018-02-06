@@ -26,7 +26,7 @@ include 'functions/head.php';
 	<div class="container login-container">
 		<form action="index.php" method="post">
 			<div class="container">
-				<?php if(!empty($error))  echo '<p style=color:red;><b>'. $error .'</b></p>';    ?>
+				<?php if(!empty($error))  echo '<p class="error"><b>'. $error .'</b></p>';    ?>
 				<label><b>Username</b></label>
 				<input type="text" placeholder="Enter Username" name="username" required>
 
