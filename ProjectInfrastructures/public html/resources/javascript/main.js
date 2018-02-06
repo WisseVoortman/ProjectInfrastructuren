@@ -117,4 +117,13 @@ var rand = Math.round(Math.random() * 10000);
   		}
   	}
 
+  	function measurement() {
+  		var checkBox = document.getElementById("switch-selection-option-check");
+  		if (checkBox.checked == true) {
+  			alert("metric");
+  		} else {
+  			alert("Imperial");
+  		}
+  	}
+
   }
