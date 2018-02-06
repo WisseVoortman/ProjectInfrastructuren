@@ -119,5 +119,13 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
   			}
   		}
   	}
+  }
 
+  function measurement() {
+  	var checkBox = document.getElementById("switch-selection-option-check");
+  	if (checkBox.checked == true) {
+  		alert("metric");
+  	} else if (checkBox.checked == false) {
+  		alert("imperial");
+  	}
   }

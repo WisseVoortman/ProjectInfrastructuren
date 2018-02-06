@@ -19,9 +19,9 @@
 				<button type="button" id="button-selection-option-internet" onclick="check_internet_connection();" class="button-selection-option">check internet</button>
 				<div class="switch-selection">
 					<span id="switch-selection-text-metric" class="switch-selection-text">Metric</span>
-					<label class="switch-selection-option-data">
-						<input type="checkbox">
-						<span class="slider round"></span>
+					<label class="switch-selection-option-data" onclick="measurement();">
+						<input type="checkbox" id="switch-selection-option-check">
+						<span class="slider round" onclick=""></span>
 					</label>
 					<span id="switch-selection-text-metric" class="switch-selection-text">Imperial</span>
 				</div>
