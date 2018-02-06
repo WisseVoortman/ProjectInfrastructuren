@@ -6,16 +6,16 @@ import java.net.Socket;
 
 class WeatherDataListener implements Runnable {
     private WeatherDataReceiver weatherDataReceiver;
-    private GeneralBuffer generalBuffer;
+    private StationBufferMap generalBuffer;
     private int port;
     private ServerSocket listener;
-    private ServerApp _sApp;
+    private ServerApp serverApp;
     private int lastId;
 
-    WeatherDataListener( WeatherDataReceiver _weatherDataReceiver, ServerApp _serverApp, int _port, GeneralBuffer generalBuffer) {
+    WeatherDataListener( WeatherDataReceiver _weatherDataReceiver, ServerApp serverApp, int _port, StationBufferMap generalBuffer) {
         this.weatherDataReceiver = _weatherDataReceiver;
         this.port = _port;
-        this._sApp = _serverApp;
+        this.serverApp = serverApp;
         this.lastId = 0;
         this.generalBuffer = generalBuffer;
 
@@ -35,7 +35,7 @@ class WeatherDataListener implements Runnable {
         while( !this.weatherDataReceiver.getIsStopped() ) {
             try{
                 Socket client = listener.accept();
-                this._sApp.getThreadPool().execute(new WeatherDataClient(client, ++lastId, this.generalBuffer));
+                this.serverApp.getThreadPool().execute(new WeatherDataClient(this.serverApp, client, ++lastId, this.generalBuffer));
             } catch (IOException e) {
                 e.printStackTrace();
             }

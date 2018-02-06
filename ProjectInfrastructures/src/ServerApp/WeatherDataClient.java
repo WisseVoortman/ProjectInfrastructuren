@@ -6,13 +6,15 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 class WeatherDataClient implements Runnable {
-    private Socket _socket;
+	private ServerApp serverApp;
+	private Socket _socket;
     private int id;
     private String buffer;
-    private GeneralBuffer generalBuffer;
+    private StationBufferMap generalBuffer;
 
-    WeatherDataClient(Socket _client, int id, GeneralBuffer generalBuffer) {
-        this._socket = _client;
+    WeatherDataClient(ServerApp serverApp,Socket _client, int id, StationBufferMap generalBuffer) {
+        this.serverApp = serverApp;
+    	this._socket = _client;
         System.out.println("Created new client!");
         this.id = id;
         this.buffer = "";
@@ -35,18 +37,19 @@ class WeatherDataClient implements Runnable {
                 if(line != null) {
                     if(line.contains("<?xml")) {
                         // Print current buffer
-                        if( !buffer.equals("") )
+                        if( !buffer.equals("") ){
                         	// prints thread id + weaterDataClientID + Buffer.
                             //System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
-                        	//test
-                        	new Dom4jParser(buffer, this.generalBuffer).run();
-                        	//Dom4jParser a = new Dom4jParser();
-                        	//a.parse();
-                        	//test
-                        
-                        // Clean buffer
-                        this.buffer = line;
-                    }else{
+                        	
+                        	//parser without threadpool
+                        	//new Dom4jParser(this.serverApp, buffer, this.generalBuffer).run();
+                        	
+                        	// parser with threadpool
+                        	this.serverApp.getParserPool().execute(new Dom4jParser(this.serverApp, buffer, this.generalBuffer));
+                        	
+                        	this.buffer = line; // Clean buffer
+                        }
+                        	                    }else{
                         buffer += line;
                     }
 

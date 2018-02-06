@@ -83,20 +83,20 @@ public class StationBuffer {
 		
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		
-		dataArray.add(stationnumber); // filling the arraylist with data before it is added to the queeu
-		dataArray.add(date);
-		dataArray.add(time);
-		dataArray.add(temperature);
-		dataArray.add(dewpoint);
-		dataArray.add(airpresurestationlevel);
-		dataArray.add(airpresuresealevel);
-		dataArray.add(visability);
-		dataArray.add(windspeed);
-		dataArray.add(perception);
-		dataArray.add(snowfallen);
-		dataArray.add(specialcircumstances);
-		dataArray.add(cloudiness);
-		dataArray.add(winddirection);
+		dataArray.add(this.stationnumber); // filling the arraylist with data before it is added to the queeu
+		dataArray.add(this.date);
+		dataArray.add(this.time);
+		dataArray.add(this.temperature);
+		dataArray.add(this.dewpoint);
+		dataArray.add(this.airpresurestationlevel);
+		dataArray.add(this.airpresuresealevel);
+		dataArray.add(this.visability);
+		dataArray.add(this.windspeed);
+		dataArray.add(this.perception);
+		dataArray.add(this.snowfallen);
+		dataArray.add(this.specialcircumstances);
+		dataArray.add(this.cloudiness);
+		dataArray.add(this.winddirection);
 		
 		this.queue.add(dataArray); // add the dataArray to the queue.
 		

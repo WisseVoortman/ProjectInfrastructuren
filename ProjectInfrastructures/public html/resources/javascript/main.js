@@ -4,14 +4,14 @@ var customhtml = '<div class="selector" id="custom_selector"><form action="#" on
 var allhtml = temphtml + "" + downfallhtml;
 var errorhtml = '<p class="error dashboard-error-message"><b>No internet connection</b></p>';
 var previousButton;
-var rand = Math.round(Math.random() * 10000);
+
 
  function setDashboardItemWidth() {
 	  var dashboardItems = document.getElementsByClassName("dashboardItem");
 	  var i;
 	  for (i=0; i < dashboardItems.length; i++) {
 		  dashboardItems[i].style.cssFloat = 'none';
-		  dashboardItems[i].style.maxWidth = '80%';
+		  dashboardItems[i].style.width = '80%';
 	  }
   }
   function configureButton(){
@@ -55,7 +55,7 @@ var rand = Math.round(Math.random() * 10000);
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-downfall';
-	  document.getElementById("dashboard-items").innerHTML = stationSelector + downfallhtml;
+	  document.getElementById("dashboard-items").innerHTML = stationSelectorGenerator() + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
 	  downfallGraph();
@@ -99,8 +99,17 @@ var rand = Math.round(Math.random() * 10000);
 	  }
   }
 
+
+  function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+  }
+
   function check_internet_connection() {
-  	var request = new XMLHttpRequest();
+  	var rand = Math.round(Math.random() * 10000);
+	var request = new XMLHttpRequest();
   	var file = "/empty.html";
   	request.open('HEAD', file + "?rand=" + rand, true);
   	request.send();

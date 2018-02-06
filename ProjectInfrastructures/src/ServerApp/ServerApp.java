@@ -7,20 +7,24 @@ import java.util.concurrent.Executors;
  */
 public class ServerApp {
 	
-	private GeneralBuffer generalBuffer;
+	private StationBufferMap stationBufferMap;
 	
     private WeatherDataReceiver weatherReceiver;
-    private ExecutorService _threadPool;
+    private ExecutorService recieverThreadPool;
+    private ExecutorService parserThreadPool;
+    private ExecutorService senderThreadPool;
     
     
     public ServerApp() {
         
-    	this.generalBuffer = new GeneralBuffer();
+    	this.stationBufferMap = new StationBufferMap();
     	
     	// Assign a thread pool of 20 to this server
-        this._threadPool = Executors.newFixedThreadPool(900);
+        this.recieverThreadPool = Executors.newFixedThreadPool(900);
+        this.parserThreadPool = Executors.newFixedThreadPool(900);
+        this.senderThreadPool = Executors.newFixedThreadPool(900);
 
-        this.weatherReceiver = new WeatherDataReceiver(this, 26555, generalBuffer);
+        this.weatherReceiver = new WeatherDataReceiver(this, 26555, stationBufferMap);
         this.weatherReceiver.start();
         
         
@@ -32,7 +36,14 @@ public class ServerApp {
     	new ServerApp();
     }
       
-    ExecutorService getThreadPool() {
-        return this._threadPool;
+    public ExecutorService getThreadPool() {
+        return this.recieverThreadPool;
     }
+    public ExecutorService getParserPool() {
+        return this.parserThreadPool;
+    }
+    public ExecutorService getSenderPool() {
+        return this.senderThreadPool;
+    }
+    
 }
