@@ -24,7 +24,7 @@ public class DataReceiverClient implements Runnable {
         this.model = model;
         this.clientSocket = clientSocket;
     }
-
+    @Override
     public void run() {
         try{
             // Open a stream
@@ -62,6 +62,7 @@ public class DataReceiverClient implements Runnable {
             // Byte buffer
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+            // Add data to the ByteArrayOutputStream
             baos.write( ByteBuffer.allocate(4).putInt((int)(dateTime.toEpochSecond(ZoneOffset.UTC) )).array() );
             baos.write( Tools.shortToByteArray( Short.parseShort(Integer.toString(Math.round(m.temperature*10))) ));
             baos.write( Tools.shortToByteArray( Short.parseShort(Integer.toString(Math.round(m.dewpoint*10))) ) );
@@ -81,20 +82,22 @@ public class DataReceiverClient implements Runnable {
             baos.write( Tools.shortToByteArray( (short) m.winddirection) );
 
             // Make sure the directory exists
-            File dir = new File(this.model.CUR_PATH + m.stationnumber + "\\");
+            File dir = new File(this.model.CUR_PATH + "\\data\\" + m.stationnumber + "\\");
             dir.mkdirs();
 
             try {
-                File file = new File(this.model.CUR_PATH + m.stationnumber + "\\" + m.stationnumber + "_" + m.date + ".dat");
+                File file = new File(this.model.CUR_PATH + "\\data\\" + m.stationnumber + "\\" + m.stationnumber + "_" + m.date + ".dat");
 
-                // if file doesnt exists, then create it
-                if (!file.exists()) {
-                    boolean t = file.createNewFile();
+                // if file does not exists, then create it
+                if( !file.exists() ) {
+                    file.createNewFile();
                 }
 
                 // Append our byte list to the file
                 try (FileOutputStream output = new FileOutputStream(file, true)) {
                     baos.writeTo(output);
+                    baos.flush();
+                    baos.close();
                 }
 
             } catch (IOException e) {

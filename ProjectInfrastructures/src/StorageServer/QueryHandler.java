@@ -1,80 +1,67 @@
 package StorageServer;
 
 import java.io.IOException;
-
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
- * @ServerEndpoint gives the relative name for the end point
- * This will be accessed via ws://localhost:8080/PACKAGE/ENDPOINT
- * Where "localhost" is the address of the host,
+ * Class that listens to incoming connections and handles them
  */
-@ServerEndpoint("/query")
 public class QueryHandler implements Runnable {
     private ServerMain model;
     private boolean running;
+    private ServerSocket receiver;
+    private final int QUERY_PORT;
 
-    QueryHandler(ServerMain model) {
+    /**
+     *
+     * @param model Main model reference
+     * @param _pQ Port number that the servers listens to for incoming connections.
+     */
+    QueryHandler(ServerMain model, int _pQ) {
         this.running = false;
         this.model = model;
+        this.QUERY_PORT = _pQ;
     }
 
+    @Override
     public void run() {
         if( this.running )
             return;
 
         this.running = true;
 
-
-        while( this.running ) { }
+        // Open a new listening socket
+        if( this.receiver == null || this.receiver.isClosed() ) {
+            try {
+                this.receiver = new ServerSocket(this.QUERY_PORT);
+                System.out.println( "Query Handler started." );
+            } catch( IOException e ) {
+                System.out.println( "Failed to create socket.\t" + e.toString() );
+            }
+        }
+        System.out.println( "Waiting for query clients..." );
+        // Listen to new incoming connections
+        while( this.running ) {
+            try {
+                // Accept a socket
+                Socket clientSocket = this.receiver.accept();
+                // Create new thread and assign it to the new client
+                this.model.getQueryPool().execute(new QueryClient(this.model, clientSocket));
+            } catch( IOException e ) {
+                System.out.println( "Failed to accept client.\t" + e.toString() );
+            }
+        }
     }
 
     public void stop() {
         if( !this.running )
             this.running = false;
-    }
 
-    /**
-     * @OnOpen allows us to intercept the creation of a new session.
-     * The session class allows us to send data to the user.
-     * In the method onOpen, we'll let the user know that the handshake was
-     * successful.
-     */
-    @OnOpen
-    public void onOpen(Session session){
-        System.out.println(session.getId() + " has opened a connection");
         try {
-            session.getBasicRemote().sendText("Connection Established");
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            this.receiver.close();
+        } catch( IOException e ) {
+            System.out.println( "Failed to close socket.\t" + e.toString() );
         }
-    }
-
-    /**
-     * When a user sends a message to the server, this method will intercept the message
-     * and allow us to react to it. For now the message is read as a String.
-     */
-    @OnMessage
-    public void onMessage(String message, Session session){
-        System.out.println("Message from " + session.getId() + ": " + message);
-        try {
-            session.getBasicRemote().sendText(message);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    /**
-     * The user closes the connection.
-     *
-     * Note: you can't send messages to the client from this method
-     */
-    @OnClose
-    public void onClose(Session session){
-        System.out.println("Session " +session.getId()+" has ended");
     }
 }

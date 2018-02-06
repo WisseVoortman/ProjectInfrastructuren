@@ -19,21 +19,17 @@ class ServerMain {
      * @param _portData Port number for incoming data
      * @param path Absolute path to storage
      */
-    ServerMain(int _portData, String path) {
+    ServerMain(int _portData, int _portQuery, String path) {
         this.CUR_PATH = path;
 
         // Create thread pools
         this.serverPool = Executors.newFixedThreadPool(5);
-        this.queryPool = Executors.newFixedThreadPool(50);
+        this.queryPool = Executors.newFixedThreadPool(100);
         this.dataPool = Executors.newFixedThreadPool(900);
 
         // Assign threads to the servers
         this.serverPool.execute(new DataReceiver( this, _portData ));
-        this.serverPool.execute(new QueryHandler( this ));
-
-        // Debug info printer
-        this.serverPool.execute(new printer(this));
-
+        //this.serverPool.execute(new QueryHandler( this ));
     }
 
     public void run() {
