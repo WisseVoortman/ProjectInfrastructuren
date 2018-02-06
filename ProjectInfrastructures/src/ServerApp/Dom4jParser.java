@@ -15,7 +15,7 @@ public class Dom4jParser implements Runnable{
 	private ServerApp serverApp;
 	
 	private String buffer;
-	private StationBufferMap generalBuffer;
+	private StationBufferMap stationBufferMap;
 	
 	
 	private String stationnumber;
@@ -37,7 +37,7 @@ public class Dom4jParser implements Runnable{
 	public Dom4jParser(ServerApp serverapp, String buffer, StationBufferMap generalBuffer){
 		this.serverApp = serverapp;
 		this.buffer = buffer;
-		this.generalBuffer = generalBuffer;
+		this.stationBufferMap = generalBuffer;
 		
 	}
 	
@@ -72,21 +72,23 @@ public class Dom4jParser implements Runnable{
 	            this.cloudiness 				= node.selectSingleNode("CLDC").getText();
 	            this.winddirection 				= node.selectSingleNode("WNDDIR").getText();
 	            
-	            if (generalBuffer.getmap().get(this.stationnumber) == null) { //gets the value for an id)
-	            		generalBuffer.getmap().put(this.stationnumber, new StationBuffer(this.stationnumber)); //no StationBuffer assigned, creating a new StationBuffer
+	            if (stationBufferMap.getmap().get(this.stationnumber) == null) { //gets the value for an id)
+	            		stationBufferMap.getmap().put(this.stationnumber, new StationBuffer(this.stationnumber)); //no StationBuffer assigned, creating a new StationBuffer
 	            		System.out.println("created a new StationBuffer for: station " + this.stationnumber + ".");
 				    } // end of if
 	            
 	            //printParsedData();
 	            
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).printID();
+	            ((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).printID();
 	            
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).addDataArrayToQueue(this.stationnumber, this.date, this.time, this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
+	            ((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).addDataArrayToQueue(this.stationnumber, this.date, this.time, this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
 	            
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).printqueue();
+	            ((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).printqueue();
 	            
-	            ((StationBuffer) generalBuffer.getmap().get(this.stationnumber)).correctTemperature();
-	            
+	            ((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).correctTemperature();
+	            if(true){
+	            	((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).addToSendQueue(this.stationBufferMap);
+	            }
 	         }
 	      } catch (DocumentException e) {
 	         e.printStackTrace();

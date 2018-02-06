@@ -105,20 +105,7 @@ public class StationBuffer {
 	public void correctTemperature(){
 		if(correctionRequired()){
 			setNewTemp();
-			if(this.queue.size() >=31){
-				sendArray();
-			}
-			
-		}
-		else if(!correctionRequired()){
-			//send arraylist to vm for storage
-			setNewTemp();
-			if(this.queue.size() >=31){
-				sendArray();
-			}
-		}			
-			
-			
+			}	
 		}
 	
 	public boolean correctionRequired(){
@@ -242,6 +229,24 @@ public class StationBuffer {
 				this.winddirection  = "0";
 			}
 		}
+		
+		
+	}
+	
+	public void addToSendQueue(StationBufferMap stationBufferMap){
+		System.out.println("Sending Measurment...");
+		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
+		dataArray = (LinkedList<String>) this.queue.peek();
+		if(this.queue.size() >=31){
+		stationBufferMap.add(dataArray);
+			}
+		stationBufferMap.print();
+						
+		if(this.queue.size() >=31){
+			this.queue.remove();
+			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
+		}
+			
 		
 		
 	}
