@@ -31,9 +31,6 @@
 		</header>
 		<div class="container">
 			<div id="error-message">
-				<!--
-				<p class="error dashboard-error-message"><b>No internet connection</b></p>
-			-->
 			</div>
 			<div id="dashboard-items">
 			</div>
