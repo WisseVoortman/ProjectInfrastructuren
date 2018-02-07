@@ -22,6 +22,10 @@ public class StationBufferMap {
 		return this.map;
 	}
 	
+	public LinkedList<Object> getSendQueue(){
+		return this.sendQueue;
+	}
+	
 	//notes
 	//((StationBuffer) this.map.get(id)).testone();    
     //((StationBuffer) this.map.get(id)).printqueue();

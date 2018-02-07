@@ -234,13 +234,13 @@ public class StationBuffer {
 	}
 	
 	public void addToSendQueue(StationBufferMap stationBufferMap){
-		System.out.println("Sending Measurment...");
+		System.out.println("adding measurement to sendQueue...");
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		dataArray = (LinkedList<String>) this.queue.peek();
 		if(this.queue.size() >=31){
 		stationBufferMap.add(dataArray);
 			}
-		stationBufferMap.print();
+		stationBufferMap.print(); // prints the senqueue
 						
 		if(this.queue.size() >=31){
 			this.queue.remove();
