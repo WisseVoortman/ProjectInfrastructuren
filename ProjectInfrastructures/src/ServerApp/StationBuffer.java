@@ -234,25 +234,22 @@ public class StationBuffer {
 	}
 	
 	public void addToSendQueue(StationBufferMap stationBufferMap){
-		System.out.println("Sending Measurment...");
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		dataArray = (LinkedList<String>) this.queue.peek();
 		if(this.queue.size() >=31){
-		stationBufferMap.add(dataArray);
-			}
-		stationBufferMap.print();
-						
-		if(this.queue.size() >=31){
+			System.out.println("adding measurement to sendQueue...");
+			stationBufferMap.add(dataArray);
+			stationBufferMap.print(); // prints the senqueue
 			this.queue.remove();
 			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
 		}
+		
 			
 		
 		
 	}
 	
 	public void sendArray(){
-		System.out.println("Sending Measurment...");
 		// 1 get the last array to send
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
 		
@@ -263,36 +260,36 @@ public class StationBuffer {
 		if(this.queue.size() >=31){
 			this.queue.remove();
 			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
-		}
-		Socket client = null;
-		ObjectOutputStream out = null;
 		
-		try{
-			this.duration = System.currentTimeMillis();
-			client = new Socket("145.37.37.120", 30011);
-			out = new ObjectOutputStream(client.getOutputStream());		
-			out.writeObject(m);
-			out.flush();
+			Socket client = null;
+			ObjectOutputStream out = null;
 			
-			// close resources
-			
-			out.close();
-			client.close();
+			try{
+				this.duration = System.currentTimeMillis();
+				client = new Socket("145.37.28.225", 30011);
+				out = new ObjectOutputStream(client.getOutputStream());		
+				out.writeObject(m);
+				out.flush();
+				
+				// close resources
+				
+				out.close();
+				client.close();
+			}
+			catch(UnknownHostException e){
+				e.printStackTrace();
+				System.exit(1);
+			} 
+			catch (IOException e) {
+				this.duration = System.currentTimeMillis() - this.duration;
+				System.out.println("connect attempt duration measured in ms:" + this.duration); // Prints how long the attempt at making a connection takes.
+				e.printStackTrace();
+				System.exit(1);
+			}
+			finally{
+				
+			}//end
 		}
-		catch(UnknownHostException e){
-			e.printStackTrace();
-			System.exit(1);
-		} 
-		catch (IOException e) {
-			this.duration = System.currentTimeMillis() - this.duration;
-			System.out.println("connect attempt duration measured in ms:" + this.duration); // Prints how long the attempt at making a connection takes.
-			e.printStackTrace();
-			System.exit(1);
-		}
-		finally{
-			
-		}
-		
 	}
 	
 }
