@@ -1,17 +1,17 @@
 <?php
-	$HOST = 127.0.0.1;
+	$HOST = '145.33.225.7';
 	$PORT = 30022;
 	$SOCKET = socket_create(AF_INET, SOCK_STREAM, 0);
 	
-	$CONNECTION = socket_create($SOCKET, $HOST, $PORT)
-	or die("error: Unable to connect to Database\n";
+	$CONNECTION = socket_connect($SOCKET, $HOST, $PORT)
+	or die("error: Unable to connect to Database\n");
 
 	$AUTHENTICATION_ID = "";
-	$FIELDS = $_POST[];
-	$STATIONS = $_POST[];
-	$WHEN = $_POST[];
-	$TIME = $_POST[];
-	$TIMEUNIT = $_POST[];
+	$FIELDS = $_POST['fields'];
+	$STATIONS = $_POST['stations'];
+	$WHEN = $_POST['when'];
+	$TIME = $_POST['time'];
+	$TIMEUNIT = $_POST['timeUnit'];
 	
 	$MESSAGE = $AUTHENTICATION_ID . "SELECT" . $FIELDS . FROM . $STATIONS . $WHEN . $TIME . "PER" . $TIMEUNIT;
 	

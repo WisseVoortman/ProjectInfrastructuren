@@ -28,6 +28,9 @@
 			</div>
 		</nav>
 		<header>
+			<button type="button" id="" onclick="handleQuery();" class="button-selection-option">test query</button>
+			<div id="queryTest">
+			</div>
 		</header>
 		<div class="container">
 			<div id="error-message">
@@ -45,11 +48,12 @@
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
 		<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
-		<script src="resources/javascript/main.js"></script>
-		<script src="resources/javascript/html/stationSelector.js"></script
+		<script src="resources/javascript/queryHandler.js"></script>
+		<script src="resources/javascript/html/stationSelector.js"></script>
 		<script src="resources/javascript/highchartsGlobalSettings.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>
+		<script src="resources/javascript/main.js"></script>
 		<script type="text/javascript">
 			dashboardPage();
 		</script>
