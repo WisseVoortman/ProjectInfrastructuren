@@ -7,11 +7,11 @@
 	or die("error: Unable to connect to Database\n";
 
 	$AUTHENTICATION_ID = "";
-	$FIELDS = "";
-	$STATIONS = "";
-	$WHEN = "";
-	$TIME = "";
-	$TIMEUNIT = "";
+	$FIELDS = $_POST[];
+	$STATIONS = $_POST[];
+	$WHEN = $_POST[];
+	$TIME = $_POST[];
+	$TIMEUNIT = $_POST[];
 	
 	$MESSAGE = $AUTHENTICATION_ID . "SELECT" . $FIELDS . FROM . $STATIONS . $WHEN . $TIME . "PER" . $TIMEUNIT;
 	
