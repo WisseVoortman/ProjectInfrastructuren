@@ -25,7 +25,7 @@ class ServerMain {
         // Create thread pools
         this.serverPool = Executors.newFixedThreadPool(5);
         this.queryPool = Executors.newFixedThreadPool(100);
-        this.dataPool = Executors.newFixedThreadPool(900);
+        this.dataPool = Executors.newFixedThreadPool(800);
 
         // Assign threads to the servers
         this.serverPool.execute(new DataReceiver( this, _portData ));
@@ -49,7 +49,7 @@ class ServerMain {
     }
 
     /**
-     * Functions
+     *
      * @return Thread pool used to handling queries
      */
     ExecutorService getQueryPool() {

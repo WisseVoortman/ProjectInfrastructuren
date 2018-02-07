@@ -46,13 +46,13 @@ public class QueryExecutorMulti implements Runnable{
 
             // Get the filename
             String fileName = stationNumber + "_" + dateString + ".dat";
-            String directory = this.model.CUR_PATH + "\\data\\" + stationNumber + "\\";
-            File file = new File(this.model.CUR_PATH + "\\data\\" + stationNumber + "\\" + fileName);
+            String directory = this.model.CUR_PATH + "/data/" + stationNumber + "/";
+            File file = new File(this.model.CUR_PATH + "/data/" + stationNumber + "/" + fileName);
             if(!file.exists()) {// Try to find the closest file
                 // Get filelist
                 File[] files = new File(directory).listFiles((dir1, name) -> name.endsWith(".dat"));
                 // Make sure there are files
-                if(files.length < 1) {
+                if((files != null ? files.length : 0) < 1) {
                     QueryResult tempQR = new QueryResult();
                     tempQR.setStationNumber(Integer.parseInt(this.stationNumber));
                     tempQR.setStatus(STATE.ERROR);
@@ -76,7 +76,7 @@ public class QueryExecutorMulti implements Runnable{
                     LocalDateTime dateTimeTwo = LocalDateTime.parse((date),
                             DateTimeFormatter.ofPattern("uuuu-MM-dd"));
 
-                    long days = ChronoUnit.DAYS.between(dateTimeOne, dateTimeTwo );
+                    long days = ChronoUnit.DAYS.between( dateTimeOne, dateTimeTwo );
                     if( days < difference ) {
                         closestFile = f;
                         difference = (int)days;
@@ -91,7 +91,6 @@ public class QueryExecutorMulti implements Runnable{
             int index = 0;
             int reqDate = Integer.parseInt(query[6]);
             if(foundDate >= reqDate) {
-                // Apparently we don't have this time. Giving the closest possible time.
                 QueryResult result = new QueryResult();
                 result.setStationNumber(Integer.parseInt(this.stationNumber));
                 result.setStatus(STATE.ERROR_WITH_DATA);
@@ -122,6 +121,7 @@ public class QueryExecutorMulti implements Runnable{
             }else {
                 //TODO: Make it look for the right time
                 // Find approx. time
+                //TODO: If on wrong day, find right time for this day (subtract x days?)
                 index = (reqDate - foundDate) * 25;
                 raf.seek(index);
                 int foundTime = raf.readInt();
@@ -154,32 +154,11 @@ public class QueryExecutorMulti implements Runnable{
 
         }catch(Exception e) {
             e.printStackTrace();
+            QueryResult result = new QueryResult();
+            result.setStationNumber(Integer.parseInt(this.stationNumber));
+            result.setStatus(STATE.ERROR);
+            result.setErrorMessage("Something went wrong gathering the data.");
+            results.add(result);
         }
     }
-
-    
-    //TODO: Add per clause
-
-            /*
-         *0 AUTHENTICATION_ID
-         *1 SELECT
-         *2 fields+to+select+separated+by+a+plus+sign
-         *3 FROM
-         *4 stations+to+query+separated+by+plus+sign
-         *5 BETWEEN | AT
-         *6(7) T1>DATA<T2 | TIMESTAMP
-         *7/8 PER
-         *8/9 SEC/MIN/HOUR
-         */
-
-            /*
-                            if(query[5].toLowerCase().equals("at")) {
-
-                }else if(query[5].toLowerCase().equals("between")) {
-
-                }else{
-                    System.out.println("Invalid syntax at segment 5.");
-                    break;
-                }
-             */
 }

@@ -82,11 +82,11 @@ public class DataReceiverClient implements Runnable {
             baos.write( Tools.shortToByteArray( (short) m.winddirection) );
 
             // Make sure the directory exists
-            File dir = new File(this.model.CUR_PATH + "\\data\\" + m.stationnumber + "\\");
+            File dir = new File(this.model.CUR_PATH + "/data/" + m.stationnumber + "/");
             dir.mkdirs();
 
             try {
-                File file = new File(this.model.CUR_PATH + "\\data\\" + m.stationnumber + "\\" + m.stationnumber + "_" + m.date + ".dat");
+                File file = new File(this.model.CUR_PATH + "/data/" + m.stationnumber + "/" + m.stationnumber + "_" + m.date + ".dat");
 
                 // if file does not exists, then create it
                 if( !file.exists() ) {

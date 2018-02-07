@@ -29,7 +29,11 @@ public class QueryExecutorSingle{
 
     public void executeQuery() {
         try {
-
+            /*
+            Send the QueriedData as soon as it has been collected
+             */
+            //TODO: Verify we actually have 2 timestamps for our between
+            //TODO: Get per clause
 
         }catch(Exception e) {
             e.printStackTrace();

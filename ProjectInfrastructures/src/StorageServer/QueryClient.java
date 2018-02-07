@@ -24,8 +24,6 @@ public class QueryClient implements Runnable {
     public void run() {
         try{
             // Open stream
-            PrintWriter out =
-                    new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in =
                     new BufferedReader(
                             new InputStreamReader(clientSocket.getInputStream()));
@@ -46,7 +44,7 @@ public class QueryClient implements Runnable {
             executeQuery(qry, stationList);
 
             // Close stream and connection
-            in.close(); out.close(); clientSocket.close();
+            in.close(); clientSocket.close();
 
         } catch (IOException e) {
             System.out.println("Failed to open input stream.");
@@ -77,6 +75,7 @@ public class QueryClient implements Runnable {
      * @return
      */
     private void executeQuery(String[] query, int[] stationList) {
+        PrintWriter out = null;
         /*
         If date not in range return error and first possible result
          */
@@ -94,7 +93,7 @@ public class QueryClient implements Runnable {
          *8/9 SEC/MIN/HOUR
          */
         try {
-            PrintWriter out = new PrintWriter(this.clientSocket.getOutputStream());
+            out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             switch (query[1].toLowerCase()) {
                 case "select":
                     // Get a list of all the fields
@@ -133,11 +132,10 @@ public class QueryClient implements Runnable {
                         break;
                     }
                     if (query[5].toLowerCase().equals("at") || query[5].toLowerCase().equals("between")) {
-                        //TODO: Implement dynamic threading
                         boolean multiRun = false;
                         if (query[5].toLowerCase().equals("at")) {
                             // Calculate probable data usage
-                            if ((query[2].length() * query[4].length() * 60) < 8000) {
+                            if((query[2].length() * query[4].length() * 60) < 8000) {
                                 multiRun = true;
                                 ArrayList<QueryResult> results = new ArrayList<>();
                                 for (String station : stations)
@@ -155,7 +153,6 @@ public class QueryClient implements Runnable {
                         if (query[5].toLowerCase().equals("between") || !multiRun) {
                             for(String station : stations)
                                 new QueryExecutorSingle(this.model, this, station, query).executeQuery();
-
                         }
 
                     } else {
@@ -178,6 +175,9 @@ public class QueryClient implements Runnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if( out != null)
+                out.close();
         }
     }
 
