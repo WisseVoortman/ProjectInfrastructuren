@@ -71,23 +71,36 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
     }
   }
   function readForm() {
-	  var formInput = document.getElementsByClassName("customForm");
-	  var locations = [];
-	  var i;
-	  for (i = 0; i < formInput.length; i++){
-		if (formInput[i].type == "checkbox" && formInput[i].value != "selectAll"){
-			if (formInput[i].checked){
-				locations.push(formInput[i].value);
+	  var connection = check_internet_connection();
+	  console.log(connection);
+	  if (connection == 'true'){
+		var formInput = document.getElementsByClassName("customForm");
+		var locations = [];
+		var i;
+		for (i = 0; i < formInput.length; i++){
+			if (formInput[i].type == "checkbox" && formInput[i].value != "selectAll"){
+				if (formInput[i].checked){
+					locations.push(formInput[i].value);
+				}
 			}
 		}
+		if (locations.length < 1){
+			window.alert("Select at least one station.")
+		}
+		if (locations.length > 0){
+			window.alert(locations);
+		}
+		console.log(locations);
 	  }
-	  if (locations.length < 1){
-		 window.alert("Select at least one station.")
+	  else {
+		  connection = check_internet_connection();
+		  if (connection == 'false'){
+			  check_internet_connection();
+		  }
+		  else {
+			  readForm();
+		  }
 	  }
-	  if (locations.length > 0){
-		  window.alert(locations);
-	  }
-	  console.log(locations);
   }
   function toggleAll(source){
 	  var allSelectorBoxes = document.getElementsByClassName("customForm");
@@ -115,10 +128,11 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
   	function processRequest() {
   		if(request.readyState == 4) {
   			if(request.status >= 200 && request.status < 304) {
-  				alert("connection exists!");
   				document.getElementById("error-message").innerHTML = '';
+				return "true";
   			} else {
   				document.getElementById("error-message").innerHTML = errorhtml;
+				return "false";
   			}
   		}
   	}

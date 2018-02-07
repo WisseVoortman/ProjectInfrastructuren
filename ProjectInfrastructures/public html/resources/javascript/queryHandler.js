@@ -1,6 +1,11 @@
 function handleQuery(){
-	var hello = 'hello php';
-	var sendThis = 'fields=' + hello + 'stations=' + 'when=' + 'time=' + 'timeUnit=';
+	var fields = '';
+	var stations = '';
+	var when = '';
+	var time = '';
+	var timeUnit = '';
+	
+	var sendThis = 'fields=' + fields + 'stations=' + stations + 'when=' + when + 'time=' + time + 'timeUnit=' + timeUnit;
 	var dataBaseRequest = new XMLHttpRequest();
 	dataBaseRequest.onreadystatechange = function(){
 		if (this.readyState == 4 && this.status == 200){
