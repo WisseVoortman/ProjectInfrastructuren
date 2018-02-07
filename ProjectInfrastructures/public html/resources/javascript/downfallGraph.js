@@ -79,12 +79,6 @@ function downfallGraph() {
         series: [{
             type: 'spline',
             name: 'Rain',
-			zones: [ {
-				value: 90,
-				color: '#0000FF'
-			}, {
-				color: '#cd0000'
-			}],
             data: (function () {
             // generate an array of random data
                 var data = [],
@@ -101,12 +95,6 @@ function downfallGraph() {
 			}())
         },{type: 'spline',
             name: 'Snow',
-			zones: [ {
-				value: 90,
-				color: '#FFAAAA'
-			}, {
-				color: '#FF00FF'
-			}],
             data: (function () {
             // generate an array of random data
                 var data = [],

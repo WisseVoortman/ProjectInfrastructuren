@@ -12,7 +12,7 @@
 			<div class="button-selection">
 				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">Dashboard</button>
 				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
-				<button type="button" id="button-selection-option-downfall" onclick="downfall();" class="button-selection-option">Downfall</button>
+				<button type="button" id="button-selection-option-rainfall" onclick="downfall();" class="button-selection-option">Rainfall</button>
 				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
 				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
 				<a href="logout.php"><button type="submit" id="button-selection-option-logout" class="button-selection-option">Logout</button></a>
