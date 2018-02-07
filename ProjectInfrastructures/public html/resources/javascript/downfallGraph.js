@@ -79,6 +79,12 @@ function downfallGraph() {
         series: [{
             type: 'spline',
             name: 'Rain',
+			zones: [ {
+				value: 90,
+				color: '#0000FF'
+			}, {
+				color: '#cd0000'
+			}],
             data: (function () {
             // generate an array of random data
                 var data = [],
@@ -93,7 +99,28 @@ function downfallGraph() {
                 }
 				return data;
 			}())
-        }],
+        },{type: 'spline',
+            name: 'Snow',
+			zones: [ {
+				value: 90,
+				color: '#FFAAAA'
+			}, {
+				color: '#FF00FF'
+			}],
+            data: (function () {
+            // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -60; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000 * 60,
+                        y: Math.round(Math.random()*100)
+                    });
+                }
+				return data;
+			}())}],
 		
 		/*exporting: {
 			buttons:{
