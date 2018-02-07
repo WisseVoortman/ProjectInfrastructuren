@@ -53,7 +53,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
   function downfall() {
     if(check_id_not_null()) {
 	  buttonReset();
-	  previousButton = 'button-selection-option-downfall';
+	  previousButton = 'button-selection-option-rainfall';
 	  document.getElementById("dashboard-items").innerHTML = stationSelectorGenerator() + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
