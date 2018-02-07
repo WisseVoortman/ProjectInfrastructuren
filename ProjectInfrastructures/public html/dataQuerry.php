@@ -6,7 +6,14 @@
 	$CONNECTION = socket_create($SOCKET, $HOST, $PORT)
 	or die("error: Unable to connect to Database\n";
 
-	$MESSAGE = "";
+	$AUTHENTICATION_ID = "";
+	$FIELDS = "";
+	$STATIONS = "";
+	$WHEN = "";
+	$TIME = "";
+	$TIMEUNIT = "";
+	
+	$MESSAGE = $AUTHENTICATION_ID . "SELECT" . $FIELDS . FROM . $STATIONS . $WHEN . $TIME . "PER" . $TIMEUNIT;
 	
 	socket_write($sock, $MESSAGE . "\n", strlen($MESSAGE)+1);
 	
@@ -14,5 +21,7 @@
 		or die("error failed to recieve data from the Database\n");
 	
 	socket_close($SOCKET);
+	
+	ECHO $DATA;
 	
 ?>

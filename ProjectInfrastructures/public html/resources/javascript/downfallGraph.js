@@ -93,7 +93,8 @@ function downfallGraph() {
                 }
 				return data;
 			}())
-        },{type: 'spline',
+        },{
+			type: 'spline',
             name: 'Snow',
             data: (function () {
             // generate an array of random data
