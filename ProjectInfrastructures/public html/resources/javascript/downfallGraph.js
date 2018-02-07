@@ -109,24 +109,6 @@ function downfallGraph() {
                 }
 				return data;
 			}())}],
-		
-		/*exporting: {
-			buttons:{
-				contextButton: {
-					enabled: true,
-					menuItems:[
-						'printChart',
-						'separator',
-						'downloadPNG',
-						'downloadJPEG',
-						'downloadPDF',
-						'downloadSVG',
-						'separator',
-						'downloadCSV',
-					]
-				}
-			}	
-		}*/
 
     });
 

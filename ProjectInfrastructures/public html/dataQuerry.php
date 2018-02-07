@@ -13,4 +13,6 @@
 	$DATA = socket_read($SOCKET, 10000, PHP_NORMAL_READ)
 		or die("error failed to recieve data from the Database\n");
 	
+	socket_close($SOCKET);
+	
 ?>
