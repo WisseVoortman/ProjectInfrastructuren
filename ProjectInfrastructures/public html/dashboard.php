@@ -34,7 +34,6 @@
 			</div>
 			<div id="dashboard-items">
 			</div>
-			
 		</div>
 		
 		<?php

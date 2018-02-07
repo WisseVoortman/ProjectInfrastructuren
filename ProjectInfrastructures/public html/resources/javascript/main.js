@@ -1,6 +1,6 @@
 var temphtml = '<div class="dashboardItem" id="tempGauge"></div>';
 var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div> '
-var customhtml = '<div class="selector" id="custom_selector"><form action="#" onsubmit="return false;"><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"><button type="submit">Send</button></th></tr></table></form></div>';
+var customhtml = '<div class="selector" id="custom_selector"><h3>Select options to create a graph:</h3><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"></th></tr></table></div><div class="selector" id="selector-graph"><p><b>Select a graph:</b></p><select id="selector-select-graph"><option value="temperature" id="selector-option-temp">Temperature</option><option value="rain" id="selector-option-rain">Rainfall</option><option value="snowfall" id="selector-option-snowfall">Snowfall</option></select></div>';
 var allhtml = temphtml + "" + downfallhtml;
 var previousButton;
 var errorhtml = '<p class="error dashboard-error-message"><b>No internet connection</b></p>';
@@ -66,7 +66,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
 		if(check_id_not_null()) {
 			buttonReset();
 			previousButton = 'button-selection-option-custom';
-			document.getElementById("dashboard-items").innerHTML = customhtml;
+			document.getElementById("dashboard-items").innerHTML = customhtml + stationSelectorGenerator();
 			configureButton();
     }
   }

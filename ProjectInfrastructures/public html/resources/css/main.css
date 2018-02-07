@@ -97,6 +97,8 @@ h1 {
 /* selector */
 .selector {
 	max-width: 30%;
+	padding-left: 1%;
+	padding-bottom:2%;
     
 }
 
@@ -260,4 +262,20 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+/**/
+#selector-graph {
+	height: 10%;
+	overflow: hidden;
+	width: 25%;
+}
+
+#selector-graph select {
+	border: none;
+	font-size:15px;
+	height: 12%;
+	width: 35%;
+	padding: 3%;
+	background-color: #f7f7f7;
+	border-color: #f7f7f7;
 }
