@@ -66,7 +66,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
 		if(check_id_not_null()) {
 			buttonReset();
 			previousButton = 'button-selection-option-custom';
-			document.getElementById("dashboard-items").innerHTML = customhtml + stationSelectorGenerator();
+			document.getElementById("dashboard-items").innerHTML = '<div class="customSelectorWrapper" id="customWrapper">' + customhtml + stationSelectorGenerator() + '</div>';
 			configureButton();
     }
   }
