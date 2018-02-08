@@ -30,8 +30,12 @@ class WeatherDataListener implements Runnable {
 
     public void run() {
         if( this.weatherDataReceiver.getIsStopped() )
-            return; // We are not supposed to be running
-
+            return; 
+        
+        /*
+         * accepts incomming connections for the socket
+         * creates a new weatherDataClient for the socket
+         */
         while( !this.weatherDataReceiver.getIsStopped() ) {
             try{
                 Socket client = listener.accept();

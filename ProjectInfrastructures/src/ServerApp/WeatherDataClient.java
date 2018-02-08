@@ -30,7 +30,12 @@ class WeatherDataClient implements Runnable {
         } catch (IOException e) {
             System.out.println("in or out failed");
         }
-
+        
+        /*
+         *  reads input from the socket
+         *  when input is being received create a new parser and pass the input to it
+         */
+        
         while(this._socket.isConnected() && in != null){
             try{
                 line = in.readLine();
