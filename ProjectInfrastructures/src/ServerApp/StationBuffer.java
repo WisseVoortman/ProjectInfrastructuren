@@ -9,9 +9,8 @@ import java.util.*;
 
 public class StationBuffer {
 
-	private String id;
+	private String id; // the ID which is that same as the stationnumber of the station this buffer belongs to
 	private LinkedList<Object> queue; // queue that will contain arrays with data
-	private long duration;
 	
 	private String stationnumber; 
 	private String date;
@@ -28,24 +27,32 @@ public class StationBuffer {
 	private String cloudiness;
 	private String winddirection;
 	
-
+	/*
+	 *  constructor of stationbuffer object
+	 *  each weather station will have its own stationbuffer.
+	 */
 	public StationBuffer(String id){
 		this.id = id;
 		this.queue = new LinkedList<Object>(); // queue that will contain data 
 	}
 		
-		
+	// prints the id of the station to the console	
 	public void printID(){
 		System.out.println("---------------------------------------------------------");
 		System.out.println("my id is: " + id);
 		
 	}
 	
+	// prints the queue size to the console
 	public void printqueue(){
 		System.out.println("queue size: " + this.queue.size());
 		//System.out.println("Current Queue: " + this.queue);
 	}
 	
+	/*
+	 *  adds data to the queue in order to create a buffer.
+	 *  this method has a built in check for empty values.
+	 */
 	public void addDataArrayToQueue(
 			String stationnumber, 
 			String date,
@@ -101,8 +108,9 @@ public class StationBuffer {
 		
 	}// end of addtodataQueue
 	
+	// checks if a temperature correction is required.
 	public void correctTemperature(){
-		if(!correctionRequired()){
+		if(correctionRequired()){
 			setNewTemp();
 			}	
 		}
@@ -136,20 +144,22 @@ public class StationBuffer {
 			
 			if((absoluteZero + Float.parseFloat(newestTemp)) >= lowerLimit && (absoluteZero + Float.parseFloat(newestTemp)) <= uperLimit){
 				//System.out.println("New temp is within the limits, and therefore does not need to be corrected.");
-				return true;
+				return false;
 			}
 			else if(this.queue.size() <1 ){
 				// there are no values to make a correction with.
+				return false;
 			}
 			else{
 				//System.out.println("New temp is not within the limits, and therefore does need to be corrected.");
-				return false;
+				return true;
 			}
 		}
 		
 		return false;
 	}
 	
+	// calculates the new temperature based on the 30 last measured temperatures. 
 	public void setNewTemp(){
 		// 1 get all temp values
 		float totalTemp = 0;
@@ -169,7 +179,11 @@ public class StationBuffer {
 		LinkedList<String> old = (LinkedList<String>) this.queue.removeLast();
 		addDataArrayToQueue(old.get(0), old.get(1), old.get(2), String.valueOf(newTemp), old.get(4), old.get(5), old.get(6), old.get(7), old.get(8), old.get(9), old.get(10), old.get(11), old.get(12), old.get(13) );
 	}
-	
+	/*
+	 * this method checks for missing values
+	 * if a measurement value is missing it will take the previous measurment.
+	 * if there is no previous measurment it will set 0.
+	 */
 	public void checkStrings(String temperature, String dewpoint, String airpresurestationlevel, String airpresuresealevel, String visability, String windspeed, String perception, String snowfallen, String specialcircumstances, String cloudiness, String winddirection){
 		if (queue.size() > 0){
 			LinkedList<String> dL = (LinkedList<String>) queue.peek();
@@ -248,7 +262,9 @@ public class StationBuffer {
 		
 		
 	}
-	
+	/*
+	 * adds the oldes value in the stationBuffer to a queue contained in the stationBufferMap for sending to the VM/storrage server.
+	 */
 	public void addToSendQueue(StationBufferMap stationBufferMap){
 				
 		if(this.queue.size() >=31){
@@ -269,6 +285,8 @@ public class StationBuffer {
 		
 	}
 	
+	
+	// old way of sending the data that did not make use of the a threadpool.
 	public void sendArray(){
 		// 1 get the last array to send
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
@@ -285,7 +303,6 @@ public class StationBuffer {
 			ObjectOutputStream out = null;
 			
 			try{
-				this.duration = System.currentTimeMillis();
 				client = new Socket("145.37.37.120", 30011);
 				out = new ObjectOutputStream(client.getOutputStream());		
 				out.writeObject(m);
@@ -301,8 +318,6 @@ public class StationBuffer {
 				System.exit(1);
 			} 
 			catch (IOException e) {
-				this.duration = System.currentTimeMillis() - this.duration;
-				System.out.println("connect attempt duration measured in ms:" + this.duration); // Prints how long the attempt at making a connection takes.
 				e.printStackTrace();
 				System.exit(1);
 			}

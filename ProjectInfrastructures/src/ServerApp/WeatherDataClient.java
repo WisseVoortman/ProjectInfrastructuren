@@ -9,7 +9,7 @@ class WeatherDataClient implements Runnable {
 	private ServerApp serverApp;
 	private Socket _socket;
     private int id;
-    private String buffer;
+    private String buffer; //contains the XML form from the weatherdata generator
     private StationBufferMap generalBuffer;
 
     WeatherDataClient(ServerApp serverApp,Socket _client, int id, StationBufferMap generalBuffer) {
@@ -20,7 +20,7 @@ class WeatherDataClient implements Runnable {
         this.buffer = "";
         this.generalBuffer = generalBuffer;
     }
-
+    // starts the thread
     public void run() {
         String line;
         BufferedReader in = null;
@@ -41,10 +41,8 @@ class WeatherDataClient implements Runnable {
                         	// prints thread id + weaterDataClientID + Buffer.
                             //System.out.println(Thread.currentThread().getId() + "\t" + id + "\t" + buffer);
                         	
-                        	//parser without threadpool
-                        	//new Dom4jParser(this.serverApp, buffer, this.generalBuffer).run();
-                        	
-                        	// parser with threadpool
+                        	                        	
+                        	// creates a parser assigned to parserThreadPool
                         	this.serverApp.getParserPool().execute(new Dom4jParser(this.serverApp, buffer, this.generalBuffer));
                         	
                         	this.buffer = line; // Clean buffer
@@ -59,6 +57,5 @@ class WeatherDataClient implements Runnable {
                 break;
             }
         }
-        System.out.println(1);
     }
 }

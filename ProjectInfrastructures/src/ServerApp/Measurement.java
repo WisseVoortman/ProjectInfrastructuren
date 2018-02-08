@@ -1,10 +1,12 @@
 package ServerApp;
 
 import java.io.Serializable;
-
+/*
+ * Class that is used to create objects that will be sent to the VM/Storrage server
+ */
 public class Measurement implements Serializable{
 	
-	public final int stationnumber;
+	public final int stationnumber; // defines variables
 	public final String date;
 	public final String time;
 	public final Float temperature;
@@ -19,6 +21,10 @@ public class Measurement implements Serializable{
 	public final Float cloudiness;
 	public final int winddirection;
 	
+	/*
+	 * constructor for Measurment class 
+	 * initializes the variables from the paramenters
+	 */
 	public Measurement(String stationnumber, String date, String time, String temperature, String dewpoint, String airpresurestationlevel, String airpresuresealevel, String visability, String windspeed, String perception, String snowfallen, String specialcircumstances, String cloudiness, String winddirection){
 		this.stationnumber 				= Integer.parseInt(stationnumber);
 		this.date						= date; 
@@ -34,7 +40,6 @@ public class Measurement implements Serializable{
 		this.specialcircumstances		= Integer.parseInt(specialcircumstances);
 		this.cloudiness					= Float.parseFloat(cloudiness);
 		this.winddirection				= Integer.parseInt(winddirection);
-		//System.out.println("this.temp: " + this.temperature);
 	}
 	
 }
