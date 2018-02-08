@@ -92,15 +92,6 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
 		}
 		console.log(locations);
 	  }
-	  else {
-		  connection = check_internet_connection();
-		  if (connection == 'false'){
-			  check_internet_connection();
-		  }
-		  else {
-			  readForm();
-		  }
-	  }
   }
   function toggleAll(source){
 	  var allSelectorBoxes = document.getElementsByClassName("customForm");

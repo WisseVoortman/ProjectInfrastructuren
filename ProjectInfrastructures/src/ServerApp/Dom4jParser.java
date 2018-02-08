@@ -87,11 +87,10 @@ public class Dom4jParser implements Runnable{
 	            
 	            ((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).correctTemperature();
 	            
-	            //((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).sendArray(); // connection timed out--> wrong ip / connection refused --> right ip +firewall on / connection refused --> right ip +firewall off
-	            
-	            if(true){
-	            	((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).addToSendQueue(this.stationBufferMap);// functions properly
-	            }
+	            //((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).sendArray(); //old way of sending
+
+	            ((StationBuffer) stationBufferMap.getmap().get(this.stationnumber)).addToSendQueue(this.stationBufferMap);// new way of sending 
+
 	         }
 	      } catch (DocumentException e) {
 	         e.printStackTrace();

@@ -36,8 +36,8 @@ public class StationBufferMap {
 		this.sendQueue.add(dataArray);
 	}
 	
-	public void print(){
-		System.out.println(sendQueue);
+	public void printSendQueue(){
+		//System.out.println(sendQueue);
 		System.out.println("send queue size:" + this.sendQueue.size());
 	}
 	
