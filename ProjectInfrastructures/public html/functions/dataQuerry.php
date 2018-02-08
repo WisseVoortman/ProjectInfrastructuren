@@ -7,10 +7,9 @@
 	$CONNECTION = socket_connect($SOCKET, $HOST, $PORT)
 	or die("error: Unable to connect to Database\n");
 
-	$AUTHENTICATION_ID = "123";
+	$AUTHENTICATION_ID = "6SQ8JGZTBWQWIM9U";
 	$FIELDS = $_POST['fields'];
 	$STATIONS = $_POST['stations'];
-	$WHEN = $_POST['when'];
 	$TIME = $_POST['time'];
 	$TIMEUNIT = $_POST['timeUnit'];
 	

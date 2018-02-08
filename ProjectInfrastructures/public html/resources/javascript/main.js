@@ -76,27 +76,24 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
     }
   }
   function readForm() {
-	  var connection = check_internet_connection();
-	  console.log(connection);
-	  if (connection == 'true'){
-		var formInput = document.getElementsByClassName("customForm");
-		var locations = [];
-		var i;
-		for (i = 0; i < formInput.length; i++){
-			if (formInput[i].type == "checkbox" && formInput[i].value != "selectAll"){
-				if (formInput[i].checked){
-					locations.push(formInput[i].value);
-				}
+	var formInput = document.getElementsByClassName("customForm");
+	var locations ='';
+	var i;
+	for (i = 0; i < formInput.length; i++){
+		if (formInput[i].type == "checkbox"){
+			if (formInput[i].checked){
+					locations += formInput[i].value + ",";
 			}
 		}
-		if (locations.length < 1){
-			window.alert("Select at least one station.")
-		}
-		if (locations.length > 0){
-			window.alert(locations);
-		}
-		console.log(locations);
-	  }
+	}
+	locations = locations.slice(0, -1);
+	if (locations.length < 1){
+		window.alert("Select at least one station.");
+	}
+	if (locations.length > 0){
+			handleQuery('precipitation', locations);
+	}
+	console.log(locations);
   }
   function toggleAll(source){
 	  var allSelectorBoxes = document.getElementsByClassName("customForm");

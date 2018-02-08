@@ -1,11 +1,11 @@
-function handleQuery(){
-	var fields = 'timestamp,temperature';
-	var stations = '222690';
-	var when = ' BETWEEN ';
-	var time = '1518089689 and 1518089691'
+function handleQuery(type, locations){
+	var fields = 'timestamp,' + type;
+	console.log(fields);
+	var stations = locations;
+	var time = '1518101601 and 1518101759'
 	var timeUnit = 'sec';
 	console.log('queryStarted');
-	var sendThis = 'fields=' + fields + '&stations=' + stations + '&when=' + when + '&time=' + time + '&timeUnit=' + timeUnit;
+	var sendThis = 'fields=' + fields + '&stations=' + stations + '&time=' + time + '&timeUnit=' + timeUnit;
 	var dataBaseRequest = new XMLHttpRequest();
 	dataBaseRequest.onreadystatechange = function(){
 		if (this.readyState == 4 && this.status == 200){
