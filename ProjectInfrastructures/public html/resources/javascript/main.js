@@ -137,3 +137,4 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
   		alert("imperial");
   	}
   }
+setInterval(function(){handleQuery()}, 1000)

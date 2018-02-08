@@ -1,19 +1,20 @@
 <?php
 	$HOST = '145.37.37.120';
+	//145.37.37.120
 	$PORT = 30022;
 	$SOCKET = socket_create(AF_INET, SOCK_STREAM, 0);
 	
 	$CONNECTION = socket_connect($SOCKET, $HOST, $PORT)
 	or die("error: Unable to connect to Database\n");
 
-	$AUTHENTICATION_ID = "1";
+	$AUTHENTICATION_ID = "123";
 	$FIELDS = $_POST['fields'];
 	$STATIONS = $_POST['stations'];
 	$WHEN = $_POST['when'];
 	$TIME = $_POST['time'];
 	$TIMEUNIT = $_POST['timeUnit'];
 	
-	$MESSAGE = $AUTHENTICATION_ID . " SELECT " . $FIELDS . " FROM " . $STATIONS . $WHEN . $TIME . " PER " . $TIMEUNIT;
+	$MESSAGE = $AUTHENTICATION_ID . " SELECT " . $FIELDS . " FROM " . $STATIONS . " BETWEEN " . $TIME . " PER " . $TIMEUNIT;
 	
 	socket_write($SOCKET, $MESSAGE . "\n\r\n", strlen($MESSAGE)+1);
 	

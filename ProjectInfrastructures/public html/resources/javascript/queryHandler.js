@@ -1,9 +1,9 @@
 function handleQuery(){
-	var fields = '1';
-	var stations = '1';
+	var fields = 'timestamp,temperature';
+	var stations = '222690';
 	var when = ' BETWEEN ';
-	var time = '1';
-	var timeUnit = '1';
+	var time = '1518086989 and 1518086691'
+	var timeUnit = 'sec';
 	console.log('queryStarted');
 	var sendThis = 'fields=' + fields + '&stations=' + stations + '&when=' + when + '&time=' + time + '&timeUnit=' + timeUnit;
 	var dataBaseRequest = new XMLHttpRequest();
