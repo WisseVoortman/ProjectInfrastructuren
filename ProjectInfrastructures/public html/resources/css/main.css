@@ -153,7 +153,16 @@ input[type=date], input[type=time]{
     color: white;
 }
 
-.downfallSelectorWrapper{
+.downfallSelectorWrapper {
+	float: left;
+	width: 20%;
+	padding-top: 0.5%;
+	padding-left: 1%;
+	display: block;
+	overflow: hidden;
+}
+
+.downfallSelectorWrapper .customSelectorWrapper {
 	float: left;
 	width: 20%;
 	padding-top: 0.5%;
@@ -279,3 +288,4 @@ input:checked + .slider:before {
 	background-color: #f7f7f7;
 	border-color: #f7f7f7;
 }
+
