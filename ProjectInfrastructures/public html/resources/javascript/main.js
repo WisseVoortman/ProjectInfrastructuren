@@ -69,10 +69,9 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			previousButton = 'button-selection-option-custom';
 			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customSelectorWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
 			configureButton();
-      /*TO DO graph
-      var graphHeight = window.getComputedStyle(document.getElementById("customGraph")).getPropertyValue('height');
-      document.getElementById("customSelectorWrapper").style.height = graphHeight;
-      */
+	/*var graphHeight = window.getComputedStyle(document.getElementById("customGraph")).getPropertyValue('height');
+      document.getElementById("customSelectorWrapper").style.height = graphHeight;*/
+
     }
   }
   function readForm() {
@@ -91,9 +90,11 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 		window.alert("Select at least one station.");
 	}
 	if (locations.length > 0){
-			handleQuery('precipitation', locations);
+			time = Math.floor(((new Date()).getTime() /1000)-5);
+			var timeToSend ='';
+			timeToSend += (time - 60) + " AND " + time;
+			handleQuery('precipitation', locations, timeToSend);		
 	}
-	console.log(locations);
   }
   function toggleAll(source){
 	  var allSelectorBoxes = document.getElementsByClassName("customForm");

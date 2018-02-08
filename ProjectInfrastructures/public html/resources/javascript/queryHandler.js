@@ -1,8 +1,8 @@
-function handleQuery(type, locations){
+function handleQuery(type, locations, timeToSend){
 	var fields = 'timestamp,' + type;
 	console.log(fields);
 	var stations = locations;
-	var time = '1518101601 and 1518101759'
+	var time = timeToSend;
 	var timeUnit = 'sec';
 	console.log('queryStarted');
 	var sendThis = 'fields=' + fields + '&stations=' + stations + '&time=' + time + '&timeUnit=' + timeUnit;

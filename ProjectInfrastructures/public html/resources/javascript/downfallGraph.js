@@ -113,7 +113,6 @@ function downfallGraph() {
                 }
 				return data;
 			}())}],
-
     });
 
 }
