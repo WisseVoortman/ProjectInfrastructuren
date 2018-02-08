@@ -266,7 +266,7 @@ public class StationBuffer {
 			
 			try{
 				this.duration = System.currentTimeMillis();
-				client = new Socket("145.37.28.225", 30011);
+				client = new Socket("145.37.37.120", 30011);
 				out = new ObjectOutputStream(client.getOutputStream());		
 				out.writeObject(m);
 				out.flush();

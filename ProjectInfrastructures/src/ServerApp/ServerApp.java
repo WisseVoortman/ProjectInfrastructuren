@@ -24,12 +24,12 @@ public class ServerApp {
     	// Assign a thread pool of 20 to this server
         this.recieverThreadPool = Executors.newFixedThreadPool(800);
         this.parserThreadPool = Executors.newFixedThreadPool(800);
-        this.senderThreadPool = Executors.newFixedThreadPool(20);
+        this.senderThreadPool = Executors.newFixedThreadPool(40);
 
         this.weatherReceiver = new WeatherDataReceiver(this, 26555, stationBufferMap);
         this.weatherReceiver.start();
         
-        for(int i=0;i<20;i++){
+        for(int i=0;i<40;i++){
         	this.senderThreadPool.execute(new Sender(this.stationBufferMap));
         }
         
