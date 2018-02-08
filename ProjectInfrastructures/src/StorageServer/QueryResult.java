@@ -78,7 +78,7 @@ public class QueryResult {
      * The method that sends the results to the client
      * @param out PrintWriter stream belonging to this client
      */
-    public synchronized void writeToStream(PrintWriter out) {
+    public synchronized void writeToStream(PrintWriter out, boolean addComma) {
         String output = "{";
         int i = 0;
         for(QueryCol col : results) {
@@ -97,7 +97,7 @@ public class QueryResult {
                     break;
             }
         }
-        output += "},";
+        output += "}" + (addComma ? "," : "");
         results.clear();
         System.out.println(output);
         out.print(output);
