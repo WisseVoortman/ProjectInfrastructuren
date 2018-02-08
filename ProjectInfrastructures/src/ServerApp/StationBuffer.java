@@ -103,7 +103,7 @@ public class StationBuffer {
 	}// end of addtodataQueue
 	
 	public void correctTemperature(){
-		if(correctionRequired()){
+		if(!correctionRequired()){
 			setNewTemp();
 			}	
 		}
@@ -139,6 +139,9 @@ public class StationBuffer {
 				//System.out.println("New temp is within the limits, and therefore does not need to be corrected.");
 				return true;
 			}
+			else if(this.queue.size() <1 ){
+				// there are no values to make a correction with.
+			}
 			else{
 				//System.out.println("New temp is not within the limits, and therefore does need to be corrected.");
 				return false;
@@ -150,8 +153,22 @@ public class StationBuffer {
 	
 	public void setNewTemp(){
 		// 1 get all temp values
+		float totalTemp = 0;
+		int b = 0;
+		for(int i=0;i < this.queue.size();i++){
+			
+			LinkedList<String> a = (LinkedList<String>) this.queue.get(i);
+			totalTemp += Float.parseFloat(a.get(3));
+			b = ++b;
+			
+		}
+		
 		// 2 calculate new temp value
+		Float newTemp = totalTemp / b;
+		
 		// 3 set new temp value
+		LinkedList<String> old = (LinkedList<String>) this.queue.removeLast();
+		addDataArrayToQueue(old.get(0), old.get(1), old.get(2), String.valueOf(newTemp), old.get(4), old.get(5), old.get(6), old.get(7), old.get(8), old.get(9), old.get(10), old.get(11), old.get(12), old.get(13) );
 	}
 	
 	public void checkStrings(String temperature, String dewpoint, String airpresurestationlevel, String airpresuresealevel, String visability, String windspeed, String perception, String snowfallen, String specialcircumstances, String cloudiness, String winddirection){
@@ -239,7 +256,7 @@ public class StationBuffer {
 		if(this.queue.size() >=31){
 			System.out.println("adding measurement to sendQueue...");
 			stationBufferMap.add(dataArray);
-			stationBufferMap.print(); // prints the senqueue
+			stationBufferMap.printSendQueue(); // prints the senqueue
 			this.queue.remove();
 			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
 		}

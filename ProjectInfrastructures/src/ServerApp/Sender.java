@@ -36,10 +36,10 @@ public class Sender implements Runnable{
 					
 					LinkedList<String> dataArray = (LinkedList<String>) stationBufferMap.getSendQueue().removeFirst();
 					Measurement m = new Measurement(dataArray.get(0), dataArray.get(1), dataArray.get(2), dataArray.get(3), dataArray.get(4), dataArray.get(5), dataArray.get(6), dataArray.get(7), dataArray.get(8), dataArray.get(9), dataArray.get(10), dataArray.get(11), dataArray.get(12), dataArray.get(13));
-					Measurement m2 = new Measurement("123456", "2009-09-13", "15:59:46", "-60.1", "-58.1", "1034.5", "1007.6", "123.7", "10.8", "11.28", "11.1", "010101", "87.4", "342");
-					System.out.println("barry");
+					//Measurement m2 = new Measurement("123456", "2009-09-13", "15:59:46", "-60.1", "-58.1", "1034.5", "1007.6", "123.7", "10.8", "11.28", "11.1", "010101", "87.4", "342");
+					
 					this.out.writeObject(m);
-					System.out.println("barry barry");
+					
 					this.out.flush();
 				}	
 			}
