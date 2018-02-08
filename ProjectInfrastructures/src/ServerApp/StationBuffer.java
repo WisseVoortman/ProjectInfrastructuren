@@ -78,7 +78,6 @@ public class StationBuffer {
 		this.cloudiness = cloudiness;
 		this.winddirection = winddirection;
 		
-		
 		checkStrings(this.temperature, this.dewpoint, this.airpresurestationlevel, this.airpresuresealevel, this.visability, this.windspeed, this.perception, this.snowfallen, this.specialcircumstances, this.cloudiness, this.winddirection);
 		
 		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
@@ -256,7 +255,7 @@ public class StationBuffer {
 		if(this.queue.size() >=31){
 			System.out.println("adding measurement to sendQueue...");
 			stationBufferMap.add(dataArray);
-			stationBufferMap.printSendQueue(); // prints the senqueue
+			System.out.println("sendQueue size:" + stationBufferMap.getSendQueue().size());
 			this.queue.remove();
 			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
 		}
