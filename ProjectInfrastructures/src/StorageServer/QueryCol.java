@@ -1,5 +1,8 @@
 package StorageServer;
 
+/**
+ * Class used for temporary storage of queried data
+ */
 class QueryCol {
     public final ColumnInfo column;
     public final Object val;

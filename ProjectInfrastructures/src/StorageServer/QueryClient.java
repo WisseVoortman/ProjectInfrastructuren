@@ -2,8 +2,6 @@ package StorageServer;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-//TODO: documentation
 /**
  * Threaded class used for processing incoming data.
  */
@@ -29,27 +27,25 @@ public class QueryClient implements Runnable {
                             new InputStreamReader(clientSocket.getInputStream()));
 
             // Read query
-            String query = in.readLine();//"id SELECT stationid+timestamp+temperature+downfall+snowfall FROM 12345+12346 BETWEEN T1 AND T2";//in.readLine();
+            String query = in.readLine();
             System.out.println("Query: " + query);
 
             // Split query into individual pieces
             String[] qry = query.trim().split("\\s");
 
             // Make sure query is has enough segments
-            if(qry.length < 7)
-                throw new Exception("Invalid query.");
+            if(qry.length < 7) {
+                new QueryResult().writeError(new PrintWriter(this.clientSocket.getOutputStream()), "Query is incomplete.");
+            }
 
             // Handle authentication
             int[] stationList = handleAuthentication(qry[0]);
-            if(stationList.length == 1 && stationList[0] == -1)
-                throw new Exception("Invalid user.");
+            if(stationList.length == 1 && stationList[0] == -1) {
+                new QueryResult().writeError(new PrintWriter(this.clientSocket.getOutputStream()), "No user found with this ID.");
+            }
 
             // Handle the query
             executeQuery(qry, stationList);
-
-            // Close stream and connection
-            //in.close(); clientSocket.close();
-
         } catch (IOException e) {
             System.out.println("Failed to open input stream.");
         } catch (Exception e) {
@@ -65,103 +61,73 @@ public class QueryClient implements Runnable {
      */
     private int[] handleAuthentication(String AuthID) {
         //TODO: Add actual authentication
-        return new int[] {
-                22300,
-                39550,
-                222690
-        };
-        //return new int[] { -1 };
+        File f = new File(this.model.CUR_PATH + "/clients/" + AuthID);
+        if(!f.exists())
+            return new int[] { -1 };
+        try {
+            RandomAccessFile raf = new RandomAccessFile(f.getAbsolutePath(), "r");
+            raf.seek(0L);
+            String temp = raf.readLine();
+            String[] list = temp.split("\\,");
+            int[] stations = new int[list.length];
+            for(int i = 0; i < list.length; i++) {
+                stations[i] = Integer.parseInt(list[i]);
+            }
+            return stations;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new int[] { -1 };
     }
 
     /**
-     *
-     * @param query
-     * @param stationList
-     * @return
+     * This method will execute the actual query
+     * @param query Sliced user query
+     * @param stationList List of stations the user is allowed access to
      */
     private void executeQuery(String[] query, int[] stationList) {
         PrintWriter out = null;
-        /*
-        If date not in range return error and first possible result
-         */
-        //TODO: Comments
-        //TODO: Add an error on error
-        /*
-         *0 AUTHENTICATION_ID
-         *1 SELECT
-         *2 fields+to+select+separated+by+a+plus+sign
-         *3 FROM
-         *4 stations+to+query+separated+by+plus+sign
-         *5 BETWEEN | AT
-         *6(7) T1>DATA<T2 | TIMESTAMP
-         *7/8 PER
-         *8/9 SEC/MIN/HOUR
-         */
         try {
+            // Create a PrintWriter
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             switch (query[1].toLowerCase()) {
                 case "select":
-                    // Get a list of all the fields
+                    // Validate all user input
                     String[] fields = query[2].split("\\,");
                     if (fields.length < 1) {
-                        System.out.println("No fields requested.");
-                        QueryResult tempQR = new QueryResult();
-                        tempQR.setStatus(STATE.ERROR);
-                        tempQR.setErrorMessage("No fields requested.");
-                        tempQR.writeToStream(out);
-                        break; // Break when there's no actual requested field
+                        new QueryResult().writeError(out, "No fields were requested.");
+                        break;
                     }
                     if (!verifyFields(fields)) {
-                        System.out.println("Invalid columns requested.");
-                        QueryResult tempQR = new QueryResult();
-                        tempQR.setStatus(STATE.ERROR);
-                        tempQR.setErrorMessage("Invalid columns requested.");
-                        tempQR.writeToStream(out);
+                        new QueryResult().writeError(out, "Invalid columns requested.");
                         break;
                     }
                     if (!query[3].toLowerCase().equals("from")) {
-                        System.out.println("Invalid syntax at segment 3.");
-                        QueryResult tempQR = new QueryResult();
-                        tempQR.setStatus(STATE.ERROR);
-                        tempQR.setErrorMessage("Invalid syntax at segment 3.");
-                        tempQR.writeToStream(out);
+                        new QueryResult().writeError(out, "Invalid syntax at segment 3.");
                         break;
                     }
                     String[] stations = query[4].split("\\,");
                     if (stations.length < 1 || !verifyStations(stations, stationList)) {
-                        System.out.println("No permissions to access requested stations.");
-                        QueryResult tempQR = new QueryResult();
-                        tempQR.setStatus(STATE.ERROR);
-                        tempQR.setErrorMessage("No permissions to access requested stations.");
-                        tempQR.writeToStream(out);
+                        new QueryResult().writeError(out, "No permissions to access requested stations.");
                         break;
                     }
                     if(!query[5].toLowerCase().equals("between")) {
-                        System.out.println("Invalid syntax at segment 5.");
-                        QueryResult tempQR = new QueryResult();
-                        tempQR.setStatus(STATE.ERROR);
-                        tempQR.setErrorMessage("Invalid syntax at segment 5.");
-                        tempQR.writeToStream(out);
+                        new QueryResult().writeError(out, "Invalid syntax at segment 5.");
                         break;
                     }
+                    // Execute the query
                     for(String station : stations)
                         new QueryExecutor(this.model, this, station, query, out).executeQuery();
-
                     break;
 
                 default:
-                    System.out.println("Invalid syntax at segment 1.");
-                    QueryResult tempQR = new QueryResult();
-                    tempQR.setStatus(STATE.ERROR);
-                    tempQR.setErrorMessage("Invalid syntax at segment 1.");
-                    tempQR.writeToStream(out);
+                    new QueryResult().writeError(out, "Invalid syntax at segment 1.");
                     break;
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            //if( out != null)
-            //    out.close();
         }
     }
 

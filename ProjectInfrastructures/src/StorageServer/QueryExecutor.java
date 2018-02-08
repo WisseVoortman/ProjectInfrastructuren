@@ -3,21 +3,17 @@ package StorageServer;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-//TODO: Documentation
-@SuppressWarnings("Duplicates")
+/**
+ * Class that will actually execute the query
+ */
 public class QueryExecutor {
     private ServerMain model;
     private QueryClient client;
@@ -33,6 +29,9 @@ public class QueryExecutor {
         this.out = out;
     }
 
+    /**
+     * Main method for query handling
+     */
     public void executeQuery() {
         try {
             int timeFrom = Integer.parseInt(query[6]);
@@ -52,13 +51,15 @@ public class QueryExecutor {
             }
             // Does the station exist?
             if(!new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/").exists()) {
-                //TODO: this
+                new QueryResult().writeError(out, "No station with ID: " + this.stationNumber + " exists.");
+                return;
             }
             // Does the station have any files?
             //TODO:FIx nullpointer
             if(Objects.requireNonNull(new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/")
                     .listFiles((dir1, name) -> name.endsWith(".dat"))).length < 1) {
-                //TODO: this
+                new QueryResult().writeError(out, "Station with ID: " + this.stationNumber + " has no data.");
+                return;
             }
 
             // Get DateObjects from time strings
@@ -83,14 +84,11 @@ public class QueryExecutor {
             fileNameList.clear();
             fileNameList.addAll(lhs);
             Collections.sort(fileNameList);
-            // Test send
-            QueryResult tempQR = new QueryResult(Integer.parseInt(stationNumber));
-            tempQR.setStatus(STATE.OK);
-            //tempQR.writeToStream(out, fileNameList);
 
             // Do we have any data in our list
             if(fileNameList.size() < 1) {
-                //TODO: handle
+                new QueryResult().writeError(out, "No data has been found for this query.");
+                return;
             }
 
             // Get a list of all the files
@@ -155,19 +153,16 @@ public class QueryExecutor {
                                 switch(Tools.FIELD_LIST.get(column).type) {
                                     case Byte:
                                         raf.seek(index + Tools.FIELD_LIST.get(column).offset);
-                                        System.out.println("Reading: " + index + Tools.FIELD_LIST.get(column).offset);
                                         tempDataSeconds.get(column).add(raf.readByte());
                                         break;
 
                                     case Short:
                                         raf.seek(index + Tools.FIELD_LIST.get(column).offset);
-                                        System.out.println("Reading: " + index + Tools.FIELD_LIST.get(column).offset);
                                         tempDataSeconds.get(column).add(raf.readShort());
                                         break;
 
                                     case Integer:
                                         raf.seek(index + Tools.FIELD_LIST.get(column).offset);
-                                        System.out.println("Reading: " + index + Tools.FIELD_LIST.get(column).offset);
                                         tempDataSeconds.get(column).add(raf.readInt());
                                         break;
                                 }
@@ -231,6 +226,8 @@ public class QueryExecutor {
                         }
                         // If end of file, send data regardless or timeTo has been reached
                         if(time > timeTo || index >= fileSize - 25) {
+                            if(per.equalsIgnoreCase("sec"))
+                                break;
 
                             if(per.equalsIgnoreCase("minute") || per.equalsIgnoreCase("hour")){
                                 // Get average if we have reached 60 seconds
@@ -303,30 +300,4 @@ public class QueryExecutor {
             e.printStackTrace();
         }
     }
-
-
-    //TODO: Add per clause
-
-    /*
-     *0 AUTHENTICATION_ID
-     *1 SELECT
-     *2 fields+to+select+separated+by+a+plus+sign
-     *3 FROM
-     *4 stations+to+query+separated+by+plus+sign
-     *5 BETWEEN | AT
-     *6(7) T1>DATA<T2 | TIMESTAMP
-     *8 PER
-     *9 SEC/MIN/HOUR
-     */
-
-            /*
-                            if(query[5].toLowerCase().equals("at")) {
-
-                }else if(query[5].toLowerCase().equals("between")) {
-
-                }else{
-                    System.out.println("Invalid syntax at segment 5.");
-                    break;
-                }
-             */
 }
