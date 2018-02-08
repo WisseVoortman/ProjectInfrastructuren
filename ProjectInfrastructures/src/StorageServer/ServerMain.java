@@ -29,7 +29,7 @@ class ServerMain {
 
         // Assign threads to the servers
         this.serverPool.execute(new DataReceiver( this, _portData ));
-        //this.serverPool.execute(new QueryHandler( this ));
+        this.serverPool.execute(new QueryHandler( this, _portQuery));
     }
 
     public void run() {

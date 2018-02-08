@@ -3,7 +3,7 @@ var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div> '
 var customhtml = '<div class="selector" id="custom_selector"><h3>Select options to create a graph:</h3><table class="selector-table"><tr></tr><tr><th>start date and time:</th><td><input type="date" id="startDate"></td><td><input type="time" id="startName"></td></tr><tr><th>end date and time:</th><td><input type="date" id="endDate"></td><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"></th></tr></table></div><div class="selector" id="selector-graph"><p><b>Select a graph:</b></p><select id="selector-select-graph"><option value="temperature" id="selector-option-temp">Temperature</option><option value="rain" id="selector-option-rain">Rainfall</option><option value="snowfall" id="selector-option-snowfall">Snowfall</option></select><select id="selector-select-graph-time"><option value="hour" id="selector-option-hour">Hour</option><option value="minute" id="selector-option-minute">Minute</option><option value="second" id="selector-option-second">Second</option></select></div>';
 var allhtml = temphtml + "" + downfallhtml;
 var previousButton;
-var errorhtml = '<p class="error dashboard-error-message"><b>No internet connection</b></p>';
+var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa-exclamation-triangle"></span>No internet connection</b></p>';
 
  function setDashboardItemWidth() {
 	  var dashboardItems = document.getElementsByClassName("dashboardItem");
@@ -54,7 +54,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-rainfall';
-	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="">' + stationSelectorGenerator() + '</div>' + downfallhtml;
+	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="downfallSelectorWrapper">' + stationSelectorGenerator() + '</div>' + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
 	  downfallGraph();
@@ -66,8 +66,12 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
 		if(check_id_not_null()) {
 			buttonReset();
 			previousButton = 'button-selection-option-custom';
-			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
+			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customSelectorWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
 			configureButton();
+      /*TO DO graph
+      var graphHeight = window.getComputedStyle(document.getElementById("customGraph")).getPropertyValue('height');
+      document.getElementById("customSelectorWrapper").style.height = graphHeight;
+      */
     }
   }
   function readForm() {
@@ -137,4 +141,4 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
   		alert("imperial");
   	}
   }
-setInterval(function(){handleQuery()}, 1000)
+//setInterval(function(){handleQuery()}, 1000)

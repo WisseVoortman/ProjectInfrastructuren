@@ -24,13 +24,14 @@ public class QueryResult {
 
     public QueryResult(){init();}
 
-    public QueryResult(int stationNumber){ this.setStationNumber(stationNumber); init();}
+    public QueryResult(int stationNumber){ this.stationNumber = stationNumber; init();}
 
     private void init() {
         this.status = STATE.UNMODIFIED; // Unmodified state
-        if(stationNumber == 0) // No ID has been provided
+        if(this.stationNumber == 0) // No ID has been provided
             this.stationNumber = -1;
         this.error = ""; // Initialize
+        this.results = new ArrayList<>();
     }
 
     public void setStationNumber(int stationNumber) {
@@ -50,7 +51,34 @@ public class QueryResult {
     }
 
     public synchronized void writeToStream(PrintWriter out) {
+        String output = "";
+        output += status + "|" + this.error + "|" + this.stationNumber + "|" + this.results.size() + "|";
+        for(QueryCol col : results) {
+            switch(col.column.type)  {
+                case Byte:
+                    output += col.column.columnName + ":" + (((byte)col.val) / col.column.multiplier) + "|";
+                    break;
 
+                case Short:
+                    output += col.column.columnName + ":" + (((short)col.val) / col.column.multiplier) + "|";
+                    break;
+
+                case Integer:
+                    output += col.column.columnName + ":" + (((int)col.val) / col.column.multiplier) + "|";
+                    break;
+            }
+        }
+        results.clear();
+        System.out.println(output);
+        out.print(output);
+    }
+
+    public synchronized void writeToStream(PrintWriter out, ArrayList<String> sL) {
+        String sN = this.status.getValue() + "|" + this.error + "|" + sL.size() + "|";
+        for(String s : sL)
+            sN += s+";";
+        out.println(sN);
+        //out.println( + this.results.size() + "\r\n");
     }
 
 }

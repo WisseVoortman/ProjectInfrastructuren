@@ -30,15 +30,18 @@ public class DataReceiverClient implements Runnable {
             // Open a stream
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
-            // Serialize object from stream
-            Measurement measurement = (Measurement)in.readObject();
-            ++this.model.tVar;
+            while(true) {
+                // Serialize object from stream
+                Measurement measurement = (Measurement) in.readObject();
+                saveToDisk(measurement);
+            }
+            //++this.model.tVar;
 
             // Close stream and connection
-            in.close(); clientSocket.close();
+            //in.close(); clientSocket.close();
 
             // Write data to disk
-            saveToDisk(measurement);
+            //saveToDisk(measurement);
         } catch (IOException e) {
             System.out.println("Failed to open input stream.");
         } catch (ClassNotFoundException e) {
