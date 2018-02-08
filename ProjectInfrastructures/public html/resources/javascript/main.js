@@ -54,7 +54,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-rainfall';
-	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="">' + stationSelectorGenerator() + '</div>' + downfallhtml;
+	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="downfallSelectorWrapper">' + stationSelectorGenerator() + '</div>' + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
 	  downfallGraph();
@@ -66,8 +66,12 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 		if(check_id_not_null()) {
 			buttonReset();
 			previousButton = 'button-selection-option-custom';
-			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
+			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customSelectorWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
 			configureButton();
+      /*TO DO graph
+      var graphHeight = window.getComputedStyle(document.getElementById("customGraph")).getPropertyValue('height');
+      document.getElementById("customSelectorWrapper").style.height = graphHeight;
+      */
     }
   }
   function readForm() {
