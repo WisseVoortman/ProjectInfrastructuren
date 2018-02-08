@@ -96,10 +96,45 @@ h1 {
 
 /* selector */
 .selector {
-	max-width: 30%;
+	width: 100%;
 	padding-left: 1%;
 	padding-bottom:2%;
     
+}
+
+.SelectorWrapper {
+	float: left;
+	width: 20%;
+	padding-top: 0.5%;
+	padding-left: 1%;
+	display: block;
+	overflow: hidden;
+	max-width: 20%;
+}
+
+.stationSelector {
+	background-color: #f7f7f7;
+	border: solid;
+	border-width: 2%;
+	border-color: #f5f5f5;
+	width: 100%;
+	display: block;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	max-height: 80%;
+}
+
+#selector-graph {
+	height: 100%;
+	width: 100%;
+}
+
+#selector-graph select {
+	border: none;
+	font-size:15px;
+	padding: 3%;
+	background-color: #f7f7f7;
+	border-color: #f7f7f7;
 }
 
 table.selector-table{
@@ -153,35 +188,9 @@ input[type=date], input[type=time]{
     color: white;
 }
 
-.downfallSelectorWrapper {
-	float: left;
-	width: 20%;
-	padding-top: 0.5%;
-	padding-left: 1%;
-	display: block;
-	overflow: hidden;
-}
 
-.downfallSelectorWrapper .customSelectorWrapper {
-	float: left;
-	width: 20%;
-	padding-top: 0.5%;
-	padding-left: 1%;
-	display: block;
-	overflow: hidden;
-}
 
-.stationSelector {
-	background-color: #f7f7f7;
-	border: solid;
-	border-width: 2%;
-	border-color: #f5f5f5;
-	width: 100%;
-	display: block;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	max-height: 80%;
-}
+
 .stationSelectorCheckbox {
 	
 }
@@ -273,19 +282,5 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 /**/
-#selector-graph {
-	height: 10%;
-	overflow: hidden;
-	width: 25%;
-}
 
-#selector-graph select {
-	border: none;
-	font-size:15px;
-	height: 12%;
-	width: 35%;
-	padding: 3%;
-	background-color: #f7f7f7;
-	border-color: #f7f7f7;
-}
 

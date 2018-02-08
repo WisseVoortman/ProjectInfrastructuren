@@ -10,12 +10,10 @@ function stationSelectorGenerator (){
 	}
 
 	var stationSelector = [
-		'<div class="downfallSelectorWrapper" id="downfallSelectorWrapper">',
 			'<div class="stationSelector" id="downfallSelector">',
 				'<label><input class="stationSelectorCheckbox" type="checkbox" onClick="toggleAll(this);" value="selectAll">Select All</label><br>',
 				stationListSelectorBoxes,
 			'</div>',
-			'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit</button>',
-		'</div>'].join("\n");
+			'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit</button>'].join("\n");
 	return stationSelector;
 }

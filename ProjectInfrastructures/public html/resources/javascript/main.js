@@ -54,7 +54,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-rainfall';
-	  document.getElementById("dashboard-items").innerHTML = stationSelectorGenerator() + downfallhtml;
+	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="">' + stationSelectorGenerator() + '</div>' + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
 	  downfallGraph();
@@ -66,7 +66,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b>No internet connect
 		if(check_id_not_null()) {
 			buttonReset();
 			previousButton = 'button-selection-option-custom';
-			document.getElementById("dashboard-items").innerHTML = '<div class="customSelectorWrapper" id="customWrapper">' + customhtml + stationSelectorGenerator() + '</div>';
+			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
 			configureButton();
     }
   }
