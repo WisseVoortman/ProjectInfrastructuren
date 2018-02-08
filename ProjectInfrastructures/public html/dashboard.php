@@ -25,7 +25,7 @@
 					<span id="switch-selection-text-metric" class="switch-selection-text">Imperial</span>
 				</div>
 				<div class="user-profile">
-					<?php if($user_found == true) {echo '<span class="fas fa-user"></span><span class="switch-selection-text">Welcome,</span>' . $_SESSION['username'];} echo ''; ?>
+					<?php if($user_found == true) {echo '<span class="fas fa-user"></span>Welcome,' . $_SESSION['username'];} ?>
 				</div>
 			</div>
 		</nav>
