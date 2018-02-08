@@ -29,22 +29,26 @@ public class QueryClient implements Runnable {
                             new InputStreamReader(clientSocket.getInputStream()));
 
             // Read query
-            String query = "id SELECT stationid+timestamp+temperature+downfall+snowfall FROM 12345+12346 BETWEEN T1 AND T2";//in.readLine();
+            String query = in.readLine();//"id SELECT stationid+timestamp+temperature+downfall+snowfall FROM 12345+12346 BETWEEN T1 AND T2";//in.readLine();
             System.out.println("Query: " + query);
 
             // Split query into individual pieces
             String[] qry = query.trim().split("\\s");
 
+            // Make sure query is has enough segments
+            if(qry.length < 7)
+                throw new Exception("Invalid query.");
+
             // Handle authentication
             int[] stationList = handleAuthentication(qry[0]);
             if(stationList.length == 1 && stationList[0] == -1)
-                throw new Exception("Invalid user");
+                throw new Exception("Invalid user.");
 
             // Handle the query
             executeQuery(qry, stationList);
 
             // Close stream and connection
-            in.close(); clientSocket.close();
+            //in.close(); clientSocket.close();
 
         } catch (IOException e) {
             System.out.println("Failed to open input stream.");
@@ -63,7 +67,8 @@ public class QueryClient implements Runnable {
         //TODO: Add actual authentication
         return new int[] {
                 22300,
-                39550
+                39550,
+                222690
         };
         //return new int[] { -1 };
     }
@@ -97,7 +102,7 @@ public class QueryClient implements Runnable {
             switch (query[1].toLowerCase()) {
                 case "select":
                     // Get a list of all the fields
-                    String[] fields = query[2].split("\\+");
+                    String[] fields = query[2].split("\\,");
                     if (fields.length < 1) {
                         System.out.println("No fields requested.");
                         QueryResult tempQR = new QueryResult();
@@ -122,7 +127,7 @@ public class QueryClient implements Runnable {
                         tempQR.writeToStream(out);
                         break;
                     }
-                    String[] stations = query[4].split("\\+");
+                    String[] stations = query[4].split("\\,");
                     if (stations.length < 1 || !verifyStations(stations, stationList)) {
                         System.out.println("No permissions to access requested stations.");
                         QueryResult tempQR = new QueryResult();
@@ -131,31 +136,7 @@ public class QueryClient implements Runnable {
                         tempQR.writeToStream(out);
                         break;
                     }
-                    if (query[5].toLowerCase().equals("at") || query[5].toLowerCase().equals("between")) {
-                        boolean multiRun = false;
-                        if (query[5].toLowerCase().equals("at")) {
-                            // Calculate probable data usage
-                            if((query[2].length() * query[4].length() * 60) < 8000) {
-                                multiRun = true;
-                                ArrayList<QueryResult> results = new ArrayList<>();
-                                for (String station : stations)
-                                    this.model.getQueryPool().execute(new QueryExecutorMulti(
-                                            this.model, this, station, query, results
-                                    ));
-
-                                while (results.size() != stations.length)
-                                    Thread.yield();
-
-                                for (QueryResult result : results)
-                                    result.writeToStream(out);
-                            }
-                        }
-                        if (query[5].toLowerCase().equals("between") || !multiRun) {
-                            for(String station : stations)
-                                new QueryExecutorSingle(this.model, this, station, query).executeQuery();
-                        }
-
-                    } else {
+                    if(!query[5].toLowerCase().equals("between")) {
                         System.out.println("Invalid syntax at segment 5.");
                         QueryResult tempQR = new QueryResult();
                         tempQR.setStatus(STATE.ERROR);
@@ -163,6 +144,9 @@ public class QueryClient implements Runnable {
                         tempQR.writeToStream(out);
                         break;
                     }
+                    for(String station : stations)
+                        new QueryExecutor(this.model, this, station, query, out).executeQuery();
+
                     break;
 
                 default:
@@ -176,8 +160,8 @@ public class QueryClient implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            if( out != null)
-                out.close();
+            //if( out != null)
+            //    out.close();
         }
     }
 
@@ -187,9 +171,10 @@ public class QueryClient implements Runnable {
      * @return whether all fields are available
      */
     private boolean verifyFields(String[] fields) {
-        for (String field : fields)
+        for (String field : fields) {
             if (!Tools.FIELD_LIST.containsKey(field))
                 return false;
+        }
         return true;
     }
 

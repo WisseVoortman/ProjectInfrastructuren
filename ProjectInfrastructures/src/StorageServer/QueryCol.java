@@ -1,9 +1,9 @@
 package StorageServer;
 
 class QueryCol {
-    private ColumnInfo column;
-    private Object val;
-    private int timestamp;
+    public final ColumnInfo column;
+    public final Object val;
+    public final int timestamp;
 
     public QueryCol(ColumnInfo column, Object val, int timestamp) {
         this.column = column;

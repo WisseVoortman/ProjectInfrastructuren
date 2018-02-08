@@ -47,6 +47,7 @@ public class DataReceiver implements Runnable {
                 // Accept a socket
                 Socket clientSocket = this.receiver.accept();
                 // Create new thread and assign it to the new client
+                System.out.println("Accepted client.");
                 this.model.getDataPool().execute(new DataReceiverClient(this.model, clientSocket));
             } catch( IOException e ) {
                 System.out.println( "Failed to accept client.\t" + e.toString() );

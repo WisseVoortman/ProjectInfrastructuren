@@ -49,7 +49,7 @@ public class QueryExecutorMulti implements Runnable{
             String directory = this.model.CUR_PATH + "/data/" + stationNumber + "/";
             File file = new File(this.model.CUR_PATH + "/data/" + stationNumber + "/" + fileName);
             if(!file.exists()) {// Try to find the closest file
-                // Get filelist
+                // Get file list
                 File[] files = new File(directory).listFiles((dir1, name) -> name.endsWith(".dat"));
                 // Make sure there are files
                 if((files != null ? files.length : 0) < 1) {
@@ -121,8 +121,11 @@ public class QueryExecutorMulti implements Runnable{
             }else {
                 //TODO: Make it look for the right time
                 // Find approx. time
-                //TODO: If on wrong day, find right time for this day (subtract x days?)
-                index = (reqDate - foundDate) * 25;
+                if(new Date(reqDate).getDate() < new Date(foundDate).getDate())
+                    index = (reqDate - foundDate) - (int)ChronoUnit.DAYS.between( new Date(reqDate).toInstant(), new Date(foundDate).toInstant() ) * 25;
+                else
+                    index = (reqDate - foundDate) * 25;
+                System.out.println("IDX: " + index);
                 raf.seek(index);
                 int foundTime = raf.readInt();
                 

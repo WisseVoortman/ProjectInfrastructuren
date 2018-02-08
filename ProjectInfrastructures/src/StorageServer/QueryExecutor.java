@@ -7,13 +7,14 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 //TODO: Documentation
 @SuppressWarnings("Duplicates")
@@ -40,14 +41,263 @@ public class QueryExecutor {
             byte[] Int = new byte[4];
             byte[] Byte = new byte[1];
 
+            // Are the dates valid?
+            if(timeFrom > timeTo) {
+                QueryResult tempQR = new QueryResult();
+                tempQR.setStatus(STATE.ERROR);
+                tempQR.setErrorMessage("Start date is later than end date.");
+                tempQR.writeToStream(out);
+
+                return;
+            }
+            // Does the station exist?
+            if(!new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/").exists()) {
+                //TODO: this
+            }
+            // Does the station have any files?
+            //TODO:FIx nullpointer
+            if(Objects.requireNonNull(new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/")
+                    .listFiles((dir1, name) -> name.endsWith(".dat"))).length < 1) {
+                //TODO: this
+            }
+
             // Get DateObjects from time strings
             Date dateFrom = new Date(timeFrom * 1000L);
+            LocalDate dateStart = dateFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Date dateTo = new Date(timeTo * 1000L);
+            LocalDate dateEnd = dateTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             // Generate filenames based on dates
+            List<LocalDate> dateList = IntStream.iterate(0, i -> i + 1)
+                    .limit(ChronoUnit.DAYS.between(dateStart.minusDays(1), dateEnd))
+                    .mapToObj(i -> dateStart.plusDays(i))
+                    .collect(Collectors.toList());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+            ArrayList<String> fileNameList = new ArrayList<>();
 
+            for(LocalDate Date : dateList) {
+                fileNameList.add(this.model.CUR_PATH + "/data/" + this.stationNumber + "/" + this.stationNumber + "_" + Date.format(formatter) + ".dat");
+            }
+            // Remove possible duplicates
+            LinkedHashSet<String> lhs = new LinkedHashSet<String>(fileNameList);
+            fileNameList.clear();
+            fileNameList.addAll(lhs);
+            Collections.sort(fileNameList);
+            // Test send
+            QueryResult tempQR = new QueryResult(Integer.parseInt(stationNumber));
+            tempQR.setStatus(STATE.OK);
+            //tempQR.writeToStream(out, fileNameList);
 
-            // Get a list of all necessary files
+            // Do we have any data in our list
+            if(fileNameList.size() < 1) {
+                //TODO: handle
+            }
+
+            // Get a list of all the files
+            File[] files = new File[fileNameList.size()];
+            for(int i = 0; i < fileNameList.size(); i++) {
+                files[i] = new File(fileNameList.get(i));
+            }
+            // Resolve per
+            String per = "SEC";
+            if(query.length >= 9)
+                per = query[9].toUpperCase();
+            if(!per.equals("SEC") && !per.equals("MINUTE") && !per.equals("HOUR"))
+                per = "SEC";
+
+            // Start initial
+            //TODO: Initializer
+            QueryResult result = new QueryResult(Integer.parseInt(this.stationNumber));
+            result.setStatus(STATE.OK);
+
+            // Go through all files
+            for(int i = 0; i < files.length; i++) {
+                long fileSize = files[i].length();
+                RandomAccessFile raf = new RandomAccessFile(files[i].getAbsolutePath(), "r");
+                HashMap<String, ArrayList<Object>> tempDataSeconds = new HashMap<>();
+                HashMap<String, ArrayList<Object>> tempDataMinutes = new HashMap<>();
+                for(ColumnInfo col : Tools.FIELD_LIST.values()) {
+                    tempDataSeconds.put(col.columnName, new ArrayList<Object>());
+                    tempDataMinutes.put(col.columnName, new ArrayList<Object>());
+                }
+
+                for(long index = 0; index < fileSize; index += 25) {
+                    boolean send = false;
+                    // Wait till we find the right timestamp
+                    //TODO: Fix wrong time
+                    raf.seek(index);
+                    int time = raf.readInt();
+                    if(time >= timeFrom && time <= timeTo) {
+                        if(per.equalsIgnoreCase("sec")) {
+                            for(String column : query[2].split("\\,")) {
+                                switch(Tools.FIELD_LIST.get(column).type) {
+                                    case Byte:
+                                        raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                                        result.addResult( new QueryCol(Tools.FIELD_LIST.get(column), raf.readByte(), time) );
+                                        break;
+
+                                    case Short:
+                                        raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                                        result.addResult( new QueryCol(Tools.FIELD_LIST.get(column), raf.readShort(), time) );
+                                        break;
+
+                                    case Integer:
+                                        raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                                        result.addResult( new QueryCol(Tools.FIELD_LIST.get(column), raf.readInt(), time) );
+                                        break;
+                                }
+                            }
+                            result.writeToStream(out);
+                            // Send data right away
+                        }else {
+                            // Accumulate data
+                            for(String column : query[2].split("\\,")) {
+                                switch(Tools.FIELD_LIST.get(column).type) {
+                                    case Byte:
+                                        raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                                        System.out.println("Reading: " + index + Tools.FIELD_LIST.get(column).offset);
+                                        tempDataSeconds.get(column).add(raf.readByte());
+                                        break;
+
+                                    case Short:
+                                        raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                                        System.out.println("Reading: " + index + Tools.FIELD_LIST.get(column).offset);
+                                        tempDataSeconds.get(column).add(raf.readShort());
+                                        break;
+
+                                    case Integer:
+                                        raf.seek(index + Tools.FIELD_LIST.get(column).offset);
+                                        System.out.println("Reading: " + index + Tools.FIELD_LIST.get(column).offset);
+                                        tempDataSeconds.get(column).add(raf.readInt());
+                                        break;
+                                }
+                            }
+                            if(per.equalsIgnoreCase("minute") || per.equalsIgnoreCase("hour")){
+                                // Get average if we have reached 60 seconds
+                                for(String column : query[2].split("\\,")) {
+                                    if(tempDataSeconds.get(column).size() == 60) {
+                                        if(per.equalsIgnoreCase("minute"))
+                                            send = true;
+                                        if(Tools.FIELD_LIST.get(column).average) {
+                                            Double avg = tempDataSeconds.get(column).stream()
+                                                    .mapToInt(a -> (int) a)
+                                                    .average()
+                                                    .orElse(0);
+                                            if(per.equalsIgnoreCase("minute"))
+                                                result.addResult(new QueryCol(Tools.FIELD_LIST.get(column), avg, time));
+                                            else
+                                                tempDataMinutes.get(column).add(avg);
+                                        }else{
+                                            if(per.equalsIgnoreCase("minute"))
+                                                result.addResult(new QueryCol(Tools.FIELD_LIST.get(column),
+                                                        tempDataSeconds.get(column)
+                                                        .get(tempDataSeconds.get(column).size()-1), time));
+                                            else
+                                                tempDataMinutes.get(column).add(tempDataSeconds.get(column)
+                                                        .get(tempDataSeconds.get(column).size()-1));
+                                        }
+                                        tempDataSeconds.get(column).clear();
+                                    }
+                                }
+                                if(per.equalsIgnoreCase("hour")) {
+                                    // Get average if we have reached 60 minutes
+                                    for(String column : query[2].split("\\,")) {
+                                        if(tempDataMinutes.get(column).size() == 60) {
+                                            if(per.equalsIgnoreCase("hour"))
+                                                send = true;
+                                            if(Tools.FIELD_LIST.get(column).average) {
+                                                Double avg = tempDataMinutes.get(column).stream()
+                                                        .mapToInt(a -> (int) a)
+                                                        .average()
+                                                        .orElse(0);
+                                                if(per.equalsIgnoreCase("hour"))
+                                                    result.addResult(new QueryCol(Tools.FIELD_LIST.get(column), avg, time));
+                                            }else{
+                                                if(per.equalsIgnoreCase("hour"))
+                                                    result.addResult(new QueryCol(Tools.FIELD_LIST.get(column),
+                                                            tempDataMinutes.get(column)
+                                                                    .get(tempDataMinutes.get(column).size()-1), time));
+                                            }
+                                            tempDataMinutes.get(column).clear();
+                                        }
+                                    }
+                                }
+
+                                if(send) {
+                                    // Send the data
+                                    result.writeToStream(out);
+                                }
+                            }
+                        }
+                        // If end of file, send data regardless or timeTo has been reached
+                        if(time > timeTo || index >= fileSize - 25) {
+
+                            if(per.equalsIgnoreCase("minute") || per.equalsIgnoreCase("hour")){
+                                // Get average if we have reached 60 seconds
+                                for(String column : query[2].split("\\,")) {
+                                    if(tempDataSeconds.get(column).size() > 0) {
+                                        if(per.equalsIgnoreCase("minute"))
+                                            send = true;
+                                        if(Tools.FIELD_LIST.get(column).average) {
+                                            Double avg = tempDataSeconds.get(column).stream()
+                                                    .mapToInt(a -> (int) a)
+                                                    .average()
+                                                    .orElse(0);
+                                            if(per.equalsIgnoreCase("minute"))
+                                                result.addResult(new QueryCol(Tools.FIELD_LIST.get(column), avg, time));
+                                            else
+                                                tempDataMinutes.get(column).add(avg);
+                                        }else{
+                                            if(per.equalsIgnoreCase("minute"))
+                                                result.addResult(new QueryCol(Tools.FIELD_LIST.get(column),
+                                                        tempDataSeconds.get(column)
+                                                                .get(tempDataSeconds.get(column).size()-1), time));
+                                            else
+                                                tempDataMinutes.get(column).add(tempDataSeconds.get(column)
+                                                        .get(tempDataSeconds.get(column).size()-1));
+                                        }
+                                        tempDataSeconds.get(column).clear();
+                                    }
+                                }
+                                if(per.equalsIgnoreCase("hour")) {
+                                    // Get average if we have reached 60 minutes
+                                    for(String column : query[2].split("\\,")) {
+                                        if(tempDataMinutes.get(column).size() > 0) {
+                                            if(per.equalsIgnoreCase("hour"))
+                                                send = true;
+                                            if(Tools.FIELD_LIST.get(column).average) {
+                                                Double avg = tempDataMinutes.get(column).stream()
+                                                        .mapToInt(a -> (int) a)
+                                                        .average()
+                                                        .orElse(0);
+                                                if(per.equalsIgnoreCase("hour"))
+                                                    result.addResult(new QueryCol(Tools.FIELD_LIST.get(column), avg, time));
+                                            }else{
+                                                if(per.equalsIgnoreCase("hour"))
+                                                    result.addResult(new QueryCol(Tools.FIELD_LIST.get(column),
+                                                            tempDataMinutes.get(column)
+                                                                    .get(tempDataMinutes.get(column).size()-1), time));
+                                            }
+                                            tempDataMinutes.get(column).clear();
+                                        }
+                                    }
+                                }
+
+                                if(send) {
+                                    // Send the data
+                                    result.writeToStream(out);
+                                }
+                            }
+
+                            break; // We've got all our data
+                        }
+                    }
+                }
+            }
+
+            // End
+            //TODO: End
+            out.println();
 
         }catch(Exception e) {
             e.printStackTrace();
@@ -65,8 +315,8 @@ public class QueryExecutor {
      *4 stations+to+query+separated+by+plus+sign
      *5 BETWEEN | AT
      *6(7) T1>DATA<T2 | TIMESTAMP
-     *7/8 PER
-     *8/9 SEC/MIN/HOUR
+     *8 PER
+     *9 SEC/MIN/HOUR
      */
 
             /*
