@@ -1,24 +1,24 @@
 <?php
-	$HOST = '145.33.225.7';
+	$HOST = '145.37.37.120';
 	$PORT = 30022;
 	$SOCKET = socket_create(AF_INET, SOCK_STREAM, 0);
 	
 	$CONNECTION = socket_connect($SOCKET, $HOST, $PORT)
 	or die("error: Unable to connect to Database\n");
 
-	$AUTHENTICATION_ID = "";
+	$AUTHENTICATION_ID = "1";
 	$FIELDS = $_POST['fields'];
 	$STATIONS = $_POST['stations'];
 	$WHEN = $_POST['when'];
 	$TIME = $_POST['time'];
 	$TIMEUNIT = $_POST['timeUnit'];
 	
-	$MESSAGE = $AUTHENTICATION_ID . "SELECT" . $FIELDS . FROM . $STATIONS . $WHEN . $TIME . "PER" . $TIMEUNIT;
+	$MESSAGE = $AUTHENTICATION_ID . " SELECT " . $FIELDS . " FROM " . $STATIONS . $WHEN . $TIME . " PER " . $TIMEUNIT;
 	
-	socket_write($sock, $MESSAGE . "\n", strlen($MESSAGE)+1);
+	socket_write($SOCKET, $MESSAGE . "\n\r\n", strlen($MESSAGE)+1);
 	
 	$DATA = socket_read($SOCKET, 10000, PHP_NORMAL_READ)
-		or die("error failed to recieve data from the Database\n");
+	or die("error failed to recieve data from the Database\n");
 	
 	socket_close($SOCKET);
 	
