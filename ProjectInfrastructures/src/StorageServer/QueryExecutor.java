@@ -42,11 +42,7 @@ public class QueryExecutor {
 
             // Are the dates valid?
             if(timeFrom > timeTo) {
-                QueryResult tempQR = new QueryResult();
-                tempQR.setStatus(STATE.ERROR);
-                tempQR.setErrorMessage("Start date is later than end date.");
-                tempQR.writeToStream(out);
-
+                new QueryResult().writeError(out, "Invalid date order");
                 return;
             }
             // Does the station exist?
@@ -55,7 +51,6 @@ public class QueryExecutor {
                 return;
             }
             // Does the station have any files?
-            //TODO:FIx nullpointer
             if(Objects.requireNonNull(new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/")
                     .listFiles((dir1, name) -> name.endsWith(".dat"))).length < 1) {
                 new QueryResult().writeError(out, "Station with ID: " + this.stationNumber + " has no data.");
@@ -107,6 +102,7 @@ public class QueryExecutor {
             //TODO: Initializer
             QueryResult result = new QueryResult(Integer.parseInt(this.stationNumber));
             result.setStatus(STATE.OK);
+            out.print("{\"station\":" + this.stationNumber + ",\"info\":[");
 
             // Go through all files
             for(int i = 0; i < files.length; i++) {
@@ -126,6 +122,10 @@ public class QueryExecutor {
                     raf.seek(index);
                     int time = raf.readInt();
                     if(time >= timeFrom && time <= timeTo) {
+                        boolean addComma;
+                        if(time == timeTo || index >= fileSize - 25) addComma = false;
+                        else addComma = true;
+
                         if(per.equalsIgnoreCase("sec")) {
                             for(String column : query[2].split("\\,")) {
                                 switch(Tools.FIELD_LIST.get(column).type) {
@@ -145,7 +145,7 @@ public class QueryExecutor {
                                         break;
                                 }
                             }
-                            result.writeToStream(out);
+                            result.writeToStream(out, addComma);
                             // Send data right away
                         }else {
                             // Accumulate data
@@ -175,7 +175,7 @@ public class QueryExecutor {
                                             send = true;
                                         if(Tools.FIELD_LIST.get(column).average) {
                                             Double avg = tempDataSeconds.get(column).stream()
-                                                    .mapToInt(a -> (int) a)
+                                                    .mapToDouble(a -> (double) a)
                                                     .average()
                                                     .orElse(0);
                                             if(per.equalsIgnoreCase("minute"))
@@ -202,7 +202,7 @@ public class QueryExecutor {
                                                 send = true;
                                             if(Tools.FIELD_LIST.get(column).average) {
                                                 Double avg = tempDataMinutes.get(column).stream()
-                                                        .mapToInt(a -> (int) a)
+                                                        .mapToDouble(a -> (double) a)
                                                         .average()
                                                         .orElse(0);
                                                 if(per.equalsIgnoreCase("hour"))
@@ -220,7 +220,7 @@ public class QueryExecutor {
 
                                 if(send) {
                                     // Send the data
-                                    result.writeToStream(out);
+                                    result.writeToStream(out, addComma);
                                 }
                             }
                         }
@@ -237,7 +237,7 @@ public class QueryExecutor {
                                             send = true;
                                         if(Tools.FIELD_LIST.get(column).average) {
                                             Double avg = tempDataSeconds.get(column).stream()
-                                                    .mapToInt(a -> (int) a)
+                                                    .mapToDouble(a -> (double) a)
                                                     .average()
                                                     .orElse(0);
                                             if(per.equalsIgnoreCase("minute"))
@@ -264,7 +264,7 @@ public class QueryExecutor {
                                                 send = true;
                                             if(Tools.FIELD_LIST.get(column).average) {
                                                 Double avg = tempDataMinutes.get(column).stream()
-                                                        .mapToInt(a -> (int) a)
+                                                        .mapToDouble(a -> (double) a)
                                                         .average()
                                                         .orElse(0);
                                                 if(per.equalsIgnoreCase("hour"))
@@ -282,7 +282,7 @@ public class QueryExecutor {
 
                                 if(send) {
                                     // Send the data
-                                    result.writeToStream(out);
+                                    result.writeToStream(out, addComma);
                                 }
                             }
 
@@ -293,8 +293,7 @@ public class QueryExecutor {
             }
 
             // End
-            //TODO: End
-            out.println();
+            out.println("]}");
 
         }catch(Exception e) {
             e.printStackTrace();

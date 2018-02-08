@@ -92,7 +92,6 @@ public class DataReceiverClient implements Runnable {
                 // Append our byte list to the file
                 try (FileOutputStream output = new FileOutputStream(file, true)) {
                     baos.writeTo(output);
-                    baos.flush();
                     baos.close();
                 }
 
