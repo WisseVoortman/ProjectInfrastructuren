@@ -1,10 +1,19 @@
 function handleQuery(){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function(){
+	var fields = '';
+	var stations = '';
+	var when = '';
+	var time = '';
+	var timeUnit = '';
+	
+	var sendThis = 'fields=' + fields + 'stations=' + stations + 'when=' + when + 'time=' + time + 'timeUnit=' + timeUnit;
+	var dataBaseRequest = new XMLHttpRequest();
+	dataBaseRequest.onreadystatechange = function(){
 		if (this.readyState == 4 && this.status == 200){
-			(console.log(this.response))
+			console.log(this.responseText);
+			document.getElementById("queryTest").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("POST", "/functions/dataQuerry.php", true);
-	xmlhttp.send();
+	dataBaseRequest.open("POST", "functions/dataQuerry.php", true);
+	dataBaseRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	dataBaseRequest.send(sendThis);
 }
