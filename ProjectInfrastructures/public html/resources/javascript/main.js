@@ -91,9 +91,10 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 	}
 	if (locations.length > 0){
 			time = Math.floor(((new Date()).getTime() /1000)-5);
-			var timeToSend ='';
+			var timeToSend ='';	
 			timeToSend += (time - 60) + " AND " + time;
-			handleQuery('precipitation', locations, timeToSend);		
+			var per = 'min'
+			handleQuery('precipitation', locations, timeToSend, per);		
 	}
   }
   function toggleAll(source){
