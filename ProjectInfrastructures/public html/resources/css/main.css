@@ -6,7 +6,6 @@ body {
 	margin: 0%;
 }
 
-
 /* Bordered form */
 form {
     border: 3;
@@ -218,7 +217,13 @@ input[type=date], input[type=time]{
 /*slider toggle div*/
 .switch-selection {
 	display:inline;
-	margin-left: 15%;
+	margin-left: 14%;
+	padding-right: 3%;
+}
+
+.user-profile {
+	display:inline;
+	color: white;
 }
 
 .switch-selection-text {
