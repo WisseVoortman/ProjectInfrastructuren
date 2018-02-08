@@ -32,8 +32,20 @@ public class StationBufferMap {
     //((StationBuffer) this.map.get(id)).addToQueue();
     //((StationBuffer) this.map.get(id)).printqueue();
 		
-	public void add(LinkedList<String> dataArray){
-		this.sendQueue.add(dataArray);
+	public synchronized void add(LinkedList<String> dataArray){
+		this.sendQueue.add(dataArray);	
+	}
+	
+	public synchronized LinkedList<String> getAndRemove(){
+		LinkedList<String> data = null;
+		if(getSendQueueSize() > 0){
+			data = (LinkedList<String>) this.sendQueue.removeFirst();
+		}
+		return data;
+	}
+	
+	public synchronized int getSendQueueSize(){
+		return this.sendQueue.size();
 	}
 	
 }//end of class

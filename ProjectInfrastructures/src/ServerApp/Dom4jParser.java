@@ -93,7 +93,8 @@ public class Dom4jParser implements Runnable{
 
 	         }
 	      } catch (DocumentException e) {
-	         e.printStackTrace();
+	         System.out.println("Parsing failed : " + e);
+	    	  e.printStackTrace();
 	      }
 	   }
 	

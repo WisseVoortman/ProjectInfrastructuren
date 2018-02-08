@@ -250,12 +250,16 @@ public class StationBuffer {
 	}
 	
 	public void addToSendQueue(StationBufferMap stationBufferMap){
-		LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
-		dataArray = (LinkedList<String>) this.queue.peek();
+				
 		if(this.queue.size() >=31){
+			LinkedList<String> dataArray = new LinkedList<String>(); // initiating an arraylist to add to the queue
+			
+			//retrieving the array to put in the sendqueue
+			dataArray = (LinkedList<String>) this.queue.peek();
+			
 			System.out.println("adding measurement to sendQueue...");
-			stationBufferMap.add(dataArray);
-			System.out.println("sendQueue size:" + stationBufferMap.getSendQueue().size());
+			stationBufferMap.add(dataArray); // <-- is synchronized
+			System.out.println("sendQueue size:" + stationBufferMap.getSendQueueSize());
 			this.queue.remove();
 			System.out.println("removing dataArray from the queue." + "new queue size: " + this.queue.size() );
 		}
