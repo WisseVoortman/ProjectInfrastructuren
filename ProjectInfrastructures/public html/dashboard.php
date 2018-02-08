@@ -10,12 +10,12 @@
 	<body>
 		<nav>
 			<div class="button-selection">
-				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option">Dashboard</button>
-				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option">Temperature</button> 
-				<button type="button" id="button-selection-option-rainfall" onclick="downfall();" class="button-selection-option">Rainfall</button>
-				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option">Snowfall</button>
-				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option">Custom</button>
-				<a href="logout.php"><button type="submit" id="button-selection-option-logout" class="button-selection-option">Logout</button></a>
+				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option"><span class="fas fa-home"></span>Dashboard</button>
+				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option"><span class="fas fa-tachometer-alt"></span>Temperature</button> 
+				<button type="button" id="button-selection-option-rainfall" onclick="downfall();" class="button-selection-option"><span class="fas fa-tint"></span>Rainfall</button>
+				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option"><span class="fas fa-snowflake"></span>Snowfall</button>
+				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option"><span class="fas fa-cogs"></span>Custom</button>
+				<a href="logout.php"><button type="submit" id="button-selection-option-logout" class="button-selection-option"><span class="fas fa-sign-out-alt"></span>Logout</button></a>
 				<button type="button" id="button-selection-option-internet" onclick="check_internet_connection();" class="button-selection-option">check internet</button>
 				<div class="switch-selection">
 					<span id="switch-selection-text-metric" class="switch-selection-text">Metric</span>

@@ -1,15 +1,13 @@
 <?php
 	session_start();
    	require_once("config.php");
-   	require_once("login.php");
-   	
+   	require_once("login.php");  	
    	if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
 		header("Location: dashboard.php");
 	}
 	if(isset($_POST["logout"]) && $_POST["logout"]) {
 		$_SESSION['loggedin'] = false;
 	}
-	
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +24,7 @@ include 'functions/head.php';
 	<div class="container login-container">
 		<form action="index.php" method="post">
 			<div class="container">
-				<?php if(!empty($error))  echo '<p class="error"><b>'. $error .'</b></p>';    ?>
+				<?php if(!empty($error))  echo '<p class="error"><span class="fas fa-exclamation-triangle"></span><b>'. $error .'</b></p>';    ?>
 				<label><b>Username</b></label>
 				<input type="text" placeholder="Enter Username" name="username" required>
 

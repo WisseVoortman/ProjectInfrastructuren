@@ -14,6 +14,6 @@ function stationSelectorGenerator (){
 				'<label><input class="stationSelectorCheckbox" type="checkbox" onClick="toggleAll(this);" value="selectAll">Select All</label><br>',
 				stationListSelectorBoxes,
 			'</div>',
-			'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit</button>'].join("\n");
+			'<button type="button" id="selectorSubmitButton" onclick="readForm();">Submit<span class="fas fa-sign-in-alt"></span></button>'].join("\n");
 	return stationSelector;
 }
