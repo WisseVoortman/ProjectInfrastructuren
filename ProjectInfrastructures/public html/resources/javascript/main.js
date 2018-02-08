@@ -141,4 +141,4 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
   		alert("imperial");
   	}
   }
-setInterval(function(){handleQuery()}, 1000)
+//setInterval(function(){handleQuery()}, 1000)

@@ -2,7 +2,7 @@ function handleQuery(){
 	var fields = 'timestamp,temperature';
 	var stations = '222690';
 	var when = ' BETWEEN ';
-	var time = '1518086989 and 1518086691'
+	var time = '1518089689 and 1518089691'
 	var timeUnit = 'sec';
 	console.log('queryStarted');
 	var sendThis = 'fields=' + fields + '&stations=' + stations + '&when=' + when + '&time=' + time + '&timeUnit=' + timeUnit;
