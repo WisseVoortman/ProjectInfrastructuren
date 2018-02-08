@@ -79,23 +79,25 @@ public class QueryResult {
      * @param out PrintWriter stream belonging to this client
      */
     public synchronized void writeToStream(PrintWriter out) {
-        String output = "";
-        output += status + "|" + this.error + "|" + this.stationNumber + "|" + this.results.size() + "|";
+        String output = "{";
+        int i = 0;
         for(QueryCol col : results) {
+            i++;
             switch(col.column.type)  {
                 case Byte:
-                    output += col.column.columnName + ":" + (byte)col.val + "|";
+                    output += "\"" + col.column.columnName + "\":" + (byte)col.val + (i == results.size() ? "" : ", ");
                     break;
 
                 case Short:
-                    output += col.column.columnName + ":" + Float.parseFloat(col.val.toString()) / col.column.multiplier  + "|";
+                    output += "\"" + col.column.columnName + "\":" + Float.parseFloat(col.val.toString()) / col.column.multiplier + (i == results.size() ? "" : ", ");
                     break;
 
                 case Integer:
-                    output += col.column.columnName + ":" + (int)col.val + "|";
+                    output += "\"" + col.column.columnName + "\":" + (int)col.val + (i == results.size() ? "" : ", ");
                     break;
             }
         }
+        output += "},";
         results.clear();
         System.out.println(output);
         out.print(output);
