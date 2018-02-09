@@ -270,6 +270,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 				},
 			}
 	  })}
+	  if (currentPage == 'temprature'){
 		DownfallGraphChart.update({
 			title: {
 				text: 'Temperature in the last hour per station'

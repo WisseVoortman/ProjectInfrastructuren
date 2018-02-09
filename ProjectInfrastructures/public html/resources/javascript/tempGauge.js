@@ -96,7 +96,6 @@ function tempGauge() {
         enabled: false
     }	
 },
-// Add some life
 function (chart) {
     if (!chart.renderer.forExport) {
         setInterval(function () {
