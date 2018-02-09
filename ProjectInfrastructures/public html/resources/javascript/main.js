@@ -108,10 +108,11 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 		window.alert("Select at least one station.");
 	}
 	if (locations.length > 0){
-			time = Math.floor((((new Date()).getTime() /1000)-60)/60);
+			time = Math.floor((((new Date()).getTime() /1000)-180)/60);
 			var timeToSend ='';
 			timeToSend += (time - 2)*60 + " AND " + time*60;
 			var per = 'min';
+			console.log(currentPage);
 			handleQuery('precipitation', locations, timeToSend, per, currentPage);		
 	}
   }

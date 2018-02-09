@@ -1,6 +1,6 @@
-function handleQuery(fields, stations, time, per, sender, currentPage){
+function handleQuery(fields, stations, time, per, currentPage, sender){
 	var fields = 'timestamp,' + fields;
-	console.log(fields);
+	console.log(currentPage);
 	console.log('queryStarted');
 	var sendThis = 'fields=' + fields + '&stations=' + stations + '&time=' + time + '&timeUnit=' + per;
 	console.log(sendThis);
@@ -35,11 +35,11 @@ function handleReturn(data){
 		}
 		for (object in array){
 			var graphData = JSON.parse(array[object]);
-			var graphSerie = []
+			var graphSerie = [];
 				for (g in graphData){
 					for (t in graphData[g]){
 						graphSerie.push(
-							{x: graphData[g][t]['time'], y: graphData[g][t]['temp']}
+							{x: graphData[g][t]['timestamp'], y: graphData[g][t]['precipitation']}
 						)
 					}
 				}
