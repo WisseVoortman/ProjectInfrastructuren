@@ -95,7 +95,6 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 
     }
   }
-
   function readForm() {
 	var formInput = document.getElementsByClassName("customForm");
 	var locations ='';
@@ -114,7 +113,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 	if (locations.length > 0){
 			time = Math.floor((((new Date()).getTime() /1000)-180)/60);
 			var timeToSend ='';
-			timeToSend += (time - 2)*60 + " AND " + time*60;
+			timeToSend += (time - 60)*60 + " AND " + time*60;
 			var per = 'min';
 			handleQuery('precipitation', locations, timeToSend, per, currentPage);
 	}
@@ -280,4 +279,3 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			})
 		}
 	  }
-//setInterval(function(){handleQuery()}, 1000)
