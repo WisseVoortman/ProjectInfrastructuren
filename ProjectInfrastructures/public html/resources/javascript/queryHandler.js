@@ -26,29 +26,25 @@ function handleReturn(data){
 	if (data.slice(1,6) == 'ERROR'){
 		console.log("we hebben een error");
 	}
-	else{
+	if (data.slice(0,1) =='{'){
 		console.log(data);
-		var testData = '{"station":5000,"info":[{"time":1518129490487, "temp":20}, {"time":1518129326112, "temp":30}]};{"station":6000,"info":[{"time":100, "temp":20}, {"time":200, "temp":30}]}';
-		var array =	testData.split(";");
+		var testData = '{"station":5000,"info":[{"time":1518129490487, "temp":20}, {"time":1518129326112, "temp":30}]};{"station":6000,"info":[{"time":1518129490487, "temp":40}, {"time":1518129326112, "temp":-30}]}';
+		var array =	data.split(";");
 		for (var i = DownfallGraphChart.series.length - 1; i>-1; i--){
 			DownfallGraphChart.series[i].remove();
 		}
 		for (object in array){
 			var graphData = JSON.parse(array[object]);
-			console.log(graphData, "dit is graphData")
+			var graphSerie = []
+				for (g in graphData){
+					for (t in graphData[g]){
+						graphSerie.push(
+							{x: graphData[g][t]['time'], y: graphData[g][t]['temp']}
+						)
+					}
+				}
 			DownfallGraphChart.addSeries(
-				{type: 'spline', name:graphData['station'].toString(), data:[(function(){
-					var data = [];
-					console.log("hello");
-					for (g in graphData[object]){
-						console.log(data);
-						data.push({
-							x: graphData[object][g]['timestamp']*1000,
-							y: graphData[object][g]['precipitation']
-						})
-					}return data;
-				})]}
-			);
+				{type: 'spline', name:graphData['station'].toString(), data:graphSerie})
 		}
 	}
 }
