@@ -115,7 +115,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			time = Math.floor((((new Date()).getTime() /1000)-180)/60);
 			var timeToSend ='';
 			timeToSend += (time - 2)*60 + " AND " + time*60;
-			var per = 'min';
+			var per = 'sec';
 			handleQuery('precipitation', locations, timeToSend, per, currentPage);
 	}
   }

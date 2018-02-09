@@ -1,5 +1,5 @@
 <?php
-	$HOST = '145.37.37.120';
+	$HOST = '145.37.36.93';
 	//145.37.37.120
 	$PORT = 30022;
 	$SOCKET = socket_create(AF_INET, SOCK_STREAM, 0);
