@@ -10,12 +10,14 @@
 	<body>
 		<nav>
 			<div class="button-selection">
-				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option"><span class="fas fa-home"></span>Dashboard</button>
-				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option"><span class="fas fa-thermometer-quarter"></span>Temperature</button> 
-				<button type="button" id="button-selection-option-rainfall" onclick="downfall();" class="button-selection-option"><span class="fas fa-tint"></span>Rainfall</button>
-				<button type="button" id="button-selection-option-snowfall" onclick="" class="button-selection-option"><span class="fas fa-snowflake"></span>Snowfall</button>
-				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option"><span class="fas fa-cogs"></span>Custom</button>
-				<a href="logout.php"><button type="submit" id="button-selection-option-logout" class="button-selection-option"><span class="fas fa-sign-out-alt"></span>Logout</button></a>
+				<button type="button" id="button-selection-option-all" onclick="dashboardPage();" class="button-selection-option"><span class="fas fa-home"></span> Dashboard</button>
+				<button type="button" id="button-selection-option-temp" onclick="temp();" class="button-selection-option"><span class="fas fa-thermometer-quarter"></span> Temperature</button> 
+				<button type="button" id="button-selection-option-rainfall" onclick="downfall();" class="button-selection-option"><span class="fas fa-tint"></span> Rainfall</button>
+				<button type="button" id="button-selection-option-snowfall" onclick="sownFall();" class="button-selection-option"><span class="fas fa-snowflake"></span> Snowfall</button>
+				<!--
+				<button type="button" id="button-selection-option-custom" onclick="custom();" class="button-selection-option"><span class="fas fa-cogs"></span> Custom</button>
+				-->
+				<a href="logout.php"><button type="submit" id="button-selection-option-logout" class="button-selection-option"><span class="fas fa-sign-out-alt"></span> Logout</button></a>
 				<div class="switch-selection">
 					<span id="switch-selection-text-metric" class="switch-selection-text">Metric</span>
 					<label class="switch-selection-option-data">
@@ -50,6 +52,7 @@
 		<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
 		<script src="resources/javascript/queryHandler.js"></script>
 		<script src="resources/javascript/html/stationSelector.js"></script>
+		<script src="resources/javascript/html/customSelector.js"></script>
 		<script src="resources/javascript/highchartsGlobalSettings.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>
