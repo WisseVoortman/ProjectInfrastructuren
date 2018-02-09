@@ -85,15 +85,15 @@ public class QueryResult {
             i++;
             switch(col.column.type)  {
                 case Byte:
-                    output += "\"" + col.column.columnName + "\":" + (byte)col.val + (i == results.size() ? "" : ", ");
+                    output += "\"" + col.column.columnName + "\":" + (byte)col.val + (i == (results.size() - 1) ? ", " : "");
                     break;
 
                 case Short:
-                    output += "\"" + col.column.columnName + "\":" + Float.parseFloat(col.val.toString()) / col.column.multiplier + (i == results.size() ? "" : ", ");
+                    output += "\"" + col.column.columnName + "\":" + Float.parseFloat(col.val.toString()) / col.column.multiplier + (i == (results.size() - 1) ? ", " : "");
                     break;
 
                 case Integer:
-                    output += "\"" + col.column.columnName + "\":" + (int)col.val + (i == results.size() ? "" : ", ");
+                    output += "\"" + col.column.columnName + "\":" + (int)col.val + (i == (results.size() - 1) ? ", " : "");
                     break;
             }
         }
@@ -108,7 +108,12 @@ public class QueryResult {
      * @param out PrintWriter stream used for writing
      * @param message Message to send to the client
      */
-    public synchronized void writeError(PrintWriter out, String message) {
-        out.println("[ERROR]" + message);
+    public synchronized void writeError(PrintWriter out, String message){out.println("[ERROR]" + message);}
+
+    public synchronized void writeError(PrintWriter out, String message, boolean newLine) {
+        if(newLine)
+            out.println("[ERROR]" + message);
+        else
+            out.print("[ERROR]" + message);
     }
 }

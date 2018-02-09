@@ -1,8 +1,8 @@
 package StorageServer;
 
 public class ServerRunner {
-    public static void main(String[] args) { // /home/peasant/Storage/  c:/temp/proj/
-       ServerMain server = new ServerMain(30011, 30022, "D:/temp/WSSRV/");
+    public static void main(String[] args) {
+       ServerMain server = new ServerMain(30011, 30022, "c:/temp/proj/");
        server.run();
     }
 }

@@ -42,18 +42,18 @@ public class QueryExecutor {
 
             // Are the dates valid?
             if(timeFrom > timeTo) {
-                new QueryResult().writeError(out, "Invalid date order");
+                new QueryResult().writeError(out, "Invalid date order", false);
                 return;
             }
             // Does the station exist?
             if(!new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/").exists()) {
-                new QueryResult().writeError(out, "No station with ID: " + this.stationNumber + " exists.");
+                new QueryResult().writeError(out, "No station with ID: " + this.stationNumber + " exists.", false);
                 return;
             }
             // Does the station have any files?
             if(Objects.requireNonNull(new File(this.model.CUR_PATH + "/data/" + this.stationNumber + "/")
                     .listFiles((dir1, name) -> name.endsWith(".dat"))).length < 1) {
-                new QueryResult().writeError(out, "Station with ID: " + this.stationNumber + " has no data.");
+                new QueryResult().writeError(out, "Station with ID: " + this.stationNumber + " has no data.", false);
                 return;
             }
 
@@ -82,7 +82,18 @@ public class QueryExecutor {
 
             // Do we have any data in our list
             if(fileNameList.size() < 1) {
-                new QueryResult().writeError(out, "No data has been found for this query.");
+                new QueryResult().writeError(out, "No data has been found for this query.", false);
+                return;
+            }
+
+            // Do we have the DateFrom as the first result
+            String firstResult = fileNameList.get(0);
+            String expectedResult = this.model.CUR_PATH + "/data/" + this.stationNumber + "/" +
+                    this.stationNumber + "_" + dateStart.format(formatter) + ".dat";
+            if(!firstResult.equalsIgnoreCase(expectedResult)) {
+                RandomAccessFile raf = new RandomAccessFile( new File(firstResult), "r");
+                raf.seek(0);
+                new QueryResult().writeError(out, "Missing data. First available date: [" + raf.readInt() + "]", false);
                 return;
             }
 
@@ -94,15 +105,13 @@ public class QueryExecutor {
             // Resolve per
             String per = "SEC";
             if(query.length >= 9)
-                per = query[9].toUpperCase();
-            if(!per.equals("SEC") && !per.equals("MINUTE") && !per.equals("HOUR"))
+                per = query[10].toUpperCase();
+            if(!per.equalsIgnoreCase("SEC") && !per.equalsIgnoreCase("MIN") && !per.equalsIgnoreCase("HOUR"))
                 per = "SEC";
 
             // Start initial
-            //TODO: Initializer
             QueryResult result = new QueryResult(Integer.parseInt(this.stationNumber));
             result.setStatus(STATE.OK);
-            out.print("{\"station\":" + this.stationNumber + ",\"info\":[");
 
             // Go through all files
             for(int i = 0; i < files.length; i++) {
@@ -118,7 +127,6 @@ public class QueryExecutor {
                 for(long index = 0; index < fileSize; index += 25) {
                     boolean send = false;
                     // Wait till we find the right timestamp
-                    //TODO: Fix wrong time
                     raf.seek(index);
                     int time = raf.readInt();
                     if(time >= timeFrom && time <= timeTo) {
@@ -167,23 +175,23 @@ public class QueryExecutor {
                                         break;
                                 }
                             }
-                            if(per.equalsIgnoreCase("minute") || per.equalsIgnoreCase("hour")){
+                            if(per.equalsIgnoreCase("min") || per.equalsIgnoreCase("hour")){
                                 // Get average if we have reached 60 seconds
                                 for(String column : query[2].split("\\,")) {
                                     if(tempDataSeconds.get(column).size() == 60) {
-                                        if(per.equalsIgnoreCase("minute"))
+                                        if(per.equalsIgnoreCase("min"))
                                             send = true;
                                         if(Tools.FIELD_LIST.get(column).average) {
                                             Double avg = tempDataSeconds.get(column).stream()
                                                     .mapToDouble(a -> (double) a)
                                                     .average()
                                                     .orElse(0);
-                                            if(per.equalsIgnoreCase("minute"))
+                                            if(per.equalsIgnoreCase("min"))
                                                 result.addResult(new QueryCol(Tools.FIELD_LIST.get(column), avg, time));
                                             else
                                                 tempDataMinutes.get(column).add(avg);
                                         }else{
-                                            if(per.equalsIgnoreCase("minute"))
+                                            if(per.equalsIgnoreCase("min"))
                                                 result.addResult(new QueryCol(Tools.FIELD_LIST.get(column),
                                                         tempDataSeconds.get(column)
                                                         .get(tempDataSeconds.get(column).size()-1), time));
@@ -229,23 +237,23 @@ public class QueryExecutor {
                             if(per.equalsIgnoreCase("sec"))
                                 break;
 
-                            if(per.equalsIgnoreCase("minute") || per.equalsIgnoreCase("hour")){
+                            if(per.equalsIgnoreCase("min") || per.equalsIgnoreCase("hour")){
                                 // Get average if we have reached 60 seconds
                                 for(String column : query[2].split("\\,")) {
                                     if(tempDataSeconds.get(column).size() > 0) {
-                                        if(per.equalsIgnoreCase("minute"))
+                                        if(per.equalsIgnoreCase("min"))
                                             send = true;
                                         if(Tools.FIELD_LIST.get(column).average) {
                                             Double avg = tempDataSeconds.get(column).stream()
                                                     .mapToDouble(a -> (double) a)
                                                     .average()
                                                     .orElse(0);
-                                            if(per.equalsIgnoreCase("minute"))
+                                            if(per.equalsIgnoreCase("min"))
                                                 result.addResult(new QueryCol(Tools.FIELD_LIST.get(column), avg, time));
                                             else
                                                 tempDataMinutes.get(column).add(avg);
                                         }else{
-                                            if(per.equalsIgnoreCase("minute"))
+                                            if(per.equalsIgnoreCase("min"))
                                                 result.addResult(new QueryCol(Tools.FIELD_LIST.get(column),
                                                         tempDataSeconds.get(column)
                                                                 .get(tempDataSeconds.get(column).size()-1), time));
@@ -293,10 +301,29 @@ public class QueryExecutor {
             }
 
             // End
-            out.println("]}");
+            out.print("]");
 
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void executeFake() {
+        int timeFrom = Integer.parseInt(query[6]);
+        int timeTo = Integer.parseInt(query[8]);
+
+        // Get DateObjects from time strings
+        Date dateFrom = new Date(timeFrom * 1000L);
+        LocalDate dateStart = dateFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Date dateTo = new Date(timeTo * 1000L);
+        LocalDate dateEnd = dateTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Generate filenames based on dates
+        List<LocalDate> dateList = IntStream.iterate(0, i -> i + 1)
+                .limit(ChronoUnit.MINUTES.between(dateStart.minusDays(1), dateEnd))
+                .mapToObj(i -> dateStart.plusDays(i))
+                .collect(Collectors.toList());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+
     }
 }
