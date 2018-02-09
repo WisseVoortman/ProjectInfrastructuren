@@ -110,8 +110,9 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 	if (locations.length > 0){
 			time = Math.floor(((new Date()).getTime() /1000)-5);
 			var timeToSend ='';
-			timeToSend += (time - 60) + " AND " + time;
-			var per = 'min'
+			//timeToSend += (time - 60) + " AND " + time;
+			timeToSend = "1518165554 and 1518165566";
+			var per = 'min';
 			handleQuery('precipitation', locations, timeToSend, per, currentPage);		
 	}
   }

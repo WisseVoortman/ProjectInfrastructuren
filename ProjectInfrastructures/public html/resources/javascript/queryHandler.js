@@ -27,27 +27,28 @@ function handleReturn(data){
 		console.log("we hebben een error");
 	}
 	else{
-	console.log(data);
-	var testData = '{"station":5000,"info":[{"time":1518129490487, "temp":20}, {"time":1518129326112, "temp":30}]};{"station":6000,"info":[{"time":100, "temp":20}, {"time":200, "temp":30}]}';
-	var array =	testData.split(";");
+		console.log(data);
+		var testData = '{"station":5000,"info":[{"time":1518129490487, "temp":20}, {"time":1518129326112, "temp":30}]};{"station":6000,"info":[{"time":100, "temp":20}, {"time":200, "temp":30}]}';
+		var array =	testData.split(";");
 		for (var i = DownfallGraphChart.series.length - 1; i>-1; i--){
-		DownfallGraphChart.series[i].remove();
-	}
-	for (object in array){
-		var graphData = JSON.parse(array[object]);
-		console.log(graphData)
-	DownfallGraphChart.addSeries(
-	{type: 'spline', name:graphData['station'].toString(), data:function(){
-		var data = [];
-		for (g in graphData[object]){
-			data.push({
-				x: graphData[object][g]['timestamp'],
-				y: graphData[object][g]['precipitation']
-			})
+			DownfallGraphChart.series[i].remove();
 		}
-	}})
-
-	//DownfallGraphChart.addSeries({type: 'spline', name: graphData['station'].toString(), data:[{x: graphData['info'][0]['time'], y:graphData['info'][0]['temp']},{x:1518132326112, y:40}]});
-	//console.log(DownfallGraphChart.options.series);
-	}}
+		for (object in array){
+			var graphData = JSON.parse(array[object]);
+			console.log(graphData, "dit is graphData")
+			DownfallGraphChart.addSeries(
+				{type: 'spline', name:graphData['station'].toString(), data:[(function(){
+					var data = [];
+					console.log("hello");
+					for (g in graphData[object]){
+						console.log(data);
+						data.push({
+							x: graphData[object][g]['timestamp']*1000,
+							y: graphData[object][g]['precipitation']
+						})
+					}return data;
+				})]}
+			);
+		}
+	}
 }
