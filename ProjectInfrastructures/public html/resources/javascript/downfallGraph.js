@@ -59,42 +59,6 @@ function downfallGraph() {
                 }
             }
         },
-
-        /*series: [{
-            type: 'spline',
-            name: 'Rain',
-            data: (function () {
-            // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -60; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000 * 60,
-                        y: Math.round(Math.random()*100)
-                    });
-                }
-				return data;
-			}())
-        },{
-			type: 'spline',
-            name: 'Snow',
-			color: '#f4a742',
-            data: (function () {
-            // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -60; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000 * 60,
-                        y: Math.round(Math.random()*100)
-                    });
-                }
-				return data;
-			}())}],*/
     });
 
 }

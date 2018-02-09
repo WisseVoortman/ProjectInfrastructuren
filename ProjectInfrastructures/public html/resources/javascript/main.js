@@ -113,7 +113,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			var timeToSend ='';
 			timeToSend += (time - 60) + " AND " + time;
 			var per = 'min'
-			handleQuery('precipitation', locations, timeToSend, per);		
+			handleQuery('precipitation', locations, timeToSend, per, sender, currentPage);		
 	}
   }
   function toggleAll(source){
@@ -182,7 +182,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			locations += stationList[object]['stationNumber'] + ","}
 		locations = locations.slice(0, -1);
 		console.log(locations);
-		setInterval(function(){handleQuery('precipitation', locations, time + ' and ' + time, 'min')}, 6000)
+		//setInterval(function(){handleQuery('precipitation', locations, time + ' and ' + time, 'min')}, 6000)
 	  }
 	  if (currentPage == 'rain'){
 		DownfallGraphChart.update({
