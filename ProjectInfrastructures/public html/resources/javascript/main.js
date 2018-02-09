@@ -155,13 +155,82 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
   		}
   	}
   }
-
   function measurement() {
   	var checkBox = document.getElementById("switch-selection-option-check");
   	if (checkBox.checked == true) {
   		measurementSystem = 'metric';
+  		if (currentPage == 'dashboard') {
+  			DownfallGraphChart.update({
+				title: {
+					text: 'Cumulative downfall in the last hour of all stations'
+				},
+				yAxis: {
+					title: {
+						text: 'Downfall in cm'
+					}
+				}
+			})  	
+  		}
+  		if (currentPage == 'rain'){
+			DownfallGraphChart.update({
+				title: {
+					text: 'Rain in the last hour per station'
+				},
+				yAxis: {
+					title: {
+						text: 'rain in cm'
+					},
+				}})
+		}
+		if (currentPage == 'snow'){
+			DownfallGraphChart.update({
+				title: {
+					text: 'Snow in the last hour per station'
+				},
+				yAxis: {
+						title: {
+						text: 'snow in cm'
+					}
+				}
+			})
+		}
+  			
   	} else {
   		measurementSystem = "imperial";
+  		if (currentPage == 'dashboard') {
+  			DownfallGraphChart.update({
+				title: {
+					text: 'Cumulative downfall in the last hour of all stations ' + '('+ measurementSystem + ')'
+				},
+				yAxis: {
+						title: {
+						text: 'Downfall in inch'
+					},
+				}
+			})  	
+  		}
+  		if (currentPage == 'rain'){
+			DownfallGraphChart.update({
+				title: {
+					text: 'Rain in the last hour per station' + '('+ measurementSystem + ')'
+				},
+				yAxis: {
+						title: {
+						text: 'rain in inch'
+					},
+				}})
+		}
+  		if (currentPage == 'snow'){
+			DownfallGraphChart.update({
+				title: {
+					text: 'Snow in the last hour per station' + '('+ measurementSystem + ')'
+				},
+				yAxis: {
+						title: {
+						text: 'snow in inch'
+					},
+				}})
+		}
   	}
   }
   function drawDownfallGraph()
