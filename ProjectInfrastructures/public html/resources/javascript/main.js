@@ -50,10 +50,13 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
     if(check_id_not_null()) {
 	  buttonReset();
 	  previousButton = 'button-selection-option-temp';
-      document.getElementById("dashboard-items").innerHTML = temphtml;
+	  currentPage = 'temprature';
+	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="downfallSelectorWrapper">' + stationSelectorGenerator() + '</div>' + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
-	  tempGauge();
+	  drawDownfallGraph();
+	  var graphHeight = window.getComputedStyle(document.getElementById("downfallGraph")).getPropertyValue('height');
+	  document.getElementById("downfallSelectorWrapper").style.height = graphHeight;
     }
   }
   function downfall() {
@@ -246,6 +249,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 				}
 			}
 		})
+		
 		var locations ="";
 		var time = Math.floor((new Date()).getTime()/1000/60)*60;
 		console.log(time);
@@ -263,6 +267,16 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			yAxis: {
 				title: {
 					text: 'rain in cm'
+				},
+			}
+	  })}
+		DownfallGraphChart.update({
+			title: {
+				text: 'Temperature in the last hour per station'
+			},
+			yAxis: {
+				title: {
+					text: 'Temperature in Celcius'
 				},
 			}
 	  })}
