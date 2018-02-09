@@ -98,7 +98,6 @@ h1 {
 	width: 100%;
 	padding-left: 1%;
 	padding-bottom:2%;
-    
 }
 
 .SelectorWrapper {
@@ -188,15 +187,7 @@ input[type=date], input[type=time]{
     color: white;
 }
 
-
-
-
-.stationSelectorCheckbox {
-	
-}
-
 /*error message*/
-
 .error {
 	color: #D8000C;
     background-color: #FFD2D2;

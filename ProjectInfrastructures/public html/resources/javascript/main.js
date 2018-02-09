@@ -1,7 +1,6 @@
 var temphtml = '<div class="dashboardItem" id="tempGauge"></div>';
 var downfallhtml = '<div class="dashboardItem" id="downfallGraph"></div> '
-var customhtml = '<div class="selector" id="custom_selector"><h3>Select options to create a graph:</h3><table class="selector-table"><tr></tr><tr><th>start date:</th><td><input type="date" id="startDate"></td></tr><tr><th>start time:</th><td><input type="time" id="startName"></td></tr><tr><th>end date:</th><td><input type="date" id="endDate"></td></tr><tr><th>end time:</th><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"></th></tr></table></div><div class="selector" id="selector-graph"><p><b>Select a graph:</b></p><select id="selector-select-graph"><option value="temperature" id="selector-option-temp">Temperature</option><option value="rain" id="selector-option-rain">Rainfall</option><option value="snowfall" id="selector-option-snowfall">Snowfall</option></select><select id="selector-select-graph-time"><option value="hour" id="selector-option-hour">Hour</option><option value="minute" id="selector-option-minute">Minute</option><option value="second" id="selector-option-second">Second</option></select></div>';
-var customtable = '' 
+//var customhtml = '<div class="selector" id="custom_selector"><h3>Select options to create a graph:</h3><table class="selector-table"><tr></tr><tr><th>start date:</th><td><input type="date" id="startDate"></td></tr><tr><th>start time:</th><td><input type="time" id="startName"></td></tr><tr><th>end date:</th><td><input type="date" id="endDate"></td></tr><tr><th>end time:</th><td><input type="time" id="endTime"></td></tr><tr><th colspan="3"></th></tr></table></div><div class="selector" id="selector-graph"><p><b>Select a graph:</b></p><select id="selector-select-graph"><option value="temperature" id="selector-option-temp">Temperature</option><option value="rain" id="selector-option-rain">Rainfall</option><option value="snowfall" id="selector-option-snowfall">Snowfall</option></select><select id="selector-select-graph-time"><option value="hour" id="selector-option-hour">Hour</option><option value="minute" id="selector-option-minute">Minute</option><option value="second" id="selector-option-second">Second</option></select></div>';
 var allhtml = temphtml + "" + downfallhtml;
 var currentPage;
 var measurementSystem = 'metric';
@@ -86,7 +85,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 		if(check_id_not_null()) {
 			buttonReset();
 			previousButton = 'button-selection-option-custom';
-			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customSelectorWrapper">' + customhtml + stationSelectorGenerator()  + '</div>';
+			document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="customSelectorWrapper">' + customGenerator() + stationSelectorGenerator()  + '</div>';
 			configureButton();
 	/*var graphHeight = window.getComputedStyle(document.getElementById("customGraph")).getPropertyValue('height');
       document.getElementById("customSelectorWrapper").style.height = graphHeight;*/

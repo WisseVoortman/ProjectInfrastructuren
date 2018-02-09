@@ -50,6 +50,7 @@
 		<script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
 		<script src="resources/javascript/queryHandler.js"></script>
 		<script src="resources/javascript/html/stationSelector.js"></script>
+		<script src="resources/javascript/html/customSelector.js"></script>
 		<script src="resources/javascript/highchartsGlobalSettings.js"></script>
 		<script src="resources/javascript/tempGauge.js"></script>
 		<script src="resources/javascript/downfallGraph.js"></script>
