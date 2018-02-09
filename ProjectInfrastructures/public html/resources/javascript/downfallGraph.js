@@ -1,28 +1,13 @@
+var DownfallGraphChart;
+
 function downfallGraph() {
 
-	var DownfallGraphChart = Highcharts.chart('downfallGraph', {
+	DownfallGraphChart = Highcharts.chart('downfallGraph', {
         chart: {
-            zoomType: 'x',
-            events: {
-                load: function () {
-					var serie = this.series;
-					setInterval(function () {
-						for (object in serie){
-							// set up the updating of the chart each second
-							var series = serie[object];
-							var x = (new Date()).getTime(), // current time
-							y = Math.round(Math.random()*100);
-							series.addPoint([x, y], true, true);
-						}
-					}, 60000);
-                }
-            }
+            zoomType: 'x'
         },
         boost: {
             useGPUTranslations: true
-        },
-        title: {
-            text: 'Cumaletive downfall last hour'
         },
         subtitle: {
             text: document.ontouchstart === undefined ?
@@ -31,13 +16,6 @@ function downfallGraph() {
         xAxis: {
             type: 'datetime',
             tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Downfall in cm'
-            },
-            min: 0,
-            //max: 100
         },
         legend: {
             enabled: true
@@ -78,7 +56,7 @@ function downfallGraph() {
             }
         },
 
-        series: [{
+        /*series: [{
             type: 'spline',
             name: 'Rain',
             data: (function () {
@@ -112,7 +90,7 @@ function downfallGraph() {
                     });
                 }
 				return data;
-			}())}],
+			}())}],*/
     });
 
 }
