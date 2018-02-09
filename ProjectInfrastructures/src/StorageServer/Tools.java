@@ -1,7 +1,10 @@
 package StorageServer;
 
 import java.util.HashMap;
-//TODO: Documentation
+
+/**
+ * Class used for simple functions
+ */
 public class Tools {
     public static short readShort(byte[] data, int offset) {
         return (short) (((data[offset] << 8)) | ((data[offset + 1] & 0xff)));
@@ -11,6 +14,9 @@ public class Tools {
         return new byte[] { (byte) ((s & 0xFF00) >> 8), (byte) (s & 0x00FF) };
     }
 
+    /**
+     * Stores information about all known columns
+     */
     public static HashMap<String, ColumnInfo> FIELD_LIST;
     static {
         FIELD_LIST = new HashMap<>();

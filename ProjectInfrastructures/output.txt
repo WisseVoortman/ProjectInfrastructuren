@@ -1,0 +1,1 @@
+{"station":5000,info:[{time:100, temp:20}, {time:200, temp:30}]};{"station":6000,info:[{time:100, temp:20}, {time:200, temp:30}]}

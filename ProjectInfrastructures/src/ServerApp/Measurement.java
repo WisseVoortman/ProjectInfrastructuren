@@ -21,7 +21,7 @@ public class Measurement implements Serializable{
 	public final Float cloudiness;
 	public final int winddirection;
 	
-	/*
+	/**
 	 * constructor for Measurment class 
 	 * initializes the variables from the paramenters
 	 */
@@ -41,5 +41,24 @@ public class Measurement implements Serializable{
 		this.cloudiness					= Float.parseFloat(cloudiness);
 		this.winddirection				= Integer.parseInt(winddirection);
 	}
-	
+	/**
+	 * constructor for Measurment class
+	 * initializes the variables from the paramenters
+	 */
+	public Measurement(int stationnumber, String date, String time, Float temperature, Float dewpoint, Float airpresurestationlevel, Float airpresuresealevel, Float visability, Float windspeed, Float perception, Float snowfallen, int specialcircumstances, Float cloudiness, int winddirection) {
+		this.stationnumber 				= stationnumber;
+		this.date						= date;
+		this.time						= time;
+		this.temperature				= temperature;
+		this.dewpoint					= dewpoint;
+		this.airpresurestationlevel		= airpresurestationlevel;
+		this.airpresuresealevel			= airpresuresealevel;
+		this.visability					= visability;
+		this.windspeed					= windspeed;
+		this.perception					= perception;
+		this.snowfallen					= snowfallen;
+		this.specialcircumstances		= specialcircumstances;
+		this.cloudiness					= cloudiness;
+		this.winddirection				= winddirection;
+	}
 }

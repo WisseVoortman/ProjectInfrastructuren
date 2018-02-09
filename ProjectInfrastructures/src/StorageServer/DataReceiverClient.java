@@ -35,13 +35,6 @@ public class DataReceiverClient implements Runnable {
                 Measurement measurement = (Measurement) in.readObject();
                 saveToDisk(measurement);
             }
-            //++this.model.tVar;
-
-            // Close stream and connection
-            //in.close(); clientSocket.close();
-
-            // Write data to disk
-            //saveToDisk(measurement);
         } catch (IOException e) {
             System.out.println("Failed to open input stream.");
         } catch (ClassNotFoundException e) {
@@ -99,7 +92,6 @@ public class DataReceiverClient implements Runnable {
                 // Append our byte list to the file
                 try (FileOutputStream output = new FileOutputStream(file, true)) {
                     baos.writeTo(output);
-                    baos.flush();
                     baos.close();
                 }
 

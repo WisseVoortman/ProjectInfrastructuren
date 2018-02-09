@@ -1,7 +1,13 @@
 package StorageServer;
 
-//TODO: Documentation
+/**
+ * Used for identifying data types and how to handle them.
+ */
 enum TYPES { Integer, Short, Byte }
+
+/**
+ * Simple class used to store useful information about columns
+ */
 public class ColumnInfo {
     public final String columnName;
     public final int offset, length, multiplier;

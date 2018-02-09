@@ -3,7 +3,9 @@ package StorageServer;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-//TODO: documentation
+/**
+ * Stores query state
+ */
 enum STATE {
     UNMODIFIED(0), OK(1), ERROR(2), ERROR_WITH_DATA(3);
     private final int value;
@@ -15,7 +17,10 @@ enum STATE {
         return value;
     }
 }
-//TODO: Documentation
+
+/**
+ * Class that contains the result of a query and transmits it
+ */
 public class QueryResult {
     private STATE status;
     private int stationNumber;
@@ -24,6 +29,9 @@ public class QueryResult {
 
     public QueryResult(){init();}
 
+    /**
+     * @param stationNumber Stationnumber that this query belongs to
+     */
     public QueryResult(int stationNumber){ this.stationNumber = stationNumber; init();}
 
     private void init() {
@@ -34,51 +42,73 @@ public class QueryResult {
         this.results = new ArrayList<>();
     }
 
+    /**
+     * Used for setting the station number
+     * @param stationNumber The station number you want to assign to this result
+     */
     public void setStationNumber(int stationNumber) {
         this.stationNumber = stationNumber;
     }
 
+    /**
+     * Used for assigning a state to this query
+     * @param status The state you want to assign to this result
+     */
     public void setStatus(STATE status) {
         this.status = status;
     }
 
+    /**
+     * Used for setting an error message
+     * @param message The message you want to set
+     */
     public void setErrorMessage(String message) {
         this.error = message;
     }
 
+    /**
+     * Used for adding results to this query
+     * @param qCol The column you want to add to the results
+     */
     public synchronized void addResult(QueryCol qCol) {
         this.results.add(qCol);
     }
 
-    public synchronized void writeToStream(PrintWriter out) {
-        String output = "";
-        output += status + "|" + this.error + "|" + this.stationNumber + "|" + this.results.size() + "|";
+    /**
+     * The method that sends the results to the client
+     * @param out PrintWriter stream belonging to this client
+     */
+    public synchronized void writeToStream(PrintWriter out, boolean addComma) {
+        String output = "{";
+        int i = 0;
         for(QueryCol col : results) {
+            i++;
             switch(col.column.type)  {
                 case Byte:
-                    output += col.column.columnName + ":" + (((byte)col.val) / col.column.multiplier) + "|";
+                    output += "\"" + col.column.columnName + "\":" + (byte)col.val + (i == results.size() ? "" : ", ");
                     break;
 
                 case Short:
-                    output += col.column.columnName + ":" + (((short)col.val) / col.column.multiplier) + "|";
+                    output += "\"" + col.column.columnName + "\":" + Float.parseFloat(col.val.toString()) / col.column.multiplier + (i == results.size() ? "" : ", ");
                     break;
 
                 case Integer:
-                    output += col.column.columnName + ":" + (((int)col.val) / col.column.multiplier) + "|";
+                    output += "\"" + col.column.columnName + "\":" + (int)col.val + (i == results.size() ? "" : ", ");
                     break;
             }
         }
+        output += "}" + (addComma ? "," : "");
         results.clear();
         System.out.println(output);
         out.print(output);
     }
 
-    public synchronized void writeToStream(PrintWriter out, ArrayList<String> sL) {
-        String sN = this.status.getValue() + "|" + this.error + "|" + sL.size() + "|";
-        for(String s : sL)
-            sN += s+";";
-        out.println(sN);
-        //out.println( + this.results.size() + "\r\n");
+    /**
+     * Method used to write an error to the client
+     * @param out PrintWriter stream used for writing
+     * @param message Message to send to the client
+     */
+    public synchronized void writeError(PrintWriter out, String message) {
+        out.println("[ERROR]" + message);
     }
-
 }

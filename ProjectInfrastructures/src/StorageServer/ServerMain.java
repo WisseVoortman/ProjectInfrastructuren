@@ -16,9 +16,11 @@ class ServerMain {
 
     /**
      *
-     * @param _portData Port number for incoming data
+     * @param _portData Port to listen on for data
+     * @param _portQuery Port used for listening to queries
      * @param path Absolute path to storage
      */
+
     ServerMain(int _portData, int _portQuery, String path) {
         this.CUR_PATH = path;
 
