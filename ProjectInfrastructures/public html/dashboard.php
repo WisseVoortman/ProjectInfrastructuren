@@ -32,9 +32,6 @@
 			</div>
 		</nav>
 		<header>
-			<button type="button" id="" onclick="handleQuery();" class="button-selection-option">test query</button>
-			<div id="queryTest">
-			</div>
 		</header>
 		<div class="container">
 			<div id="error-message">

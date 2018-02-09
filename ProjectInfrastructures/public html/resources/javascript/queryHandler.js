@@ -47,4 +47,5 @@ function handleReturn(data){
 				{type: 'spline', name:graphData['station'].toString(), data:graphSerie})
 		}
 	}
+	console.log(currentPage)
 }

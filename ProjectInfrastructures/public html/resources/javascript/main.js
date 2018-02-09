@@ -95,7 +95,6 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 
     }
   }
-
   function readForm() {
 	var formInput = document.getElementsByClassName("customForm");
 	var locations ='';
@@ -280,4 +279,3 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			})
 		}
 	  }
-//setInterval(function(){handleQuery()}, 1000)
