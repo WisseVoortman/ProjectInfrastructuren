@@ -112,7 +112,7 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 			var timeToSend ='';
 			timeToSend += (time - 60) + " AND " + time;
 			var per = 'min'
-			handleQuery('precipitation', locations, timeToSend, per, sender, currentPage);		
+			handleQuery('precipitation', locations, timeToSend, per, currentPage);		
 	}
   }
   function toggleAll(source){
