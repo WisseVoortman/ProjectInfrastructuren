@@ -2,7 +2,7 @@ function handleQuery(fields, stations, time, per, currentPage, sender){
 	var fields = 'timestamp,' + fields;
 	console.log(currentPage);
 	console.log('queryStarted');
-	var sendThis = 'fields=' + fields + '&stations=' + stations + '&time=' + time + '&timeUnit=' + per;
+	var sendThis = 'fields=' + fields + '&stations=' + stations + '&time=' + time + '&timeUnit=' + per + '&currentPage=' + currentPage;
 	console.log(sendThis);
 	var dataBaseRequest = new XMLHttpRequest();
 	dataBaseRequest.onreadystatechange = function(){

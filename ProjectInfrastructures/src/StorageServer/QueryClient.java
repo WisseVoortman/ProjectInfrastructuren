@@ -16,10 +16,12 @@ public class QueryClient implements Runnable {
     QueryClient(ServerMain model, Socket clientSocket) {
         this.model = model;
         this.clientSocket = clientSocket;
+        System.out.println("Called constructor");
     }
 
     @Override
     public void run() {
+        System.out.println("Called run");
         try{
             // Open stream
             BufferedReader in =
@@ -35,13 +37,13 @@ public class QueryClient implements Runnable {
 
             // Make sure query is has enough segments
             if(qry.length < 7) {
-                new QueryResult().writeError(new PrintWriter(this.clientSocket.getOutputStream()), "Query is incomplete.");
+                new QueryResult().writeError(new PrintWriter(this.clientSocket.getOutputStream(), true), "Query is incomplete.");
             }
 
             // Handle authentication
             int[] stationList = handleAuthentication(qry[0]);
             if(stationList.length == 1 && stationList[0] == -1) {
-                new QueryResult().writeError(new PrintWriter(this.clientSocket.getOutputStream()), "No user found with this ID.");
+                new QueryResult().writeError(new PrintWriter(this.clientSocket.getOutputStream(), true), "No user found with this ID.");
             }
 
             // Handle the query
@@ -90,6 +92,10 @@ public class QueryClient implements Runnable {
     private void executeQuery(String[] query, int[] stationList) {
         PrintWriter out = null;
         try {
+            String s = "";
+            for(String q : query)
+                s+= q + " ";
+            System.out.println(s);
             // Create a PrintWriter
             out = new PrintWriter(this.clientSocket.getOutputStream(), true);
             switch (query[1].toLowerCase()) {
@@ -117,9 +123,26 @@ public class QueryClient implements Runnable {
                         new QueryResult().writeError(out, "Invalid syntax at segment 5.");
                         break;
                     }
+                    s = "";
+                    for(String q : query)
+                        s+= q + " ";
+                    System.out.println(s);
                     // Execute the query
-                    for(String station : stations)
-                        new QueryExecutor(this.model, this, station, query, out).executeQuery();
+                    for(int i = 0; i < stations.length; i++) {
+                        //out.print("{");
+                        new QueryExecutor(this.model, this, stations[i], query, out).executeFake();
+                        /*out.print("{\"station\":" + stations[i] + ",\"info\":[");
+                        new QueryExecutor(this.model, this, stations[i], query, out).executeQuery();
+                        if(i < (stations.length - 1)) {
+                            System.out.println("\tNoLine");
+                            out.print("};");
+                        }else{
+                            System.out.println("New line");
+                            out.println("}");
+                        }*/
+                    }
+                    //for(String station : stations)
+                    //    new QueryExecutor(this.model, this, station, query, out).executeQuery();
                     break;
 
                 default:

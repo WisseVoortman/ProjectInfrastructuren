@@ -10,11 +10,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class DataTransmitter implements Runnable{
-    private ServerMain model;
+    private PiMain model;
     private String serverIp;
     private int serverPort;
 
-    public DataTransmitter(ServerMain model, String _serverIp, int _serverPort) {
+    public DataTransmitter(PiMain model, String _serverIp, int _serverPort) {
         this.model = model;
         this.serverIp = _serverIp;
         this.serverPort = _serverPort;
