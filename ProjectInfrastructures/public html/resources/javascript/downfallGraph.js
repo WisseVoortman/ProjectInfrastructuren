@@ -20,6 +20,10 @@ function downfallGraph() {
         legend: {
             enabled: true
         },
+		yAxis: {
+            min: 0
+            //max: 100
+			},
 		tooltip: {
 			xDateFormat: '%H:%M'
 		},

@@ -29,7 +29,7 @@ function handleReturn(data){
 		console.log("we hebben een error");
 	}
 	else{
-	
+	console.log(data);
 	var testData = '{"station":5000,"info":[{"time":1518129490487, "temp":20}, {"time":1518129326112, "temp":30}]};{"station":6000,info:[{"time":100, "temp":20}, {"time":200, "temp":30}]}';
 	var array =	testData.split(";");
 	var graphData = JSON.parse(array[0]);

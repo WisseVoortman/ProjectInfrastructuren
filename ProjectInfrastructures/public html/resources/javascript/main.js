@@ -5,6 +5,8 @@ var customtable = ''
 var allhtml = temphtml + "" + downfallhtml;
 var currentPage;
 var measurementSystem = 'metric';
+var downfallInterval;
+var tempInterval;
 var previousButton;
 var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa-exclamation-triangle"></span>No internet connection</b></p>';
 
@@ -59,6 +61,19 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 	  buttonReset();
 	  previousButton = 'button-selection-option-rainfall';
 	  currentPage = 'rain';
+	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="downfallSelectorWrapper">' + stationSelectorGenerator() + '</div>' + downfallhtml;
+	  configureButton();
+	  setDashboardItemWidth();
+	  drawDownfallGraph();
+	  var graphHeight = window.getComputedStyle(document.getElementById("downfallGraph")).getPropertyValue('height');
+	  document.getElementById("downfallSelectorWrapper").style.height = graphHeight;
+    }
+  }
+   function sownFall() {
+    if(check_id_not_null()) {
+	  buttonReset();
+	  previousButton = 'button-selection-option-snowfall';
+	  currentPage = 'snow';
 	  document.getElementById("dashboard-items").innerHTML = '<div class="SelectorWrapper" id="downfallSelectorWrapper">' + stationSelectorGenerator() + '</div>' + downfallhtml;
 	  configureButton();
 	  setDashboardItemWidth();
@@ -155,14 +170,19 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 				text: 'Cumulative downfall in the last hour of all stations'
 			},
 			yAxis: {
-            title: {
-                text: 'Downfall in cm'
-            },
-            min: 0,
-            //max: 100
+				title: {
+					text: 'Downfall in cm'
+				}
 			}
 		})
-		setInterval(function(){handleQuery()}, 1000)
+		var locations ="";
+		var time = Math.floor((new Date()).getTime()/1000/60)*60;
+		console.log(time);
+		for(object in stationList){
+			locations += stationList[object]['stationNumber'] + ","}
+		locations = locations.slice(0, -1);
+		console.log(locations);
+		setInterval(function(){handleQuery('precipitation', locations, time + ' and ' + time, 'min')}, 6000)
 	  }
 	  if (currentPage == 'rain'){
 		DownfallGraphChart.update({
@@ -170,13 +190,22 @@ var errorhtml = '<p class="error dashboard-error-message"><b><span class="fas fa
 				text: 'Rain in the last hour per station'
 			},
 			yAxis: {
-            title: {
-                text: 'rain in cm'
-            },
-            min: 0,
-            //max: 100
+				title: {
+					text: 'rain in cm'
+				},
 			}
-		})  
+	  })}
+		if (currentPage == 'snow'){
+			DownfallGraphChart.update({
+				title: {
+					text: 'Snow in the last hour per station'
+				},
+				yAxis: {
+						title: {
+						text: 'snow in cm'
+					}
+				}
+			})
+		}
 	  }
-  }
 //setInterval(function(){handleQuery()}, 1000)
